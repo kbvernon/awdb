@@ -4,16 +4,21 @@
 \alias{get_station_metadata}
 \title{Get Station Metadata From USDA NWCC AWDB}
 \usage{
-get_station_metadata(station_triplets)
+get_station_metadata(
+  station_triplets,
+  return_forecast_metadata = FALSE,
+  return_reservoir_metadata = FALSE,
+  return_element_metadata = FALSE
+)
 }
 \arguments{
 \item{station_triplets}{character vector, a vector of station triplets having
 the form \code{station:state:network}, with \code{state} being the state code for each
 station (e.g., "OR" for "Oregon") and \code{network} the abbreviation of the
-station network that each station is part of (e.g., "SCAN" for "Soil Climate
-Adaptation Network"). Note that the \code{*} wildcard can be used to select all of
-\code{station}, \code{state}, or \code{network}. The triplet \verb{*:*:*} will return the entire
-database. See Details for all networks.}
+station network that each station is part of (e.g., "USGS" refers to all USGS
+soil monitoring stations). Note that the \code{*} wildcard can be used to select
+all of \code{station}, \code{state}, or \code{network}. The triplet \verb{*:*:*} will return the
+entire database. See Details for all networks.}
 }
 \value{
 a \code{data.frame} with number of rows equal to

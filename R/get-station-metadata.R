@@ -13,7 +13,11 @@
 #' @examples
 #' get_station_metadata("302:OR:SNTL")
 #'
-get_station_metadata <- function(station_triplets) {
+get_station_metadata <- function(
+    station_triplets,
+    return_forecast_metadata = FALSE,
+    return_reservoir_metadata = FALSE,
+    return_element_metadata = FALSE) {
   check_character(station_triplets)
 
   # TODO: handle rate limit of 1000 elements per request
@@ -28,7 +32,10 @@ get_station_metadata <- function(station_triplets) {
 
   request_url <- httr2::req_url_query(
     httr2::request(endpoint),
-    stationTriplets = station_triplets
+    stationTriplets = station_triplets,
+    returnForecastPointMetadata = return_forecast_metadata,
+    returnReservoirMetadata = return_reservoir_metadata,
+    returnStationElements = return_element_metadata
   )
 
   response <- httr2::req_perform(
@@ -38,8 +45,10 @@ get_station_metadata <- function(station_triplets) {
 
   json <- httr2::resp_body_string(response)
 
-  df <- parse_station_metadataset_json(json)
-  class(df[["geometry"]]) <- c("sfc_POINT", "sfc")
+  parse_station_metadataset_json(json)
 
-  df
+  # class(df[["station_elements"]]) <- "list"
+  # class(df[["geometry"]]) <- c("sfc_POINT", "sfc")
+
+  # df
 }

@@ -10,10 +10,10 @@ get_station_data(station_triplets, elements, begin_date, end_date)
 \item{station_triplets}{character vector, a vector of station triplets having
 the form \code{station:state:network}, with \code{state} being the state code for each
 station (e.g., "OR" for "Oregon") and \code{network} the abbreviation of the
-station network that each station is part of (e.g., "SCAN" for "Soil Climate
-Adaptation Network"). Note that the \code{*} wildcard can be used to select all of
-\code{station}, \code{state}, or \code{network}. The triplet \verb{*:*:*} will return the entire
-database. See Details for all networks.}
+station network that each station is part of (e.g., "USGS" refers to all USGS
+soil monitoring stations). Note that the \code{*} wildcard can be used to select
+all of \code{station}, \code{state}, or \code{network}. The triplet \verb{*:*:*} will return the
+entire database. See Details for all networks.}
 
 \item{elements}{character vector, the abbreviation of the variable for which
 measurements are sought (e.g., "SMS" for "Soil Moisture Percent"). See

@@ -74,7 +74,7 @@ impl From<StationDataset> for Robj {
         let mut derived_data: Vec<bool> = Vec::with_capacity(n_row);
         let mut values: List = List::new(n_row);
 
-        values.set_class(&["Values", "AsIs"]).unwrap();
+        values.set_class(&["AsIs"]).unwrap();
 
         for (i, x) in sd.0.into_iter().enumerate() {
             for y in x.data.into_iter() {
@@ -156,15 +156,15 @@ pub struct StationMetadata {
     pub dco_code: String,
     pub county_name: String,
     pub huc: String,
-    pub elevation: i32,
+    pub elevation: f64,
     pub latitude: f64,
     pub longitude: f64,
-    pub data_time_zone: i32,
+    pub data_time_zone: f64,
     pub pedon_code: Option<String>,
     pub shef_id: Option<String>,
     pub begin_date: String,
     pub end_date: String,
-    pub station_elements: Vec<StationElement>,
+    pub station_elements: Option<Vec<StationElement>>,
 }
 
 impl From<StationMetadataset> for Robj {
@@ -179,8 +179,8 @@ impl From<StationMetadataset> for Robj {
         let mut dco_code: Vec<String> = Vec::with_capacity(n_row);
         let mut county_name: Vec<String> = Vec::with_capacity(n_row);
         let mut huc: Vec<String> = Vec::with_capacity(n_row);
-        let mut elevation: Vec<i32> = Vec::with_capacity(n_row);
-        let mut data_time_zone: Vec<i32> = Vec::with_capacity(n_row);
+        let mut elevation: Vec<f64> = Vec::with_capacity(n_row);
+        let mut data_time_zone: Vec<f64> = Vec::with_capacity(n_row);
         let mut pedon_code: Vec<Option<String>> = Vec::with_capacity(n_row);
         let mut shef_id: Vec<Option<String>> = Vec::with_capacity(n_row);
         let mut begin_date: Vec<String> = Vec::with_capacity(n_row);
@@ -188,11 +188,36 @@ impl From<StationMetadataset> for Robj {
         let mut station_elements: List = List::new(n_row);
         let mut sfc: List = List::new(n_row);
 
-        station_elements.set_class(&["Elements", "AsIs"]).unwrap();
+        station_elements.set_class(&["AsIs"]).unwrap();
 
         let mut crs = list!(
             input = "EPSG:4326",
-            wkt = r#"{GEOGCRS["WGS 84",\n    ENSEMBLE["World Geodetic System 1984 ensemble",\n        MEMBER["World Geodetic System 1984 (Transit)"],\n        MEMBER["World Geodetic System 1984 (G730)"],\n        MEMBER["World Geodetic System 1984 (G873)"],\n        MEMBER["World Geodetic System 1984 (G1150)"],\n        MEMBER["World Geodetic System 1984 (G1674)"],\n        MEMBER["World Geodetic System 1984 (G1762)"],\n        MEMBER["World Geodetic System 1984 (G2139)"],\n        ELLIPSOID["WGS 84",6378137,298.257223563,\n            LENGTHUNIT["metre",1]],\n        ENSEMBLEACCURACY[2.0]],\n    PRIMEM["Greenwich",0,\n        ANGLEUNIT["degree",0.0174532925199433]],\n    CS[ellipsoidal,2],\n        AXIS["geodetic latitude (Lat)",north,\n            ORDER[1],\n            ANGLEUNIT["degree",0.0174532925199433]],\n        AXIS["geodetic longitude (Lon)",east,\n            ORDER[2],\n            ANGLEUNIT["degree",0.0174532925199433]],\n    USAGE[\n        SCOPE["Horizontal component of 3D system."],\n        AREA["World."],\n        BBOX[-90,-180,90,180]],\n    ID["EPSG",4326]]}"#
+            wkt = r#"GEOGCRS["WGS 84",
+    ENSEMBLE["World Geodetic System 1984 ensemble",
+        MEMBER["World Geodetic System 1984 (Transit)"],
+        MEMBER["World Geodetic System 1984 (G730)"],
+        MEMBER["World Geodetic System 1984 (G873)"],
+        MEMBER["World Geodetic System 1984 (G1150)"],
+        MEMBER["World Geodetic System 1984 (G1674)"],
+        MEMBER["World Geodetic System 1984 (G1762)"],
+        MEMBER["World Geodetic System 1984 (G2139)"],
+        ELLIPSOID["WGS 84",6378137,298.257223563,
+            LENGTHUNIT["metre",1]],
+        ENSEMBLEACCURACY[2.0]],
+    PRIMEM["Greenwich",0,
+        ANGLEUNIT["degree",0.0174532925199433]],
+    CS[ellipsoidal,2],
+        AXIS["geodetic latitude (Lat)",north,
+            ORDER[1],
+            ANGLEUNIT["degree",0.0174532925199433]],
+        AXIS["geodetic longitude (Lon)",east,
+            ORDER[2],
+            ANGLEUNIT["degree",0.0174532925199433]],
+    USAGE[
+        SCOPE["Horizontal component of 3D system."],
+        AREA["World."],
+        BBOX[-90,-180,90,180]],
+    ID["EPSG",4326]]"#
         );
 
         crs.set_class(&["crs"]).unwrap();
@@ -201,7 +226,7 @@ impl From<StationMetadataset> for Robj {
             .unwrap()
             .set_attrib("n_empty", 0)
             .unwrap()
-            .set_attrib("crs", crs)
+            .set_attrib("crs", &crs)
             .unwrap()
             .set_attrib("precision", 0)
             .unwrap();
@@ -227,8 +252,10 @@ impl From<StationMetadataset> for Robj {
             begin_date.push(x.begin_date);
             end_date.push(x.end_date);
 
-            let elements_df = x.station_elements.into_dataframe().unwrap().into_robj();
-            station_elements.set_elt(i, elements_df).unwrap();
+            if let Some(e) = x.station_elements {
+                let elements_df = e.into_dataframe().unwrap().into_robj();
+                station_elements.set_elt(i, elements_df).unwrap()
+            }
 
             if x.longitude < xmin {
                 xmin = x.longitude
@@ -252,9 +279,14 @@ impl From<StationMetadataset> for Robj {
             sfc.set_elt(i, point).unwrap();
         }
 
-        let mut bbox = list!(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax);
+        let mut bbox = Doubles::from_values([xmin, ymin, xmax, ymax]);
 
-        bbox.set_class(&["bbox"]).unwrap();
+        bbox.set_class(&["bbox"])
+            .unwrap()
+            .set_attrib("names", ["xmin", "ymin", "xmax", "ymax"])
+            .unwrap()
+            .set_attrib("crs", &crs)
+            .unwrap();
 
         sfc.set_attrib("bbox", bbox).unwrap();
 
