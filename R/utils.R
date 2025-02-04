@@ -91,7 +91,7 @@ split_requests <- function(
   )
 
   lapply(
-    station_triplets,
+    station_triplets_list,
     function(.x) {
       httr2::req_url_query(
         httr2::request(endpoint),
