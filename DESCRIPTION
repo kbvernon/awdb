@@ -14,6 +14,6 @@ SystemRequirements: Cargo (Rust's package manager), rustc
 Imports: 
     cli,
     httr2,
-    rlang
+    rlang (>= 1.1.0)
 Suggests: 
     sf

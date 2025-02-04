@@ -152,19 +152,37 @@ pub struct StationMetadata {
     pub station_id: String,
     pub state_code: String,
     pub network_code: String,
-    pub name: String,
-    pub dco_code: String,
-    pub county_name: String,
-    pub huc: String,
-    pub elevation: f64,
+    pub name: Option<String>,
+    pub dco_code: Option<String>,
+    pub county_name: Option<String>,
+    pub huc: Option<String>,
+    pub elevation: Option<f64>,
     pub latitude: f64,
     pub longitude: f64,
-    pub data_time_zone: f64,
+    pub data_time_zone: Option<f64>,
     pub pedon_code: Option<String>,
     pub shef_id: Option<String>,
-    pub begin_date: String,
-    pub end_date: String,
+    pub begin_date: Option<String>,
+    pub end_date: Option<String>,
+    pub forecast_point: Option<ForecastPoint>,
+    pub reservoir_metadata: Option<ReservoirMetadata>,
     pub station_elements: Option<Vec<StationElement>>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ForecastPoint {
+    pub name: String,
+    pub forecaster: String,
+    pub exceedence_probabilities: Vec<i64>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ReservoirMetadata {
+    pub capacity: i64,
+    pub elevation_at_capacity: i64,
+    pub usable_capacity: i64,
 }
 
 impl From<StationMetadataset> for Robj {
@@ -175,16 +193,16 @@ impl From<StationMetadataset> for Robj {
         let mut station_id: Vec<String> = Vec::with_capacity(n_row);
         let mut state_code: Vec<String> = Vec::with_capacity(n_row);
         let mut network_code: Vec<String> = Vec::with_capacity(n_row);
-        let mut name: Vec<String> = Vec::with_capacity(n_row);
-        let mut dco_code: Vec<String> = Vec::with_capacity(n_row);
-        let mut county_name: Vec<String> = Vec::with_capacity(n_row);
-        let mut huc: Vec<String> = Vec::with_capacity(n_row);
-        let mut elevation: Vec<f64> = Vec::with_capacity(n_row);
-        let mut data_time_zone: Vec<f64> = Vec::with_capacity(n_row);
+        let mut name: Vec<Option<String>> = Vec::with_capacity(n_row);
+        let mut dco_code: Vec<Option<String>> = Vec::with_capacity(n_row);
+        let mut county_name: Vec<Option<String>> = Vec::with_capacity(n_row);
+        let mut huc: Vec<Option<String>> = Vec::with_capacity(n_row);
+        let mut elevation: Vec<Option<f64>> = Vec::with_capacity(n_row);
+        let mut data_time_zone: Vec<Option<f64>> = Vec::with_capacity(n_row);
         let mut pedon_code: Vec<Option<String>> = Vec::with_capacity(n_row);
         let mut shef_id: Vec<Option<String>> = Vec::with_capacity(n_row);
-        let mut begin_date: Vec<String> = Vec::with_capacity(n_row);
-        let mut end_date: Vec<String> = Vec::with_capacity(n_row);
+        let mut begin_date: Vec<Option<String>> = Vec::with_capacity(n_row);
+        let mut end_date: Vec<Option<String>> = Vec::with_capacity(n_row);
         let mut station_elements: List = List::new(n_row);
         let mut sfc: List = List::new(n_row);
 
@@ -324,7 +342,10 @@ fn parse_station_metadataset_json(x: &str) -> Robj {
 
     match parsed {
         Ok(p) => p.into(),
-        Err(_) => data_frame!(),
+        Err(e) => {
+            rprint!("{}", e);
+            data_frame!()
+        }
     }
 }
 

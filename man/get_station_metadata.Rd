@@ -5,32 +5,79 @@
 \title{Get Station Metadata From USDA NWCC AWDB}
 \usage{
 get_station_metadata(
-  station_triplets,
+  aoi,
+  elements,
+  networks = "*",
+  durations = "DAILY",
   return_forecast_metadata = FALSE,
   return_reservoir_metadata = FALSE,
-  return_element_metadata = FALSE
+  return_element_metadata = FALSE,
+  request_size = 10L
 )
 }
 \arguments{
-\item{station_triplets}{character vector, a vector of station triplets having
-the form \code{station:state:network}, with \code{state} being the state code for each
-station (e.g., "OR" for "Oregon") and \code{network} the abbreviation of the
-station network that each station is part of (e.g., "USGS" refers to all USGS
-soil monitoring stations). Note that the \code{*} wildcard can be used to select
-all of \code{station}, \code{state}, or \code{network}. The triplet \verb{*:*:*} will return the
-entire database. See Details for all networks.}
+\item{aoi}{\code{sfc} POLYGON scalar, the area of interest used for performing
+a spatial filter on available stations in \code{network}.}
+
+\item{elements}{character vector, abbreviations or codes for variables of
+interest (e.g., "SMS" for "Soil Moisture Percent"). See Details for available
+elements and codes.}
+
+\item{networks}{character vector, abbreviations or codes for station networks
+of interest (e.g., "USGS" refers to all USGS soil monitoring stations).
+Default is \code{*}, for "all networks". See Details for available networks and
+codes.}
+
+\item{return_forecast_metadata}{scalar boolean, whether to return a list
+column with forecast metadata. Default is \code{FALSE}.}
+
+\item{return_reservoir_metadata}{scalar boolean, whether to return a list
+column with reservoir metadata. Default is \code{FALSE}.}
+
+\item{return_element_metadata}{scalar boolean, whether to return a list
+column with element metadata. Default is \code{FALSE}.}
+
+\item{request_size}{integer scalar, number of individual stations to include
+in each query. This helps to meet rate limits imposed by the API. If you are
+getting a request error, you might try lowering this number. Default is
+\code{10L}.}
 }
 \value{
-a \code{data.frame} with number of rows equal to
-\code{length(station_triplets)}. Element metadata for each station is stored in a
-list column named "station_elements".
+an \code{sf} table with station data. The number of rows is equal to the
+number of stations found. If requested, forecast, reservoir,
+and element metadata for each station are stored in their respective list
+columns.
 }
 \description{
 Get station metadata from the USDA National Water and Climate Center Air and
 Water Database REST API. Each station is uniquely identified by a station
 triplet of the form \code{station:state:network}.
 }
+\details{
+If you just want the locations, set all metadata options to \code{FALSE}.
+}
 \examples{
-get_station_metadata("302:OR:SNTL")
+\dontrun{
+library(sf)
 
+pnw <- sf::st_bbox(c(
+  xmin = -123.9745334,
+  ymin = 42.689170,
+  xmax = -117.212106,
+  ymax = 48.591128
+))
+
+pnw <- sf::st_as_sfc(pnw, crs = 4326)
+
+# get locations and element metadata for stations with snow water equivalent
+# (WTEQ) and soil moisture percent (SMS:*, * = any depth) measurements
+get_station_metadata(
+  pnw,
+  elements = c("WTEQ", "SMS:*"),
+  return_element_metadata = TRUE
+)
+
+# get just locations for stations with snow water equivalent measurements
+get_station_metadata(pnw, elements = "WTEQ")
+}
 }
