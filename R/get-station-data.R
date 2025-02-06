@@ -86,7 +86,7 @@ get_station_data <- function(
     "data"
   )
 
-  requests <- split_requests(
+  json <- make_requests(
     endpoint,
     stations[["station_triplet"]],
     request_size,
@@ -96,11 +96,9 @@ get_station_data <- function(
     endDate = end_date
   )
 
-  responses <- perform_requests(requests)
 
-  dfs <- lapply(responses, parse_station_dataset_json)
-
-  df <- do.call("rbind", dfs)
+  # parse vector of json strings
+  df <- parse_station_dataset_json(json)
 
   class(df[["values"]]) <- "list"
 

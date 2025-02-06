@@ -1,5 +1,6 @@
 use extendr_api::prelude::*;
 use serde::{Deserialize, Serialize};
+use serde_json;
 
 // https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html
 
@@ -130,13 +131,13 @@ impl From<StationDataset> for Robj {
 }
 
 #[extendr]
-fn parse_station_dataset_json(x: &str) -> Robj {
-    let parsed = serde_json::from_str::<StationDataset>(x);
+fn parse_station_dataset_json(x: Strings) -> Robj {
+    let vec_data = x
+        .into_iter()
+        .flat_map(|v| serde_json::from_str::<StationDataset>(v).unwrap().0)
+        .collect();
 
-    match parsed {
-        Ok(p) => p.into(),
-        Err(_) => data_frame!(),
-    }
+    StationDataset(vec_data).into()
 }
 
 // STATION METADATA ------------------------------------------------------------
@@ -337,16 +338,13 @@ impl From<StationMetadataset> for Robj {
 }
 
 #[extendr]
-fn parse_station_metadataset_json(x: &str) -> Robj {
-    let parsed = serde_json::from_str::<StationMetadataset>(x);
+fn parse_station_metadataset_json(x: Strings) -> Robj {
+    let vec_metadata = x
+        .into_iter()
+        .flat_map(|v| serde_json::from_str::<StationMetadataset>(v).unwrap().0)
+        .collect();
 
-    match parsed {
-        Ok(p) => p.into(),
-        Err(e) => {
-            rprint!("{}", e);
-            data_frame!()
-        }
-    }
+    StationMetadataset(vec_metadata).into()
 }
 
 // TODO

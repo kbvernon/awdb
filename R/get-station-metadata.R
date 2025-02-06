@@ -80,7 +80,7 @@ get_station_metadata <- function(
     "stations"
   )
 
-  requests <- split_requests(
+  json <- make_requests(
     endpoint,
     stations[["station_triplet"]],
     request_size,
@@ -88,11 +88,8 @@ get_station_metadata <- function(
     durations = durations
   )
 
-  responses <- perform_requests(requests)
-
-  dfs <- lapply(responses, parse_station_metadataset_json)
-
-  df <- do.call("rbind", dfs)
+  # parse vector of json strings
+  df <- parse_station_metadataset_json(json)
 
   if (all(lengths(df[["station_elements"]]) == 0)) {
     df[["station_elements"]] <- NULL

@@ -57,28 +57,33 @@ get_stations <- function(
 
   class(df[["geometry"]]) <- c("sfc_POINT", "sfc")
 
+  df <- sf::st_transform(df, sf::st_crs(aoi))
+
   df <- sf::st_filter(df, aoi)
 
   df
 }
 
-#' Split Station Triplets Into Multiple Requests
+#' Make Requests in Parallel
 #'
+#' @inheritParams get_station_data
+#' @param endpoint character scalar, the base url for the API plus the endpoint
+#' @param call from rlang: "the defused call with which the function running in
+#' the frame was invoked."
+#' @param ... key-value pairs passed as query parameters to `req_url_query()`
+#'
+#' @details
 #' The AWDB REST API rate limits requests to 1000 elements. That's the number of
 #' elements at each station, not the number of stations, which is difficult to
 #' estimate directly (the metadata is also rate limited in this way). The
-#' solution is to to limit the number of stations to a small number, so we can
-#' then use `httr2::req_perform_parallel()`.
-#'
-#' @inheritParams get_station_data
-#' @param ... key-value pairs passed as query parameters to `req_url_query()`
-#' @param call from rlang: "the defused call with which the function running in
-#' the frame was invoked."
+#' solution is to to limit the number of stations to a small number, then use
+#' `httr2::req_perform_parallel()`. If any requests fail, this will emit a
+#' warning with a list of failed stations.
 #'
 #' @keywords internal
 #' @noRd
 #'
-split_requests <- function(
+make_requests <- function(
   endpoint,
   station_triplets,
   request_size,
@@ -90,27 +95,43 @@ split_requests <- function(
     f = ceiling(seq_along(station_triplets) / request_size)
   )
 
-  lapply(
+  base_request_url <- httr2::request(endpoint)
+
+  requests <- lapply(
     station_triplets_list,
     function(.x) {
       httr2::req_url_query(
-        httr2::request(endpoint),
+        base_request_url,
         stationTriplets = paste0(.x, collapse = ","),
         ...
       )
     }
   )
-}
 
-#' Perform Requests in Parallel
-#'
-#' @keywords internal
-#' @noRd
-#'
-perform_requests <- function(requests, call = rlang::caller_call()) {
-  responses <- httr2::req_perform_parallel(requests)
+  responses <- httr2::req_perform_parallel(requests, on_error = "continue")
 
-  lapply(responses, httr2::resp_body_string)
+  errors <- vapply(
+    responses,
+    FUN = httr2::resp_is_error,
+    FUN.VALUE = logical(1L),
+    USE.NAMES = FALSE
+  )
+
+  if (any(errors)) {
+    missing_stations <- unlist(station_triplets_list[errors])
+
+    cli::cli_alert(
+      "Request failed for these stations: {missing_stations}",
+      call = call
+    )
+  }
+
+  vapply(
+    responses[!errors],
+    FUN = httr2::resp_body_string,
+    FUN.VALUE = character(1L),
+    USE.NAMES = FALSE
+  )
 }
 
 #' Check For Valid `sfc` Scalar
