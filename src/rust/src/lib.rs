@@ -1,6 +1,7 @@
 use extendr_api::prelude::*;
 use serde::{Deserialize, Serialize};
-use serde_json;
+use serde_json::Value;
+use std::collections::HashMap;
 
 // https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html
 
@@ -175,7 +176,8 @@ pub struct StationMetadata {
 pub struct ForecastPoint {
     pub name: String,
     pub forecaster: String,
-    pub exceedence_probabilities: Vec<i64>,
+    #[serde(flatten)]
+    pub exceedence_probabilities: HashMap<String, Value>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -199,61 +201,20 @@ impl From<StationMetadataset> for Robj {
         let mut county_name: Vec<Option<String>> = Vec::with_capacity(n_row);
         let mut huc: Vec<Option<String>> = Vec::with_capacity(n_row);
         let mut elevation: Vec<Option<f64>> = Vec::with_capacity(n_row);
+        let mut latitude: Vec<f64> = Vec::with_capacity(n_row);
+        let mut longitude: Vec<f64> = Vec::with_capacity(n_row);
         let mut data_time_zone: Vec<Option<f64>> = Vec::with_capacity(n_row);
         let mut pedon_code: Vec<Option<String>> = Vec::with_capacity(n_row);
         let mut shef_id: Vec<Option<String>> = Vec::with_capacity(n_row);
         let mut begin_date: Vec<Option<String>> = Vec::with_capacity(n_row);
         let mut end_date: Vec<Option<String>> = Vec::with_capacity(n_row);
         let mut station_elements: List = List::new(n_row);
-        let mut sfc: List = List::new(n_row);
+        let mut station_forecasts: List = List::new(n_row);
+        let mut station_reservoirs: List = List::new(n_row);
 
         station_elements.set_class(&["AsIs"]).unwrap();
-
-        let mut crs = list!(
-            input = "EPSG:4326",
-            wkt = r#"GEOGCRS["WGS 84",
-    ENSEMBLE["World Geodetic System 1984 ensemble",
-        MEMBER["World Geodetic System 1984 (Transit)"],
-        MEMBER["World Geodetic System 1984 (G730)"],
-        MEMBER["World Geodetic System 1984 (G873)"],
-        MEMBER["World Geodetic System 1984 (G1150)"],
-        MEMBER["World Geodetic System 1984 (G1674)"],
-        MEMBER["World Geodetic System 1984 (G1762)"],
-        MEMBER["World Geodetic System 1984 (G2139)"],
-        ELLIPSOID["WGS 84",6378137,298.257223563,
-            LENGTHUNIT["metre",1]],
-        ENSEMBLEACCURACY[2.0]],
-    PRIMEM["Greenwich",0,
-        ANGLEUNIT["degree",0.0174532925199433]],
-    CS[ellipsoidal,2],
-        AXIS["geodetic latitude (Lat)",north,
-            ORDER[1],
-            ANGLEUNIT["degree",0.0174532925199433]],
-        AXIS["geodetic longitude (Lon)",east,
-            ORDER[2],
-            ANGLEUNIT["degree",0.0174532925199433]],
-    USAGE[
-        SCOPE["Horizontal component of 3D system."],
-        AREA["World."],
-        BBOX[-90,-180,90,180]],
-    ID["EPSG",4326]]"#
-        );
-
-        crs.set_class(&["crs"]).unwrap();
-
-        sfc.set_class(&["sfc_POINT", "sfc", "AsIs"])
-            .unwrap()
-            .set_attrib("n_empty", 0)
-            .unwrap()
-            .set_attrib("crs", &crs)
-            .unwrap()
-            .set_attrib("precision", 0)
-            .unwrap();
-
-        let mut xmin = f64::MAX;
-        let mut xmax = f64::MIN;
-        let mut ymin = f64::MAX;
-        let mut ymax = f64::MIN;
+        station_forecasts.set_class(&["AsIs"]).unwrap();
+        station_reservoirs.set_class(&["AsIs"]).unwrap();
 
         for (i, x) in sm.0.into_iter().enumerate() {
             station_triplet.push(x.station_triplet);
@@ -265,6 +226,8 @@ impl From<StationMetadataset> for Robj {
             county_name.push(x.county_name);
             huc.push(x.huc);
             elevation.push(x.elevation);
+            latitude.push(x.latitude);
+            longitude.push(x.longitude);
             data_time_zone.push(x.data_time_zone);
             pedon_code.push(x.pedon_code);
             shef_id.push(x.shef_id);
@@ -275,39 +238,7 @@ impl From<StationMetadataset> for Robj {
                 let elements_df = e.into_dataframe().unwrap().into_robj();
                 station_elements.set_elt(i, elements_df).unwrap()
             }
-
-            if x.longitude < xmin {
-                xmin = x.longitude
-            }
-            if x.longitude > xmax {
-                xmax = x.longitude
-            }
-            if x.latitude < ymin {
-                ymin = x.latitude
-            }
-            if x.latitude > ymax {
-                ymax = x.latitude
-            }
-
-            let point = Doubles::from_values([x.longitude, x.latitude])
-                .into_robj()
-                .set_class(&["XY", "POINT", "sfg"])
-                .unwrap()
-                .to_owned();
-
-            sfc.set_elt(i, point).unwrap();
         }
-
-        let mut bbox = Doubles::from_values([xmin, ymin, xmax, ymax]);
-
-        bbox.set_class(&["bbox"])
-            .unwrap()
-            .set_attrib("names", ["xmin", "ymin", "xmax", "ymax"])
-            .unwrap()
-            .set_attrib("crs", &crs)
-            .unwrap();
-
-        sfc.set_attrib("bbox", bbox).unwrap();
 
         let mut df = data_frame!(
             station_triplet = station_triplet,
@@ -319,19 +250,17 @@ impl From<StationMetadataset> for Robj {
             county_name = county_name,
             huc = huc,
             elevation = elevation,
+            latitude = latitude,
+            longitude = longitude,
             data_time_zone = data_time_zone,
             pedon_code = pedon_code,
             shef_id = shef_id,
             begin_date = begin_date,
             end_date = end_date,
-            station_elements = station_elements,
-            geometry = sfc
+            station_elements = station_elements
         );
 
-        df.set_class(&["sf", "tbl_df", "tbl", "data.frame"])
-            .unwrap()
-            .set_attrib("sf_column", "geometry")
-            .unwrap();
+        df.set_class(&["tbl_df", "tbl", "data.frame"]).unwrap();
 
         df
     }
