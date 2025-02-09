@@ -1,7 +1,7 @@
 use extendr_api::prelude::*;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
-use std::{collections::HashMap, sync::OnceLock};
+use std::collections::HashMap;
 
 // https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html
 
@@ -106,7 +106,9 @@ impl From<StationDataSet> for Robj {
                 derived_data.push(dd);
 
                 let values_df = y.values.into_dataframe().unwrap().into_robj();
-                values.set_elt(i, values_df).unwrap();
+                values
+                    .set_elt(i, drop_empty_columns(&values_df).unwrap())
+                    .unwrap();
             }
         }
 
@@ -127,7 +129,7 @@ impl From<StationDataSet> for Robj {
 
         df.set_class(&["tbl_df", "tbl", "data.frame"]).unwrap();
 
-        df
+        drop_empty_columns(&df).unwrap()
     }
 }
 
@@ -229,7 +231,7 @@ impl From<StationForecastSet> for Robj {
 
         df.set_class(&["tbl_df", "tbl", "data.frame"]).unwrap();
 
-        df
+        drop_empty_columns(&df).unwrap()
     }
 }
 
@@ -337,10 +339,14 @@ impl From<StationMetadataSet> for Robj {
 
             if let Some(e) = x.station_elements {
                 let mut elements_df = e.into_dataframe().unwrap().into_robj();
+
                 elements_df
                     .set_class(&["tbl_df", "tbl", "data.frame"])
                     .unwrap();
-                station_elements.set_elt(i, elements_df).unwrap();
+
+                station_elements
+                    .set_elt(i, drop_empty_columns(&elements_df).unwrap())
+                    .unwrap();
             }
 
             if let Some(e) = x.forecast_point {
@@ -356,7 +362,10 @@ impl From<StationMetadataSet> for Robj {
                 forecast_df
                     .set_class(&["tbl_df", "tbl", "data.frame"])
                     .unwrap();
-                station_forecasts.set_elt(i, forecast_df).unwrap();
+
+                station_forecasts
+                    .set_elt(i, drop_empty_columns(&forecast_df).unwrap())
+                    .unwrap();
             }
 
             if let Some(e) = x.reservoir_metadata {
@@ -365,10 +374,14 @@ impl From<StationMetadataSet> for Robj {
                     elevation_at_capacity = e.elevation_at_capacity,
                     usable_capacity = e.usable_capacity
                 );
+
                 reservoir_df
                     .set_class(&["tbl_df", "tbl", "data.frame"])
                     .unwrap();
-                station_reservoir.set_elt(i, reservoir_df).unwrap();
+
+                station_reservoir
+                    .set_elt(i, drop_empty_columns(&reservoir_df).unwrap())
+                    .unwrap();
             }
         }
 
@@ -396,7 +409,7 @@ impl From<StationMetadataSet> for Robj {
 
         df.set_class(&["tbl_df", "tbl", "data.frame"]).unwrap();
 
-        df
+        drop_empty_columns(&df).unwrap()
     }
 }
 
@@ -408,6 +421,67 @@ fn parse_station_metadataset_json(x: Strings) -> Robj {
         .collect();
 
     StationMetadataSet(vec_metadata).into()
+}
+
+// helper to clean tables when they have empty columns
+fn drop_empty_columns(x: &Robj) -> Result<Robj> {
+    // converting to a list because DataFrame doesn't have attributes
+    // TODO: make a github issue....
+    let lst = List::try_from(x)?;
+
+    // We can safely unwrap because we know there is a names attribute
+    let mut to_keep = Vec::new();
+
+    let col_names = lst.names().unwrap();
+
+    // determine which columns to keep
+    for col_name in col_names {
+        let col = lst.index(col_name)?;
+        match &col.rtype() {
+            Rtype::Logicals => {
+                for xi in Logicals::try_from(col)?.into_iter() {
+                    if !xi.is_na() {
+                        to_keep.push(col_name);
+                        break;
+                    }
+                }
+            }
+            Rtype::Integers => {
+                for xi in Integers::try_from(col)?.into_iter() {
+                    if !xi.is_na() {
+                        to_keep.push(col_name);
+                        break;
+                    }
+                }
+            }
+            Rtype::Doubles => {
+                for xi in Doubles::try_from(col)?.into_iter() {
+                    if !xi.is_na() {
+                        to_keep.push(col_name);
+                        break;
+                    }
+                }
+            }
+            Rtype::Strings => {
+                for xi in Strings::try_from(col)?.into_iter() {
+                    if !xi.is_na() {
+                        to_keep.push(col_name);
+                        break;
+                    }
+                }
+            }
+            Rtype::List => {
+                for (_, xi) in List::try_from(col)?.into_iter() {
+                    if !xi.is_null() {
+                        to_keep.push(col_name);
+                        break;
+                    }
+                }
+            }
+            _ => (),
+        }
+    }
+    Ok(x.slice(to_keep)?)
 }
 
 // TODO: parse json from references endpoint
