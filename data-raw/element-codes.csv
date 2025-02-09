@@ -1,0 +1,103 @@
+﻿name,code,unit
+Air Temperature Average,TAVG,fahrenheit
+Air Temperature Maximum,TMAX,fahrenheit
+Air Temperature Minimum,TMIN,fahrenheit
+Air Temperature Observed,TOBS,fahrenheit
+Barometric Pressure,PRES,inches of mercury
+Battery - ETI Precipitation Gauge,ETIB,volt
+Conductivity,COND,umho
+Dew Point Temperature,DPTP,fahrenheit
+Diagnostics,DIAG,
+Dissolved Oxygen,DISO,milligrams per liter
+Dissolved Oxygen - Percent Saturation,DISP,percent
+Diversion Flow Volume Observed,DIV,acre-feet
+Diversion Discharge Observed Mean,DIVD,cubic feet per second
+Discharge Manual/External Adjusted Mean,SRDOX,cubic feet per second
+Energy Gain or Loss from Ground,HFTV,watt per square meter
+Evaporation,EVAP,inches
+Fuel Moisture,FUEL,percent
+Precipitation Accumulation,PREC,inches
+Precipitation Increment,PRCP,inches
+Precipitation Increment Snow Adjusted,PRCPSA,inches
+Reservoir Storage Volume,RESC,acre-feet
+River Discharge Observed Mean,SRDOO,cubic feet per second
+Snow Depth,SNWD,inches
+Snow Water Equivalent,WTEQ,inches
+"Stream Volume, Adjusted",SRVO,acre-feet
+"Stream Volume, Adjusted Externally",SRVOX,acre-feet
+"Stream Volume, Observed",SRVO,acre-feet
+Teleconnection Index (also known as Oscillation Index),OI,
+Fuel Temperature Internal,FMTMP,fahrenheit
+Ground Surface Interface Temperature Average,TGSV,fahrenheit
+Ground Surface Interface Temperature Maximum,TGSX,fahrenheit
+Ground Surface Interface Temperature Minimum,TGSN,fahrenheit
+Ground Surface Interface Temperature Observed,TGSI,fahrenheit
+Julian Date,JDATE,calendar date
+Net Solar Radiation Average,NTRDV,watt per square meter
+Net Solar Radiation Maximum,NTRDX,watt per square meter
+Net Solar Radiation Minimum,NTRDN,watt per square meter
+Net Solar Radiation Observed,NTRDC,watt per square meter
+Water Acidity,H2OPH,
+Photosynthetically Active Radiation (PAR) Average,PARV,micromole per square meter per second
+Pulse Line Monitor - ETI Gauge,ETIL,volt
+Real Dielectric Constant,RDC,
+Relative Humidity,RHUM,percent
+Relative Humidity Average,RHUMV,percent
+Relative Humidity Enclosure,RHENC,percent
+Relative Humidity Maximum,RHUMX,percent
+Relative Humidity Minimum,RHUMN,percent
+Reservoir Stage,REST,feet
+Salinity,SAL,grams per liter
+Snow Depth Average,SNWDV,inches
+Snow Depth Maximum,SNWDX,inches
+Snow Depth Minimum,SNWDN,inches
+Snow Fall,SNOW,inches
+Snow Water Equivalent Average,WTEQV,inches
+Snow Water Equivalent Maximum,WTEQX,inches
+Snow Water Equivalent Minimum,WTEQN,inches
+Soil Moisture Bars Average,SMV,inches of mercury
+Soil Moisture Bars Maximum,SMX,inches of mercury
+Soil Moisture Bars Minimum,SMN,inches of mercury
+Soil Moisture Bars Observed,SMO,inches of mercury
+Soil Moisture Percent,SMS,percent
+Soil Temperature Average,STV,fahrenheit
+Soil Temperature Maximum,STX,fahrenheit
+Soil Temperature Minimum,STN,fahrenheit
+Soil Temperature Observed,STO,fahrenheit
+Solar Radiation,SRAD,watt per square meter
+Solar Radiation Average,SRADV,watt per square meter
+Solar Radiation Maximum,SRADX,watt per square meter
+Solar Radiation Minimum,SRADN,watt per square meter
+Solar Radiation Total,SRADT,watt per square meter
+Solar Radiation - Langley,LRAD,langley
+Solar Radiation - Langley Maximum,LRADX,langley
+Solar Radiation - Langley Total,LRADT,langley
+Stream Stage (Gauge Height) Average,SRMV,feet
+Stream Stage (gauge Height) Maximum,SRMX,feet
+Stream Stage (Gauge Height) Minimum,SRMN,feet
+Stream Stage (Gauge Height) Observed,SRMO,feet
+Stream Flow Average,STRV,cubic feet per second
+Turbidity,TURB,nephelometric turbidity units
+Usable Lake Storage Volume,RESA,acre-feet
+Vapor Pressure - Partial,PVPV,kilopascal
+Vapor Pressure - Saturated,SVPV,kilopascal
+Water Level Average,WLEVV,inches
+Water Level Maximum,WLEVX,inches
+Water Level Minimum,WLEVN,inches
+Water Level Observed,WLEV,inches
+Water Temperature,WTEMP,fahrenheit
+Water Temperature Average,WTAVG,fahrenheit
+Water Temperature Maximum,WTMAX,fahrenheit
+Water Temperature Minimum,WTMIN,fahrenheit
+Well Depth,WELL,feet
+Wind Direction Average,WDIRV,degree
+Wind Direction Observed,WDIRV,degree
+Wind Movement Average,WDMVV,mile
+Wind Movement Maximum,WDMVX,mile
+Wind Movement Minimum,WDMVN,mile
+Wind Movement Observed,WDMV,mile
+Wind Movement Total,WDMVT,mile
+Wind Speed Average,WSPDV,miles per hour
+Wind Speed Maximum,WSPDX,miles per hour
+Wind Speed Minimum,WSPDN,miles per hour
+Wind Speed Observed,WSPD,miles per hour

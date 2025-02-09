@@ -1,0 +1,9 @@
+﻿code,description
+BOR,Any Bureau of Reclamation reservoir station plus other non-BOR reservoir stations.
+CLMIND,Used to store climate indices (such as Southern Oscillation Index or Trans-Nino Index).
+COOP,National Weather Service COOP stations.
+MPRC,Manual precipitation sites.
+MSNT,"Manual SNOTEL non-telemetered, non-real-time sites."
+SNOW,NRCS Snow Course sites
+SNTL,NWCC SNOTEL and SCAN stations
+USGS,"Any USGS station, but also other non-USGS streamflow stations."
