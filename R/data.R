@@ -26,5 +26,4 @@
 #'
 #' @format ## `network_codes`
 #' A `tibble` with columns `code` and `description`.
-#' @source [AWDB Web Service User Guide](https://www.nrcs.usda.gov/sites/default/files/2023-03/AWDB%20Web%20Service%20User%20Guide.pdf)
 "network_codes"

@@ -19,8 +19,6 @@ A \code{tibble} with columns \code{code} and \code{description}.
 }
 \source{
 \href{https://www.nrcs.usda.gov/sites/default/files/2023-03/AWDB\%20Web\%20Service\%20User\%20Guide.pdf}{AWDB Web Service User Guide}
-
-\href{https://www.nrcs.usda.gov/sites/default/files/2023-03/AWDB\%20Web\%20Service\%20User\%20Guide.pdf}{AWDB Web Service User Guide}
 }
 \usage{
 element_codes
