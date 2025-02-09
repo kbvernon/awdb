@@ -13,6 +13,8 @@
 #'
 #' A list of elements, their codes and units.
 #'
+#' @name codes
+#'
 #' @format ## `element_codes`
 #' A `tibble` with columns `code`, `name`, and `unit`.
 #' @source [AWDB Web Service User Guide](https://www.nrcs.usda.gov/sites/default/files/2023-03/AWDB%20Web%20Service%20User%20Guide.pdf)
@@ -21,6 +23,8 @@
 #' Network Codes
 #'
 #' A list of station networks and their codes.
+#'
+#' @rdname codes
 #'
 #' @format ## `network_codes`
 #' A `tibble` with columns `code` and `description`.
