@@ -11,7 +11,7 @@
 
 #' Element Codes
 #'
-#' A list of elements, their codes and units.
+#' Codes for station elements and networks.
 #'
 #' @name codes
 #'
@@ -21,8 +21,6 @@
 "element_codes"
 
 #' Network Codes
-#'
-#' A list of station networks and their codes.
 #'
 #' @rdname codes
 #'

@@ -28,8 +28,6 @@ element_codes
 network_codes
 }
 \description{
-A list of elements, their codes and units.
-
-A list of station networks and their codes.
+Codes for station elements and networks.
 }
 \keyword{datasets}
