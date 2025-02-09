@@ -44,7 +44,7 @@ get_stations(
 get_stations(
   bear_lake,
   elements = "WTEQ",
-  awdb_options = set_options(durations = "DAILY")
+  awdb_options = set_options(duration = "DAILY")
 )
 
 }

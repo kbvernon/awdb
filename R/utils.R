@@ -57,27 +57,21 @@ filter_stations <- function(
 
   if (nrow(df) == 0) {
     cli::cli_abort(
-      "No stations found in {.var aoi}.",
+      "No stations with {.val {elements}} element(s) found in the {.var aoi}.",
       call = call
     )
   }
 
   if (awdb_options[["return_element_metadata"]]) {
     class(df[["element_metadata"]]) <- "list"
-  } else {
-    df[["element_metadata"]] <- NULL
   }
 
   if (awdb_options[["return_forecast_metadata"]]) {
     class(df[["forecast_metadata"]]) <- "list"
-  } else {
-    df[["forecast_metadata"]] <- NULL
   }
 
   if (awdb_options[["return_reservoir_metadata"]]) {
     class(df[["reservoir_metadata"]]) <- "list"
-  } else {
-    df[["reservoir_metadata"]] <- NULL
   }
 
   df

@@ -31,7 +31,7 @@ get_forecasts <- function(
 
   stations <- filter_stations(
     aoi,
-    elements = collapse(elements),
+    elements = elements,
     awdb_options
   )
 
@@ -42,10 +42,12 @@ get_forecasts <- function(
     "forecasts"
   )
 
+  # note: the query parameter for forecasts is "elementCodes," rather than
+  # "elements," like it is for the other endpoints
   json <- make_requests(
     endpoint,
     stations[["station_triplet"]],
-    elements = collapse(elements),
+    elementCodes = collapse(elements),
     beginPublicationDate = awdb_options[["begin_publication_date"]],
     endPublicationDate = awdb_options[["end_publication_date"]],
     exceedenceProbabilities = awdb_options[["exceedence_probabilities"]],
