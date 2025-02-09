@@ -3,19 +3,27 @@
 #' Get element data for stations in the Air and Water Database REST API that
 #' fall in area of interest.
 #'
-#' @inheritParams get_stations
+#' @param aoi `sfc` POLYGON scalar, the area of interest used for performing
+#' a spatial filter on available stations in `network`.
+#' @param elements character vector, abbreviations or codes for variables of
+#' interest (e.g., "SMS" for "Soil Moisture Percent"). See Details for available
+#' elements and codes.
+#' @param awdb_options an `awdb_options` list with additional query parameters.
 #' @param as_sf boolean scalar, whether to return the data as an `sf` table.
 #' Default is `FALSE`. Repeating the spatial data across each station element
 #' and its time series can be costly.
 #'
 #' @return if `as_sf`, an `sf` table, otherwise a simple data.frame. The number
 #' of rows depends on the number of stations and element parameters. Time series
-#' data are included as a list column named `"values"`.
+#' data are included as a list column named `"element_values"`.
+#'
+#' @details
+#' TODO!
 #'
 #' @export
 #'
 #' @examples
-#' get_elements(bear_lake, elements = "WTEQ", networks = "SNTL")
+#' get_elements(bear_lake, elements = "WTEQ")
 #'
 get_elements <- function(
   aoi,
@@ -28,13 +36,10 @@ get_elements <- function(
   check_awdb_options(awdb_options)
   check_bool(as_sf, rlang::caller_call())
 
-  elements <- paste0(elements, collapse = ", ")
-
   stations <- filter_stations(
     aoi,
-    elements,
-    networks = awdb_options[["networks"]],
-    durations = awdb_options[["duration"]]
+    elements = collapse(elements),
+    awdb_options
   )
 
   endpoint <- file.path(
@@ -47,7 +52,7 @@ get_elements <- function(
   json <- make_requests(
     endpoint,
     stations[["station_triplet"]],
-    elements = elements,
+    elements = collapse(elements),
     duration = awdb_options[["duration"]],
     beginDate = awdb_options[["begin_date"]],
     endDate = awdb_options[["end_date"]],
@@ -57,7 +62,7 @@ get_elements <- function(
   # parse vector of json strings
   df <- parse_station_dataset_json(json)
 
-  class(df[["values"]]) <- "list"
+  class(df[["element_values"]]) <- "list"
 
   if (as_sf) {
     df <- merge(

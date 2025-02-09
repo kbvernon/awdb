@@ -3,18 +3,12 @@
 #' Get stations and their coordinates from the Air and Water Database REST API
 #' that fall in area of interest.
 #'
-#' @param aoi `sfc` POLYGON scalar, the area of interest used for performing
-#' a spatial filter on available stations in `network`.
-#' @param elements character vector, abbreviations or codes for variables of
-#' interest (e.g., "SMS" for "Soil Moisture Percent"). See Details for available
-#' elements and codes.
-#' @param awdb_options an `awdb_options` list with additional query parameters.
+#' @inheritParams get_elements
 #'
 #' @return an `sf` table with station data.
 #'
 #' @details
-#' You can also subset stations by specifying `networks` and `duration` in
-#' [set_options()].
+#' You can also subset stations using query parameters in [set_options()].
 #'
 #' @export
 #'
@@ -50,8 +44,7 @@ get_stations <- function(
 
   filter_stations(
     aoi,
-    elements,
-    networks = awdb_options[["networks"]],
-    durations = awdb_options[["duration"]]
+    elements = collapse(elements),
+    awdb_options
   )
 }

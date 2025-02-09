@@ -1,7 +1,7 @@
 use extendr_api::prelude::*;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
-use std::collections::HashMap;
+use std::{collections::HashMap, sync::OnceLock};
 
 // https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html
 
@@ -11,7 +11,7 @@ use std::collections::HashMap;
 // and let Values be a list column with a data frame in each row
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct StationDataset(Vec<StationData>);
+pub struct StationDataSet(Vec<StationData>);
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
@@ -59,8 +59,8 @@ pub struct Values {
     pub median: Option<i32>,
 }
 
-impl From<StationDataset> for Robj {
-    fn from(sd: StationDataset) -> Self {
+impl From<StationDataSet> for Robj {
+    fn from(sd: StationDataSet) -> Self {
         let n_row = sd.0.iter().map(|x| x.data.len()).sum();
 
         let mut station_triplet: Vec<String> = Vec::with_capacity(n_row);
@@ -122,7 +122,7 @@ impl From<StationDataset> for Robj {
             begin_date = begin_date,
             end_date = end_date,
             derived_data = derived_data,
-            values = values
+            element_values = values
         );
 
         df.set_class(&["tbl_df", "tbl", "data.frame"]).unwrap();
@@ -135,17 +135,119 @@ impl From<StationDataset> for Robj {
 fn parse_station_dataset_json(x: Strings) -> Robj {
     let vec_data = x
         .into_iter()
-        .flat_map(|v| serde_json::from_str::<StationDataset>(v).unwrap().0)
+        .flat_map(|v| serde_json::from_str::<StationDataSet>(v).unwrap().0)
         .collect();
 
-    StationDataset(vec_data).into()
+    StationDataSet(vec_data).into()
+}
+
+// STATION FORECAST ------------------------------------------------------------
+// each station forecast set is a row in the data frame
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct StationForecastSet(Vec<StationForecast>);
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct StationForecast {
+    pub station_triplet: String,
+    pub forecast_point_name: String,
+    pub data: Vec<Forecast>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct Forecast {
+    pub element_code: String,
+    pub forecast_period: Vec<String>,
+    pub forecast_status: String,
+    pub issue_date: String,
+    pub period_normal: f64,
+    pub publication_date: String,
+    pub unit_code: String,
+    pub forecast_values: HashMap<String, Value>,
+}
+
+impl From<StationForecastSet> for Robj {
+    fn from(sf: StationForecastSet) -> Self {
+        let n_row = sf.0.len();
+
+        let mut station_triplet: Vec<String> = Vec::with_capacity(n_row);
+        let mut forecast_point_name: Vec<String> = Vec::with_capacity(n_row);
+        let mut element_code: Vec<String> = Vec::with_capacity(n_row);
+        let mut forecast_period: List = List::new(n_row);
+        let mut forecast_status: Vec<String> = Vec::with_capacity(n_row);
+        let mut issue_date: Vec<String> = Vec::with_capacity(n_row);
+        let mut period_normal: Vec<f64> = Vec::with_capacity(n_row);
+        let mut publication_date: Vec<String> = Vec::with_capacity(n_row);
+        let mut unit_code: Vec<String> = Vec::with_capacity(n_row);
+        let mut forecast_values: List = List::new(n_row);
+
+        forecast_period.set_class(&["AsIs"]).unwrap();
+        forecast_values.set_class(&["AsIs"]).unwrap();
+
+        for (i, x) in sf.0.into_iter().enumerate() {
+            for y in x.data.into_iter() {
+                station_triplet.push(x.station_triplet.clone());
+                forecast_point_name.push(x.forecast_point_name.clone());
+                element_code.push(y.element_code);
+
+                forecast_period
+                    .set_elt(i, y.forecast_period.into())
+                    .unwrap();
+
+                forecast_status.push(y.forecast_status);
+                issue_date.push(y.issue_date);
+                period_normal.push(y.period_normal);
+                publication_date.push(y.publication_date);
+                unit_code.push(y.unit_code);
+
+                let keys: Strings = y.forecast_values.keys().cloned().collect();
+                let values: Vec<f64> = y
+                    .forecast_values
+                    .values()
+                    .map(|v| v.as_f64().unwrap())
+                    .collect();
+                let mut df = data_frame!(keys = keys, values = values);
+                df.set_class(&["tbl_df", "tbl", "data.frame"]).unwrap();
+                forecast_values.set_elt(i, df).unwrap();
+            }
+        }
+
+        let mut df = data_frame!(
+            station_triplet = station_triplet,
+            forecast_point_name = forecast_point_name,
+            element_code = element_code,
+            forecast_period = forecast_period,
+            forecast_status = forecast_status,
+            issue_date = issue_date,
+            period_normal = period_normal,
+            publication_date = publication_date,
+            unit_code = unit_code,
+            forecast_values = forecast_values
+        );
+
+        df.set_class(&["tbl_df", "tbl", "data.frame"]).unwrap();
+
+        df
+    }
+}
+
+#[extendr]
+fn parse_station_forecast_set_json(x: Strings) -> Robj {
+    let vec_data = x
+        .into_iter()
+        .flat_map(|v| serde_json::from_str::<StationForecastSet>(v).unwrap().0)
+        .collect();
+
+    StationForecastSet(vec_data).into()
 }
 
 // STATION METADATA ------------------------------------------------------------
 // each station metadataset is a row in the data frame
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct StationMetadataset(Vec<StationMetadata>);
+pub struct StationMetadataSet(Vec<StationMetadata>);
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
@@ -176,20 +278,19 @@ pub struct StationMetadata {
 pub struct ForecastPoint {
     pub name: String,
     pub forecaster: String,
-    #[serde(flatten)]
-    pub exceedence_probabilities: HashMap<String, Value>,
+    pub exceedence_probabilities: Vec<i32>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ReservoirMetadata {
-    pub capacity: i64,
-    pub elevation_at_capacity: i64,
-    pub usable_capacity: i64,
+    pub capacity: i32,
+    pub elevation_at_capacity: i32,
+    pub usable_capacity: i32,
 }
 
-impl From<StationMetadataset> for Robj {
-    fn from(sm: StationMetadataset) -> Self {
+impl From<StationMetadataSet> for Robj {
+    fn from(sm: StationMetadataSet) -> Self {
         let n_row = sm.0.len();
 
         let mut station_triplet: Vec<String> = Vec::with_capacity(n_row);
@@ -210,11 +311,11 @@ impl From<StationMetadataset> for Robj {
         let mut end_date: Vec<Option<String>> = Vec::with_capacity(n_row);
         let mut station_elements: List = List::new(n_row);
         let mut station_forecasts: List = List::new(n_row);
-        let mut station_reservoirs: List = List::new(n_row);
+        let mut station_reservoir: List = List::new(n_row);
 
         station_elements.set_class(&["AsIs"]).unwrap();
         station_forecasts.set_class(&["AsIs"]).unwrap();
-        station_reservoirs.set_class(&["AsIs"]).unwrap();
+        station_reservoir.set_class(&["AsIs"]).unwrap();
 
         for (i, x) in sm.0.into_iter().enumerate() {
             station_triplet.push(x.station_triplet);
@@ -235,8 +336,39 @@ impl From<StationMetadataset> for Robj {
             end_date.push(x.end_date);
 
             if let Some(e) = x.station_elements {
-                let elements_df = e.into_dataframe().unwrap().into_robj();
-                station_elements.set_elt(i, elements_df).unwrap()
+                let mut elements_df = e.into_dataframe().unwrap().into_robj();
+                elements_df
+                    .set_class(&["tbl_df", "tbl", "data.frame"])
+                    .unwrap();
+                station_elements.set_elt(i, elements_df).unwrap();
+            }
+
+            if let Some(e) = x.forecast_point {
+                let mut ep = list!(e.exceedence_probabilities);
+                ep.set_class(&["AsIs"]).unwrap();
+
+                let mut forecast_df = data_frame!(
+                    name = e.name,
+                    forecaster = e.forecaster,
+                    exceedence_probabilities = ep
+                );
+
+                forecast_df
+                    .set_class(&["tbl_df", "tbl", "data.frame"])
+                    .unwrap();
+                station_forecasts.set_elt(i, forecast_df).unwrap();
+            }
+
+            if let Some(e) = x.reservoir_metadata {
+                let mut reservoir_df = data_frame!(
+                    capacity = e.capacity,
+                    elevation_at_capacity = e.elevation_at_capacity,
+                    usable_capacity = e.usable_capacity
+                );
+                reservoir_df
+                    .set_class(&["tbl_df", "tbl", "data.frame"])
+                    .unwrap();
+                station_reservoir.set_elt(i, reservoir_df).unwrap();
             }
         }
 
@@ -257,7 +389,9 @@ impl From<StationMetadataset> for Robj {
             shef_id = shef_id,
             begin_date = begin_date,
             end_date = end_date,
-            station_elements = station_elements
+            forecast_metadata = station_forecasts,
+            reservoir_metadata = station_reservoir,
+            element_metadata = station_elements
         );
 
         df.set_class(&["tbl_df", "tbl", "data.frame"]).unwrap();
@@ -270,18 +404,13 @@ impl From<StationMetadataset> for Robj {
 fn parse_station_metadataset_json(x: Strings) -> Robj {
     let vec_metadata = x
         .into_iter()
-        .flat_map(|v| serde_json::from_str::<StationMetadataset>(v).unwrap().0)
+        .flat_map(|v| serde_json::from_str::<StationMetadataSet>(v).unwrap().0)
         .collect();
 
-    StationMetadataset(vec_metadata).into()
+    StationMetadataSet(vec_metadata).into()
 }
 
-// TODO
-// - consider hashmap with serde_json::Value for optional json fields
-// - parse json from forecast endpoint
-// - parse json from metadata endpoint with forecast metadata
-// - parse json from metadata endpoint with reservoir metadata
-// - parse json from references endpoint
+// TODO: parse json from references endpoint
 
 // Macro to generate exports.
 // This ensures exported functions are registered with R.
@@ -289,5 +418,6 @@ fn parse_station_metadataset_json(x: Strings) -> Robj {
 extendr_module! {
     mod awdb;
     fn parse_station_dataset_json;
+    fn parse_station_forecast_set_json;
     fn parse_station_metadataset_json;
 }

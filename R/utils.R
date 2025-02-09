@@ -1,6 +1,7 @@
 #' Get Station Locations From USDA NWCC AWDB in Area of Interest
 #'
 #' @inheritParams get_elements
+#' @param ... key-value pairs passed as query parameters to `req_url_query()`
 #'
 #' @keywords internal
 #' @noRd
@@ -8,8 +9,7 @@
 filter_stations <- function(
   aoi,
   elements,
-  networks,
-  durations,
+  awdb_options,
   call = rlang::caller_call()
 ) {
   endpoint <- file.path(
@@ -19,15 +19,21 @@ filter_stations <- function(
     "stations"
   )
 
+  triplets <- paste0("*:*:", awdb_options[["networks"]], collapse = ",")
+
   request_url <- httr2::req_url_query(
     httr2::request(endpoint),
-    stationTriplets = paste0("*:*:", networks, collapse = ","),
+    stationTriplets = triplets,
     elements = elements,
-    networks = networks,
-    durations = durations,
-    returnForecastPointMetadata = FALSE,
-    returnReservoirMetadata = FALSE,
-    returnStationElements = FALSE
+    stationNames = awdb_options[["station_names"]],
+    dcoCodes = awdb_options[["dco_codes"]],
+    countyNames = awdb_options[["county_names"]],
+    durations = awdb_options[["duration"]],
+    hucs = awdb_options[["hucs"]],
+    returnForecastPointMetadata = awdb_options[["return_forecast_metadata"]],
+    returnReservoirMetadata = awdb_options[["return_reservoir_metadata"]],
+    returnStationElements = awdb_options[["return_element_metadata"]],
+    activeOnly = awdb_options[["active_only"]]
   )
 
   response <- httr2::req_perform(
@@ -54,6 +60,24 @@ filter_stations <- function(
       "No stations found in {.var aoi}.",
       call = call
     )
+  }
+
+  if (awdb_options[["return_element_metadata"]]) {
+    class(df[["element_metadata"]]) <- "list"
+  } else {
+    df[["element_metadata"]] <- NULL
+  }
+
+  if (awdb_options[["return_forecast_metadata"]]) {
+    class(df[["forecast_metadata"]]) <- "list"
+  } else {
+    df[["forecast_metadata"]] <- NULL
+  }
+
+  if (awdb_options[["return_reservoir_metadata"]]) {
+    class(df[["reservoir_metadata"]]) <- "list"
+  } else {
+    df[["reservoir_metadata"]] <- NULL
   }
 
   df
@@ -167,4 +191,31 @@ check_awdb_options <- function(awdb_options, call = rlang::caller_call()) {
       call = call
     )
   }
+}
+
+#' Check Date is in Proper Format
+#'
+#' Proper format is "YYYY-MM-DD."
+#'
+#' @keywords internal
+#' @noRd
+#'
+check_date_format <- function(x, call = rlang::caller_call()) {
+  check_string(x, allow_null = TRUE, call = call)
+
+  arg <- rlang::caller_arg(x)
+
+  if (!rlang::is_null(x) && !grepl("^\\d{4}-\\d{2}-\\d{2}$", x)) {
+    cli::cli_abort(
+      "{.arg {arg}} must be of the form `\"YYYY-MM-DD\"`.",
+      call = call
+    )
+  }
+}
+
+#' @keywords internal
+#' @noRd
+#'
+collapse <- function(x) {
+  paste0(x, collapse = ",")
 }
