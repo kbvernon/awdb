@@ -74,11 +74,9 @@ impl From<StationDataSet> for Robj {
         let mut begin_date: Vec<String> = Vec::with_capacity(n_row);
         let mut end_date: Vec<String> = Vec::with_capacity(n_row);
         let mut derived_data: Vec<bool> = Vec::with_capacity(n_row);
-        let mut values: List = List::new(n_row);
+        let mut values: Vec<Robj> = Vec::with_capacity(n_row);
 
-        values.set_class(&["AsIs"]).unwrap();
-
-        for (i, x) in sd.0.into_iter().enumerate() {
+        for x in sd.0.into_iter() {
             for y in x.data.into_iter() {
                 let StationElement {
                     element_code: ec,
@@ -106,11 +104,12 @@ impl From<StationDataSet> for Robj {
                 derived_data.push(dd);
 
                 let values_df = y.values.into_dataframe().unwrap().into_robj();
-                values
-                    .set_elt(i, drop_empty_columns(&values_df).unwrap())
-                    .unwrap();
+                values.push(drop_empty_columns(&values_df).unwrap());
             }
         }
+
+        let mut values = List::from_values(values);
+        values.set_class(&["AsIs"]).unwrap();
 
         let mut df = data_frame!(
             station_triplet = station_triplet,
@@ -177,27 +176,20 @@ impl From<StationForecastSet> for Robj {
         let mut station_triplet: Vec<String> = Vec::with_capacity(n_row);
         let mut forecast_point_name: Vec<String> = Vec::with_capacity(n_row);
         let mut element_code: Vec<String> = Vec::with_capacity(n_row);
-        let mut forecast_period: List = List::new(n_row);
+        let mut forecast_period: Vec<Robj> = Vec::with_capacity(n_row);
         let mut forecast_status: Vec<String> = Vec::with_capacity(n_row);
         let mut issue_date: Vec<String> = Vec::with_capacity(n_row);
         let mut period_normal: Vec<f64> = Vec::with_capacity(n_row);
         let mut publication_date: Vec<String> = Vec::with_capacity(n_row);
         let mut unit_code: Vec<String> = Vec::with_capacity(n_row);
-        let mut forecast_values: List = List::new(n_row);
+        let mut forecast_values: Vec<Robj> = Vec::with_capacity(n_row);
 
-        forecast_period.set_class(&["AsIs"]).unwrap();
-        forecast_values.set_class(&["AsIs"]).unwrap();
-
-        for (i, x) in sf.0.into_iter().enumerate() {
+        for x in sf.0.into_iter() {
             for y in x.data.into_iter() {
                 station_triplet.push(x.station_triplet.clone());
                 forecast_point_name.push(x.forecast_point_name.clone());
                 element_code.push(y.element_code);
-
-                forecast_period
-                    .set_elt(i, y.forecast_period.into())
-                    .unwrap();
-
+                forecast_period.push(y.forecast_period.into());
                 forecast_status.push(y.forecast_status);
                 issue_date.push(y.issue_date);
                 period_normal.push(y.period_normal);
@@ -212,9 +204,15 @@ impl From<StationForecastSet> for Robj {
                     .collect();
                 let mut df = data_frame!(keys = keys, values = values);
                 df.set_class(&["tbl_df", "tbl", "data.frame"]).unwrap();
-                forecast_values.set_elt(i, df).unwrap();
+                forecast_values.push(drop_empty_columns(&df).unwrap());
             }
         }
+
+        let mut forecast_period = List::from_values(forecast_period);
+        let mut forecast_values = List::from_values(forecast_values);
+
+        forecast_period.set_class(&["AsIs"]).unwrap();
+        forecast_values.set_class(&["AsIs"]).unwrap();
 
         let mut df = data_frame!(
             station_triplet = station_triplet,
@@ -283,12 +281,43 @@ pub struct ForecastPoint {
     pub exceedence_probabilities: Vec<i32>,
 }
 
+impl From<ForecastPoint> for Robj {
+    fn from(x: ForecastPoint) -> Self {
+        let mut ep = list!(x.exceedence_probabilities);
+        ep.set_class(&["AsIs"]).unwrap();
+
+        let mut df = data_frame!(
+            name = x.name,
+            forecaster = x.forecaster,
+            exceedence_probabilities = ep
+        );
+
+        df.set_class(&["tbl_df", "tbl", "data.frame"]).unwrap();
+
+        drop_empty_columns(&df).unwrap()
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ReservoirMetadata {
     pub capacity: i32,
     pub elevation_at_capacity: i32,
     pub usable_capacity: i32,
+}
+
+impl From<ReservoirMetadata> for Robj {
+    fn from(x: ReservoirMetadata) -> Self {
+        let mut df = data_frame!(
+            capacity = x.capacity,
+            elevation_at_capacity = x.elevation_at_capacity,
+            usable_capacity = x.usable_capacity
+        );
+
+        df.set_class(&["tbl_df", "tbl", "data.frame"]).unwrap();
+
+        drop_empty_columns(&df).unwrap()
+    }
 }
 
 impl From<StationMetadataSet> for Robj {
@@ -311,13 +340,9 @@ impl From<StationMetadataSet> for Robj {
         let mut shef_id: Vec<Option<String>> = Vec::with_capacity(n_row);
         let mut begin_date: Vec<Option<String>> = Vec::with_capacity(n_row);
         let mut end_date: Vec<Option<String>> = Vec::with_capacity(n_row);
-        let mut station_elements: List = List::new(n_row);
-        let mut station_forecasts: List = List::new(n_row);
-        let mut station_reservoir: List = List::new(n_row);
-
-        station_elements.set_class(&["AsIs"]).unwrap();
-        station_forecasts.set_class(&["AsIs"]).unwrap();
-        station_reservoir.set_class(&["AsIs"]).unwrap();
+        let mut station_forecasts = List::new(n_row);
+        let mut station_reservoir = List::new(n_row);
+        let mut station_elements = List::new(n_row);
 
         for (i, x) in sm.0.into_iter().enumerate() {
             station_triplet.push(x.station_triplet);
@@ -350,40 +375,17 @@ impl From<StationMetadataSet> for Robj {
             }
 
             if let Some(e) = x.forecast_point {
-                let mut ep = list!(e.exceedence_probabilities);
-                ep.set_class(&["AsIs"]).unwrap();
-
-                let mut forecast_df = data_frame!(
-                    name = e.name,
-                    forecaster = e.forecaster,
-                    exceedence_probabilities = ep
-                );
-
-                forecast_df
-                    .set_class(&["tbl_df", "tbl", "data.frame"])
-                    .unwrap();
-
-                station_forecasts
-                    .set_elt(i, drop_empty_columns(&forecast_df).unwrap())
-                    .unwrap();
+                station_forecasts.set_elt(i, e.into()).unwrap();
             }
 
             if let Some(e) = x.reservoir_metadata {
-                let mut reservoir_df = data_frame!(
-                    capacity = e.capacity,
-                    elevation_at_capacity = e.elevation_at_capacity,
-                    usable_capacity = e.usable_capacity
-                );
-
-                reservoir_df
-                    .set_class(&["tbl_df", "tbl", "data.frame"])
-                    .unwrap();
-
-                station_reservoir
-                    .set_elt(i, drop_empty_columns(&reservoir_df).unwrap())
-                    .unwrap();
+                station_reservoir.set_elt(i, e.into()).unwrap();
             }
         }
+
+        station_forecasts.set_class(&["AsIs"]).unwrap();
+        station_reservoir.set_class(&["AsIs"]).unwrap();
+        station_elements.set_class(&["AsIs"]).unwrap();
 
         let mut df = data_frame!(
             station_triplet = station_triplet,
