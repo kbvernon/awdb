@@ -115,7 +115,7 @@ make_requests <- function(
     function(.x) {
       httr2::req_url_query(
         httr2::request(endpoint),
-        stationTriplets = paste0(.x, collapse = ","),
+        stationTriplets = collapse(.x),
         ...
       )
     }

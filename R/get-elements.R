@@ -51,7 +51,7 @@ get_elements <- function(
 
   json <- make_requests(
     endpoint,
-    stations[["station_triplet"]],
+    station_triplets = stations[["station_triplet"]],
     elements = collapse(elements),
     duration = awdb_options[["duration"]],
     beginDate = awdb_options[["begin_date"]],
