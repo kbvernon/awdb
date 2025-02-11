@@ -1,0 +1,135 @@
+---
+format: gfm
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    fig-align: center
+    fig-path: "man/figures/README-"
+    fig-format: svg
+---
+
+<!-- README.md is generated from README.qmd. Please edit that file -->
+
+# awdb
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of `{awdb}` is to provide tools for querying the USDA National Water 
+and Climate Center [Air and Water Database REST API](https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html). 
+Rust via extendr is used to serialize and flatten deeply nested JSON responses.
+The packaged is also designed to support pretty printing of `tibbles` if you import
+the `{tibble}` package.
+
+## Installation
+
+You can install the development version of `{awdb}` from [GitHub](https://github.com/) 
+with:
+
+``` r
+# install.packages("pak")
+pak::pak("kbvernon/awdb")
+```
+
+## Find Stations
+
+Find all AWDB stations around Bear Lake in northern Utah that measure soil 
+moisture percent at various depths. 
+
+```{r}
+#| warning: false
+
+library(awdb)
+library(sf)
+library(tibble)
+
+stations <- get_stations(bear_lake, elements = "SMS:*")
+
+stations
+```
+
+::: {style="width: 65%; margin: 0 auto;"}
+```{r fig-stations}
+#| echo: false
+#| warning: false
+par(mar = rep(0, 4))
+
+basemaps::basemap(
+  bear_lake, 
+  map_service = "esri", 
+  map_type = "world_topo_map",
+  verbose = FALSE
+)
+
+plot(
+  bear_lake |> st_transform(3857),
+  lwd = 2.5,
+  add = TRUE
+)
+
+plot(
+  stations |> st_geometry() |> st_transform(3857),
+  pch = 19,
+  col = "white",
+  cex = 2.5,
+  add = TRUE
+)
+
+plot(
+  stations |> st_geometry() |> st_transform(3857),
+  pch = 21,
+  col = "black",
+  bg = "grey75",
+  cex = 1.5,
+  lwd = 1.5,
+  add = TRUE
+)
+```
+:::
+
+## Get Station Data
+
+USDA refers to variables measured at AWDB stations as "elements." The package 
+provides a table with all possible elements that can be lazy loaded when you 
+import `{awdb}`. Keep in mind that not all of them are measured at every 
+station.
+
+```{r}
+element_codes
+```
+
+Here we get snow water equivalent and soil moisture measurements around Bear 
+Lake in early May of 2015.
+
+```{r}
+elements <- get_elements(
+  bear_lake,
+  elements = c("WTEQ", "SMS:8"),
+  awdb_options = set_options(
+    begin_date = "2015-05-01",
+    end_date = "2015-05-07"
+  )
+)
+
+elements[, c("station_triplet", "element_code", "element_values")]
+
+elements[["element_values"]][[1]]
+```
+
+These are time series, so the element values come in a list column containing
+data.frames with at least `date` and `value` columns. Using `tidyr::unnest()` is
+helpful for unpacking all of them.
+
+## Additional Query Parameters
+
+In the above example, we use `set_options()` to pass additional query 
+parameters. This is a helper that uses defaults assumed by the AWDB REST API. 
+Some additional package specific options are also included. It has a decent 
+print method if you want to inspect it.
+
+```{r}
+set_options()
+```
+
+

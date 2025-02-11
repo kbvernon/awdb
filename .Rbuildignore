@@ -3,3 +3,5 @@
 ^src/Makevars$
 ^src/Makevars\.win$
 ^data-raw$
+^dev$
+^README\.*$
