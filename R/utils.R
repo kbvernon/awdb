@@ -173,40 +173,6 @@ check_sfc_scalar <- function(aoi, shape, call = rlang::caller_call()) {
   }
 }
 
-#' Check For `awdb_options` List
-#'
-#' @keywords internal
-#' @noRd
-#'
-check_awdb_options <- function(awdb_options, call = rlang::caller_call()) {
-  if (!rlang::inherits_all(awdb_options, c("awdb_options", "list"))) {
-    cli::cli_abort(
-      "{.var awdb_options} must be an {.cls awdb_options} list.",
-      call = call
-    )
-  }
-}
-
-#' Check Date is in Proper Format
-#'
-#' Proper format is "YYYY-MM-DD."
-#'
-#' @keywords internal
-#' @noRd
-#'
-check_date_format <- function(x, call = rlang::caller_call()) {
-  check_string(x, allow_null = TRUE, call = call)
-
-  arg <- rlang::caller_arg(x)
-
-  if (!rlang::is_null(x) && !grepl("^\\d{4}-\\d{2}-\\d{2}$", x)) {
-    cli::cli_abort(
-      "{.arg {arg}} must be of the form `\"YYYY-MM-DD\"`.",
-      call = call
-    )
-  }
-}
-
 #' @keywords internal
 #' @noRd
 #'

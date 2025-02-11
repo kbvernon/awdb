@@ -100,18 +100,8 @@ set_options <- function(
   check_bool(return_suspect_values, call = current_call)
   check_date_format(begin_publication_date, call = current_call)
   check_date_format(end_publication_date, call = current_call)
-
-  if (
-    !rlang::is_null(exceedence_probabilities) &&
-      !rlang::is_integer(exceedence_probabilities)
-  ) {
-    cli::cli_abort(
-      "{.arg exceedence_probabilities} must be an integer vector.",
-      "i" = "e.g., `c(30L, 50L, 70L)`.",
-      call = current_call
-    )
-  }
-
+  check_whole_number_vector(exceedence_probabilities)
+  check_character(forecast_periods, allow_null = TRUE, call = caller_call)
   check_character(station_names, allow_null = TRUE, call = current_call)
   check_character(dco_codes, allow_null = TRUE, call = current_call)
   check_character(county_names, allow_null = TRUE, call = current_call)
@@ -137,24 +127,37 @@ set_options <- function(
     error_call = current_call
   )
 
+  # format queries
+  networks <- collapse(networks)
+  duration <- toupper(duration)
+  period_reference <- toupper(period_reference)
+  central_tendency <- if_not_null(central_tendency, toupper)
+  exceedence_probabilities <- if_not_null(exceedence_probabilities, collapse)
+  forecast_periods <- if_not_null(forecast_periods, collapse)
+  station_names <- if_not_null(station_names, collapse)
+  dco_codes <- if_not_null(dco_codes, collapse)
+  county_names <- if_not_null(county_names, collapse)
+  hucs <- if_not_null(hucs, collapse)
+
+  # build list
   parameters <- list(
     "networks" = networks,
-    "duration" = toupper(duration),
+    "duration" = duration,
     "begin_date" = begin_date,
     "end_date" = end_date,
-    "period_reference" = toupper(period_reference),
-    "central_tendency" = toupper(central_tendency),
+    "period_reference" = period_reference,
+    "central_tendency" = central_tendency,
     "return_flags" = return_flags,
     "return_original_values" = return_original_values,
     "return_suspect_values" = return_suspect_values,
     "begin_publication_date" = begin_publication_date,
     "end_publication_date" = end_publication_date,
-    "exceedence_probabilities" = collapse(exceedence_probabilities),
-    "forecast_periods" = collapse(forecast_periods),
-    "station_names" = collapse(station_names),
-    "dco_codes" = collapse(dco_codes),
-    "county_names" = collapse(county_names),
-    "hucs" = collapse(hucs),
+    "exceedence_probabilities" = exceedence_probabilities,
+    "forecast_periods" = forecast_periods,
+    "station_names" = station_names,
+    "dco_codes" = dco_codes,
+    "county_names" = county_names,
+    "hucs" = hucs,
     "return_forecast_metadata" = return_forecast_metadata,
     "return_reservoir_metadata" = return_reservoir_metadata,
     "return_element_metadata" = return_element_metadata,
@@ -171,12 +174,84 @@ set_options <- function(
 #' @export
 #'
 print.awdb_options <- function(x, ...) {
-  parameter_set <- mapply(
-    function(.x, .y) paste0(.x, ": ", .y),
-    .x = names(x),
-    .y = x
+  parameter_set <- sprintf(
+    "%s: %s",
+    names(x),
+    vapply(
+      x,
+      function(v) if (is.null(v)) "NULL" else as.character(v),
+      character(1)
+    )
   )
 
   cli::cli_h1("AWDB Query Parameter Set")
   cli::cli_ul(parameter_set)
+}
+
+#' Check For `awdb_options` List
+#'
+#' @keywords internal
+#' @noRd
+#'
+check_awdb_options <- function(awdb_options, call = rlang::caller_call()) {
+  if (!rlang::inherits_all(awdb_options, c("awdb_options", "list"))) {
+    cli::cli_abort(
+      "{.var awdb_options} must be an {.cls awdb_options} list.",
+      call = call
+    )
+  }
+}
+
+#' Check Date is in Proper Format
+#'
+#' Proper format is "YYYY-MM-DD."
+#'
+#' @keywords internal
+#' @noRd
+#'
+check_date_format <- function(x, call = rlang::caller_call()) {
+  check_string(x, allow_null = TRUE, call = call)
+
+  arg <- rlang::caller_arg(x)
+
+  if (!rlang::is_null(x) && !grepl("^\\d{4}-\\d{2}-\\d{2}$", x)) {
+    cli::cli_abort(
+      "{.arg {arg}} must be of the form `\"YYYY-MM-DD\"`.",
+      call = call
+    )
+  }
+}
+
+#' Check Integers Vector
+#'
+#' Proper format is "YYYY-MM-DD."
+#'
+#' @keywords internal
+#' @noRd
+#'
+check_whole_number_vector <- function(x, call = rlang::caller_call()) {
+  arg <- rlang::caller_arg(x)
+
+  if (!rlang::is_null(x) && !rlang::is_integer(x)) {
+    cli::cli_abort(
+      "{.arg {arg}} must be an integer vector.",
+      call = call
+    )
+  }
+}
+
+#' If Not NULL
+#'
+#' @param x an R object
+#' @param .f a function to apply to `x`
+#'
+#' @keywords internal
+#' @noRd
+#'
+if_not_null <- function(x, .f, ...) {
+  check_function(.f, ...)
+
+  if (!rlang::is_null(x)) x <- .f(x)
+
+  x
 }
