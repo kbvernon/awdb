@@ -8,8 +8,8 @@
 
 <!-- badges: end -->
 
-The goal of `{awdb}` is to provide tools for querying the USDA National
-Water and Climate Center [Air and Water Database REST
+The `{awdb}` package provides tools for querying the USDA National Water
+and Climate Center [Air and Water Database REST
 API](https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html).
 Rust via extendr is used to serialize and flatten deeply nested JSON
 responses. The packaged is also designed to support pretty printing of
@@ -60,16 +60,9 @@ stations
 #> #   geometry <POINT [°]>
 ```
 
-<div style="width: 65%; margin: 0 auto;">
+<div style="width: 50%; margin: 0 auto;">
 
-<div id="fig-stations">
-
-<img src="man/figures/README-fig-stations-1.svg" id="fig-stations"
-data-fig-align="center" />
-
-Figure 1
-
-</div>
+<img src="man/figures/README-stations-1.svg" data-fig-align="center" />
 
 </div>
 

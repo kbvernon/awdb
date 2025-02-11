@@ -16,7 +16,7 @@ knitr:
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of `{awdb}` is to provide tools for querying the USDA National Water 
+The `{awdb}` package provides tools for querying the USDA National Water 
 and Climate Center [Air and Water Database REST API](https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html). 
 Rust via extendr is used to serialize and flatten deeply nested JSON responses.
 The packaged is also designed to support pretty printing of `tibbles` if you import
@@ -49,15 +49,16 @@ stations <- get_stations(bear_lake, elements = "SMS:*")
 stations
 ```
 
-::: {style="width: 65%; margin: 0 auto;"}
-```{r fig-stations}
+::: {style="width: 50%; margin: 0 auto;"}
+
+```{r stations}
 #| echo: false
 #| warning: false
 par(mar = rep(0, 4))
 
 basemaps::basemap(
-  bear_lake, 
-  map_service = "esri", 
+  bear_lake,
+  map_service = "esri",
   map_type = "world_topo_map",
   verbose = FALSE
 )
@@ -72,7 +73,7 @@ plot(
   stations |> st_geometry() |> st_transform(3857),
   pch = 19,
   col = "white",
-  cex = 2.5,
+  cex = 1.7,
   add = TRUE
 )
 
@@ -81,11 +82,12 @@ plot(
   pch = 21,
   col = "black",
   bg = "grey75",
-  cex = 1.5,
+  cex = 1.3,
   lwd = 1.5,
   add = TRUE
 )
 ```
+
 :::
 
 ## Get Station Data
