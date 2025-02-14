@@ -28,8 +28,8 @@ pak::pak("kbvernon/awdb")
 
 ## The AWDB REST API
 
-The AWDB REST API has four service endpoints, and there are four
-functions in this R package to query each:
+This R package provides a separate function to query each endpoint at
+the UDSA AWDB REST API:
 
 | Endpoint       | Function           |
 |:---------------|:-------------------|
