@@ -3,6 +3,7 @@
 S3method(print,awdb_options)
 export(get_elements)
 export(get_forecasts)
+export(get_references)
 export(get_stations)
 export(set_options)
 useDynLib(awdb, .registration = TRUE)
