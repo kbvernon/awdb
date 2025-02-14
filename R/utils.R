@@ -172,10 +172,3 @@ check_sfc_scalar <- function(aoi, shape, call = rlang::caller_call()) {
     )
   }
 }
-
-#' @keywords internal
-#' @noRd
-#'
-collapse <- function(x) {
-  paste0(x, collapse = ",")
-}

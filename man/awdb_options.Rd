@@ -74,13 +74,17 @@ period for which to retrieve data. Date must be in format \code{YYYY-MM-DD}. If
 
 \item{forecast_periods}{character vector, TODO! figure this one out...}
 
-\item{station_names}{character vector, station names. Default is \code{NULL}.}
+\item{station_names}{character vector, used to subset stations by their
+names. Default is \code{NULL}.}
 
-\item{dco_codes}{character vector, DCO codes. Default is \code{NULL}.}
+\item{dco_codes}{character vector, used to subset stations to those that fall
+in specified DCOs. Default is \code{NULL}.}
 
-\item{county_names}{character vector, county names. Default is \code{NULL}.}
+\item{county_names}{character vector, used to subset stations to those that
+fall in specified counties. Default is \code{NULL}.}
 
-\item{hucs}{integer vector, hydrologic unit codes. Default is \code{NULL}.}
+\item{hucs}{integer vector, used to subset stations to those that fall in
+specified hydrologic units. Default is \code{NULL}.}
 
 \item{return_forecast_metadata}{boolean scalar, whether to return forecast
 metadata with station locations. Will be included as a list column. Default

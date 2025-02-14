@@ -33,10 +33,14 @@
 #' `NULL`, assumes current day.
 #' @param exceedence_probabilities integer vector, TODO! write this...
 #' @param forecast_periods character vector, TODO! figure this one out...
-#' @param station_names character vector, station names. Default is `NULL`.
-#' @param dco_codes character vector, DCO codes. Default is `NULL`.
-#' @param county_names character vector, county names. Default is `NULL`.
-#' @param hucs integer vector, hydrologic unit codes. Default is `NULL`.
+#' @param station_names character vector, used to subset stations by their
+#' names. Default is `NULL`.
+#' @param dco_codes character vector, used to subset stations to those that fall
+#' in specified DCOs. Default is `NULL`.
+#' @param county_names character vector, used to subset stations to those that
+#' fall in specified counties. Default is `NULL`.
+#' @param hucs integer vector, used to subset stations to those that fall in
+#' specified hydrologic units. Default is `NULL`.
 #' @param return_forecast_metadata boolean scalar, whether to return forecast
 #' metadata with station locations. Will be included as a list column. Default
 #' is `FALSE`.
@@ -174,18 +178,75 @@ set_options <- function(
 #' @export
 #'
 print.awdb_options <- function(x, ...) {
-  parameter_set <- sprintf(
-    "%s: %s",
-    names(x),
-    vapply(
-      x,
-      function(v) if (is.null(v)) "NULL" else as.character(v),
-      character(1)
-    )
+  parameters <- names(x)
+  values <- unlist(as.character(x), use.names = FALSE)
+
+  check_station <- ifelse(
+    parameters %in% c(
+      "station_names",
+      "dco_codes",
+      "county_names",
+      "hucs",
+      "return_forecast_metadata",
+      "return_reservoir_metadata",
+      "return_element_metadata",
+      "active_only",
+      "networks",
+      "request_size"
+    ),
+    "\u2713",
+    "x"
+  )
+
+  check_element <- ifelse(
+    parameters %in% c(
+      "duration",
+      "begin_date",
+      "end_date",
+      "period_reference",
+      "central_tendency",
+      "return_flags",
+      "return_original_values",
+      "return_suspect_values",
+      "networks",
+      "request_size"
+    ),
+    "\u2713",
+    "x"
+  )
+
+  check_forecast <- ifelse(
+    parameters %in% c(
+      "begin_publication_date",
+      "end_publication_date",
+      "exceedence_probabilities",
+      "forecast_periods",
+      "networks",
+      "request_size"
+    ),
+    "\u2713",
+    "x"
+  )
+
+  np <- max(nchar(parameters))
+  nv <- max(nchar(values))
+
+  # sprint format with correct spacing
+  fmt <- paste0("%-", np, "s ", "%", nv, "s %s %s %s")
+
+  df <- sprintf(
+    fmt,
+    c("", parameters),
+    c("VALUE", values),
+    c("STATION", paste0(formatC(check_station, width = 4), "   ")),
+    c("ELEMENT", paste0(formatC(check_element, width = 4), "   ")),
+    c("FORECAST", paste0(formatC(check_forecast, width = 4), "    "))
   )
 
   cli::cli_h1("AWDB Query Parameter Set")
-  cli::cli_ul(parameter_set)
+  cli::cli_text("Options passed to each endpoint.")
+  cli::cli_text("")
+  cat(df, sep = "\n")
 }
 
 #' Check For `awdb_options` List
@@ -254,4 +315,11 @@ if_not_null <- function(x, .f, ...) {
   if (!rlang::is_null(x)) x <- .f(x)
 
   x
+}
+
+#' @keywords internal
+#' @noRd
+#'
+collapse <- function(x) {
+  paste0(x, collapse = ",")
 }
