@@ -80,7 +80,7 @@ stations
 #> #   geometry <POINT [°]>
 ```
 
-<div style="width: 45%; margin: 0 auto;">
+<div style="width: 40%; margin: 0 auto;">
 
 <img src="man/figures/README-stations-1.svg" data-fig-align="center" />
 
@@ -185,26 +185,26 @@ set_options()
 #> Options passed to each endpoint.
 #> 
 #>                           VALUE STATION ELEMENT FORECAST
-#> networks                      *    ✓       ✓       ✓    
-#> duration                  DAILY    x       ✓       x    
-#> begin_date                 NULL    x       ✓       x    
-#> end_date                   NULL    x       ✓       x    
-#> period_reference            END    x       ✓       x    
-#> central_tendency           NULL    x       ✓       x    
-#> return_flags              FALSE    x       ✓       x    
-#> return_original_values    FALSE    x       ✓       x    
-#> return_suspect_values     FALSE    x       ✓       x    
-#> begin_publication_date     NULL    x       x       ✓    
-#> end_publication_date       NULL    x       x       ✓    
-#> exceedence_probabilities   NULL    x       x       ✓    
-#> forecast_periods           NULL    x       x       ✓    
-#> station_names              NULL    ✓       x       x    
-#> dco_codes                  NULL    ✓       x       x    
-#> county_names               NULL    ✓       x       x    
-#> hucs                       NULL    ✓       x       x    
-#> return_forecast_metadata  FALSE    ✓       x       x    
-#> return_reservoir_metadata FALSE    ✓       x       x    
-#> return_element_metadata   FALSE    ✓       x       x    
-#> active_only                TRUE    ✓       x       x    
-#> request_size                 10    ✓       ✓       ✓
+#> networks                      *       ✓       ✓        ✓
+#> duration                  DAILY       x       ✓        x
+#> begin_date                 NULL       x       ✓        x
+#> end_date                   NULL       x       ✓        x
+#> period_reference            END       x       ✓        x
+#> central_tendency           NULL       x       ✓        x
+#> return_flags              FALSE       x       ✓        x
+#> return_original_values    FALSE       x       ✓        x
+#> return_suspect_values     FALSE       x       ✓        x
+#> begin_publication_date     NULL       x       x        ✓
+#> end_publication_date       NULL       x       x        ✓
+#> exceedence_probabilities   NULL       x       x        ✓
+#> forecast_periods           NULL       x       x        ✓
+#> station_names              NULL       ✓       x        x
+#> dco_codes                  NULL       ✓       x        x
+#> county_names               NULL       ✓       x        x
+#> hucs                       NULL       ✓       x        x
+#> return_forecast_metadata  FALSE       ✓       x        x
+#> return_reservoir_metadata FALSE       ✓       x        x
+#> return_element_metadata   FALSE       ✓       x        x
+#> active_only                TRUE       ✓       x        x
+#> request_size                 10       ✓       ✓        ✓
 ```

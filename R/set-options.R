@@ -238,9 +238,9 @@ print.awdb_options <- function(x, ...) {
     fmt,
     c("", parameters),
     c("VALUE", values),
-    c("STATION", paste0(formatC(check_station, width = 4), "   ")),
-    c("ELEMENT", paste0(formatC(check_element, width = 4), "   ")),
-    c("FORECAST", paste0(formatC(check_forecast, width = 4), "    "))
+    c("STATION", formatC(check_station, width = nchar("STATION"))),
+    c("ELEMENT", formatC(check_element, width = nchar("ELEMENT"))),
+    c("FORECAST", formatC(check_forecast, width = nchar("FORECAST")))
   )
 
   cli::cli_h1("AWDB Query Parameter Set")

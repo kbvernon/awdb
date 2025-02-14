@@ -67,7 +67,7 @@ stations <- get_stations(bear_lake, elements = "SMS:*")
 stations
 ```
 
-::: {style="width: 45%; margin: 0 auto;"}
+::: {style="width: 40%; margin: 0 auto;"}
 
 ```{r stations}
 #| echo: false
