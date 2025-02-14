@@ -11,52 +11,52 @@ use std::collections::HashMap;
 // and let Values be a list column with a data frame in each row
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct StationDataSet(Vec<StationData>);
+struct StationDataSet(Vec<StationData>);
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct StationData {
-    pub station_triplet: String,
-    pub data: Vec<ElementData>,
+struct StationData {
+    station_triplet: String,
+    data: Vec<ElementData>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct ElementData {
-    pub station_element: StationElement,
-    pub values: Vec<Values>,
+struct ElementData {
+    station_element: StationElement,
+    values: Vec<Values>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, IntoDataFrameRow)]
 #[serde(rename_all = "camelCase")]
-pub struct StationElement {
-    pub element_code: String,
-    pub ordinal: i32,
-    pub height_depth: Option<i32>,
-    pub duration_name: String,
-    pub data_precision: i32,
-    pub stored_unit_code: String,
-    pub original_unit_code: String,
-    pub begin_date: String,
-    pub end_date: String,
-    pub derived_data: bool,
+struct StationElement {
+    element_code: String,
+    ordinal: i32,
+    height_depth: Option<i32>,
+    duration_name: String,
+    data_precision: i32,
+    stored_unit_code: String,
+    original_unit_code: String,
+    begin_date: String,
+    end_date: String,
+    derived_data: bool,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, IntoDataFrameRow)]
 #[serde(rename_all = "camelCase")]
-pub struct Values {
-    pub date: Option<String>,
-    pub month: Option<i32>,
-    pub month_part: Option<String>,
-    pub year: Option<i32>,
-    pub collection_date: Option<String>,
-    pub value: Option<f64>,
-    pub qc_flag: Option<String>,
-    pub qa_flag: Option<String>,
-    pub orig_value: Option<f64>,
-    pub orig_qc_flag: Option<String>,
-    pub average: Option<f64>,
-    pub median: Option<i32>,
+struct Values {
+    date: Option<String>,
+    month: Option<i32>,
+    month_part: Option<String>,
+    year: Option<i32>,
+    collection_date: Option<String>,
+    value: Option<f64>,
+    qc_flag: Option<String>,
+    qa_flag: Option<String>,
+    orig_value: Option<f64>,
+    orig_qc_flag: Option<String>,
+    average: Option<f64>,
+    median: Option<i32>,
 }
 
 impl From<StationDataSet> for Robj {
@@ -146,27 +146,27 @@ fn parse_station_dataset_json(x: Strings) -> Robj {
 // each station forecast set is a row in the data frame
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct StationForecastSet(Vec<StationForecast>);
+struct StationForecastSet(Vec<StationForecast>);
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct StationForecast {
-    pub station_triplet: String,
-    pub forecast_point_name: String,
-    pub data: Vec<Forecast>,
+struct StationForecast {
+    station_triplet: String,
+    forecast_point_name: String,
+    data: Vec<Forecast>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct Forecast {
-    pub element_code: String,
-    pub forecast_period: Vec<String>,
-    pub forecast_status: String,
-    pub issue_date: String,
-    pub period_normal: f64,
-    pub publication_date: String,
-    pub unit_code: String,
-    pub forecast_values: HashMap<String, Value>,
+struct Forecast {
+    element_code: String,
+    forecast_period: Vec<String>,
+    forecast_status: String,
+    issue_date: String,
+    period_normal: f64,
+    publication_date: String,
+    unit_code: String,
+    forecast_values: HashMap<String, Value>,
 }
 
 impl From<StationForecastSet> for Robj {
@@ -243,42 +243,248 @@ fn parse_station_forecast_set_json(x: Strings) -> Robj {
     StationForecastSet(vec_data).into()
 }
 
-// STATION METADATA ------------------------------------------------------------
-// each station metadataset is a row in the data frame
+// REFERENCES ------------------------------------------------------------------
+// only parse one reference list at a time
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct StationMetadataSet(Vec<StationMetadata>);
+struct DcoDto {
+    dcos: Vec<DcoRef>,
+}
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, IntoDataFrameRow)]
 #[serde(rename_all = "camelCase")]
-pub struct StationMetadata {
-    pub station_triplet: String,
-    pub station_id: String,
-    pub state_code: String,
-    pub network_code: String,
-    pub name: Option<String>,
-    pub dco_code: Option<String>,
-    pub county_name: Option<String>,
-    pub huc: Option<String>,
-    pub elevation: Option<f64>,
-    pub latitude: f64,
-    pub longitude: f64,
-    pub data_time_zone: Option<f64>,
-    pub pedon_code: Option<String>,
-    pub shef_id: Option<String>,
-    pub begin_date: Option<String>,
-    pub end_date: Option<String>,
-    pub forecast_point: Option<ForecastPoint>,
-    pub reservoir_metadata: Option<ReservoirMetadata>,
-    pub station_elements: Option<Vec<StationElement>>,
+struct DcoRef {
+    code: String,
+    name: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct ForecastPoint {
-    pub name: String,
-    pub forecaster: String,
-    pub exceedence_probabilities: Vec<i32>,
+struct DurationDto {
+    durations: Vec<DurationRef>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, IntoDataFrameRow)]
+#[serde(rename_all = "camelCase")]
+struct DurationRef {
+    code: String,
+    name: String,
+    duration_minutes: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+struct ElementDto {
+    elements: Vec<ElementRef>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, IntoDataFrameRow)]
+#[serde(rename_all = "camelCase")]
+struct ElementRef {
+    code: String,
+    name: String,
+    physical_element_name: String,
+    function_code: String,
+    data_precision: i32,
+    description: Option<String>,
+    stored_unit_code: String,
+    english_unit_code: String,
+    metric_unit_code: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+struct ForecastDto {
+    forecast_periods: Vec<ForecastRef>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, IntoDataFrameRow)]
+#[serde(rename_all = "camelCase")]
+struct ForecastRef {
+    code: String,
+    name: String,
+    description: Option<String>,
+    begin_month_day: Option<String>,
+    end_month_day: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+struct FunctionDto {
+    functions: Vec<FunctionRef>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, IntoDataFrameRow)]
+#[serde(rename_all = "camelCase")]
+struct FunctionRef {
+    code: String,
+    abbreviation: String,
+    name: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+struct InstrumentDto {
+    instruments: Vec<InstrumentRef>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, IntoDataFrameRow)]
+#[serde(rename_all = "camelCase")]
+struct InstrumentRef {
+    name: String,
+    transducer_length: i32,
+    data_precision_adjustment: i32,
+    manufacturer: String,
+    model: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+struct NetworkDto {
+    networks: Vec<NetworkRef>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, IntoDataFrameRow)]
+#[serde(rename_all = "camelCase")]
+struct NetworkRef {
+    code: String,
+    name: String,
+    description: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+struct PhysicalElementDto {
+    physical_elements: Vec<PhysicalElementRef>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, IntoDataFrameRow)]
+#[serde(rename_all = "camelCase")]
+struct PhysicalElementRef {
+    name: String,
+    shef_physical_element_code: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+struct StateDto {
+    states: Vec<StateRef>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, IntoDataFrameRow)]
+#[serde(rename_all = "camelCase")]
+struct StateRef {
+    code: String,
+    fips_number: String,
+    name: String,
+    country_code: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+struct UnitDto {
+    units: Vec<UnitRef>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, IntoDataFrameRow)]
+#[serde(rename_all = "camelCase")]
+struct UnitRef {
+    code: String,
+    singular_name: String,
+    plural_name: Option<String>,
+    description: Option<String>,
+}
+
+#[extendr]
+fn parse_station_reference_json(x: Strings, reference_type: Strings) -> Robj {
+    let json = x[0].as_str();
+    let rtype = reference_type[0].as_str();
+
+    let mut df = match rtype {
+        "dcos" => {
+            let dco = serde_json::from_str::<DcoDto>(json).unwrap();
+            dco.dcos.into_dataframe().into_robj()
+        }
+        "durations" => {
+            let duration = serde_json::from_str::<DurationDto>(json).unwrap();
+            duration.durations.into_dataframe().into_robj()
+        }
+        "elements" => {
+            let element = serde_json::from_str::<ElementDto>(json).unwrap();
+            element.elements.into_dataframe().into_robj()
+        }
+        "forecastPeriods" => {
+            let forecast = serde_json::from_str::<ForecastDto>(json).unwrap();
+            forecast.forecast_periods.into_dataframe().into_robj()
+        }
+        "functions" => {
+            let function = serde_json::from_str::<FunctionDto>(json).unwrap();
+            function.functions.into_dataframe().into_robj()
+        }
+        "instruments" => {
+            let instrument = serde_json::from_str::<InstrumentDto>(json).unwrap();
+            instrument.instruments.into_dataframe().into_robj()
+        }
+        "networks" => {
+            let network = serde_json::from_str::<NetworkDto>(json).unwrap();
+            network.networks.into_dataframe().into_robj()
+        }
+        "physicalElements" => {
+            let phys_el = serde_json::from_str::<PhysicalElementDto>(json).unwrap();
+            phys_el.physical_elements.into_dataframe().into_robj()
+        }
+        "states" => {
+            let state = serde_json::from_str::<StateDto>(json).unwrap();
+            state.states.into_dataframe().into_robj()
+        }
+        "units" => {
+            let unit = serde_json::from_str::<UnitDto>(json).unwrap();
+            unit.units.into_dataframe().into_robj()
+        }
+        _ => data_frame!(),
+    };
+
+    df.set_class(&["tbl_df", "tbl", "data.frame"]).unwrap();
+
+    drop_empty_columns(&df).unwrap()
+}
+
+// STATION METADATA ------------------------------------------------------------
+// each station metadataset is a row in the data frame
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+struct StationMetadataSet(Vec<StationMetadata>);
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+struct StationMetadata {
+    station_triplet: String,
+    station_id: String,
+    state_code: String,
+    network_code: String,
+    name: Option<String>,
+    dco_code: Option<String>,
+    county_name: Option<String>,
+    huc: Option<String>,
+    elevation: Option<f64>,
+    latitude: f64,
+    longitude: f64,
+    data_time_zone: Option<f64>,
+    pedon_code: Option<String>,
+    shef_id: Option<String>,
+    begin_date: Option<String>,
+    end_date: Option<String>,
+    forecast_point: Option<ForecastPoint>,
+    reservoir_metadata: Option<ReservoirMetadata>,
+    station_elements: Option<Vec<StationElement>>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+struct ForecastPoint {
+    name: String,
+    forecaster: String,
+    exceedence_probabilities: Vec<i32>,
 }
 
 impl From<ForecastPoint> for Robj {
@@ -300,10 +506,10 @@ impl From<ForecastPoint> for Robj {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct ReservoirMetadata {
-    pub capacity: i32,
-    pub elevation_at_capacity: i32,
-    pub usable_capacity: i32,
+struct ReservoirMetadata {
+    capacity: i32,
+    elevation_at_capacity: i32,
+    usable_capacity: i32,
 }
 
 impl From<ReservoirMetadata> for Robj {
@@ -495,5 +701,6 @@ extendr_module! {
     mod awdb;
     fn parse_station_dataset_json;
     fn parse_station_forecast_set_json;
+    fn parse_station_reference_json;
     fn parse_station_metadataset_json;
 }

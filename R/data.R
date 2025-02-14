@@ -8,22 +8,3 @@
 #' A simple feature column or `sfc` consisting of a single POLYGON geometry.
 #' @source Coordinates digitized manually.
 "bear_lake"
-
-#' Element Codes
-#'
-#' Codes for station elements and networks.
-#'
-#' @name codes
-#'
-#' @format ## `element_codes`
-#' A `tibble` with columns `code`, `name`, and `unit`.
-#' @source [AWDB Web Service User Guide](https://www.nrcs.usda.gov/sites/default/files/2023-03/AWDB%20Web%20Service%20User%20Guide.pdf)
-"element_codes"
-
-#' Network Codes
-#'
-#' @rdname codes
-#'
-#' @format ## `network_codes`
-#' A `tibble` with columns `code` and `description`.
-"network_codes"
