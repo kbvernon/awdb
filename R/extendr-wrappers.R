@@ -14,6 +14,8 @@ parse_station_dataset_json <- function(x) .Call(wrap__parse_station_dataset_json
 
 parse_station_forecast_set_json <- function(x) .Call(wrap__parse_station_forecast_set_json, x)
 
+parse_station_reference_json <- function(x, reference_type) .Call(wrap__parse_station_reference_json, x, reference_type)
+
 parse_station_metadataset_json <- function(x) .Call(wrap__parse_station_metadataset_json, x)
 
 
