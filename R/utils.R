@@ -53,7 +53,9 @@ filter_stations <- function(
 
   df <- sf::st_transform(df, sf::st_crs(aoi))
 
-  df <- sf::st_filter(df, aoi)
+  i <- lengths(sf::st_intersects(sf::st_geometry(df), aoi)) > 0
+
+  df <- df[i, ]
 
   if (nrow(df) == 0) {
     cli::cli_abort(
