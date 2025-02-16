@@ -195,8 +195,7 @@ print.awdb_options <- function(x, ...) {
       "return_reservoir_metadata",
       "return_element_metadata",
       "active_only",
-      "networks",
-      "request_size"
+      "networks"
     ),
     "\u2713",
     "x"
@@ -204,6 +203,11 @@ print.awdb_options <- function(x, ...) {
 
   check_element <- ifelse(
     parameters %in% c(
+      "station_names",
+      "dco_codes",
+      "county_names",
+      "hucs",
+      "active_only",
       "duration",
       "begin_date",
       "end_date",
@@ -221,6 +225,11 @@ print.awdb_options <- function(x, ...) {
 
   check_forecast <- ifelse(
     parameters %in% c(
+      "station_names",
+      "dco_codes",
+      "county_names",
+      "hucs",
+      "active_only",
       "begin_publication_date",
       "end_publication_date",
       "exceedence_probabilities",

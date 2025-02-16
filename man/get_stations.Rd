@@ -2,7 +2,7 @@
 % Please edit documentation in R/get-stations.R
 \name{get_stations}
 \alias{get_stations}
-\title{Get Stations From USDA NWCC AWDB in Area of Interest}
+\title{Get Station Metadata}
 \usage{
 get_stations(aoi, elements, awdb_options = set_options())
 }
@@ -20,11 +20,28 @@ elements and codes.}
 an \code{sf} table with station metadata.
 }
 \description{
-Get stations and their coordinates from the Air and Water Database REST API
-that fall in area of interest.
+Get station metadata from the USDA National Water and Climate Center Air and
+Water Database REST API. This includes their spatial coordinates.
 }
 \details{
-You can also subset stations using query parameters in \code{\link[=set_options]{set_options()}}.
+This endpoint will accept the following query parameters via \code{set_options()}:
+\itemize{
+\item \code{station_names}
+\item \code{dco_codes}
+\item \code{county_names}
+\item \code{hucs}
+\item \code{return_forecast_metadata}
+\item \code{return_reservoir_metadata}
+\item \code{return_element_metadata}
+\item \code{active_only}
+}
+
+You may also specify \code{networks}. The \code{networks} parameter is used internally
+to build unique station triplet identifiers of the form
+\code{station:state:network}, so it serves to filter stations to just those
+networks.
+
+See \code{set_options()} for more details.
 }
 \examples{
 # get stations with WTEQ elements

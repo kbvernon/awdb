@@ -1,6 +1,8 @@
-#' Get Data Dictionary for AWDB
+#' Get Data Dictionary
 #'
-#' Provides descriptions of all codes used in the AWDB.
+#' Get references from the USDA National Water and Climate Center Air and Water
+#' Database REST API. References provide descriptions of all codes used in the
+#' AWDB.
 #'
 #' @param reference_type character scalar, the name of the reference. Potential
 #' values include `dcos`, `durations`, `elements` (default), `forecastPeriods`,

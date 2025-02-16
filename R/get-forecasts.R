@@ -1,4 +1,4 @@
-#' Get Station Forecasts From USDA NWCC AWDB
+#' Get Station Forecasts
 #'
 #' Get station forecasts from the USDA National Water and Climate Center Air and
 #' Water Database REST API.
@@ -10,13 +10,35 @@
 #' data are included as a list column named `"forecast_values"`.
 #'
 #' @details
-#' TODO!
+#' This endpoint will accept the following query parameters via `set_options()`:
+#' - `begin_publication_date`
+#' - `end_publication_date`
+#' - `exceedence_probabilities`
+#' - `forecast_periods`
+#'
+#' The following can also be passed to filter stations:
+#' - `station_names`
+#' - `dco_codes`
+#' - `county_names`
+#' - `hucs`
+#' - `active_only`
+#'
+#' You may also specify `networks` and `request_size`. The `networks` parameter
+#' is used internally to build unique station triplet identifiers of the form
+#' `station:state:network` which are then passed to the endpoint, so it serves
+#' to filter stations to just those networks. The `request_size` parameter is
+#' for handling rate limits, which are based on the number of elements - a hard
+#' value to measure directly, so this parameter is more a rule of thumb than a
+#' strict standard. If processing is slow for you, you may find experimenting
+#' with this parameter useful.
+#'
+#' See `set_options()` for more details.
 #'
 #' @export
 #'
 #' @examples
 #' # get forecasts for snow water equivalent (WTEQ)
-#' get_forecasts(cascades, elements = "WTEQ")
+#' # get_forecasts(cascades, elements = "WTEQ")
 #'
 get_forecasts <- function(
   aoi,

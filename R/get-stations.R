@@ -1,14 +1,29 @@
-#' Get Stations From USDA NWCC AWDB in Area of Interest
+#' Get Station Metadata
 #'
-#' Get stations and their coordinates from the Air and Water Database REST API
-#' that fall in area of interest.
+#' Get station metadata from the USDA National Water and Climate Center Air and
+#' Water Database REST API. This includes their spatial coordinates.
 #'
 #' @inheritParams get_elements
 #'
 #' @return an `sf` table with station metadata.
 #'
 #' @details
-#' You can also subset stations using query parameters in [set_options()].
+#' This endpoint will accept the following query parameters via `set_options()`:
+#' - `station_names`
+#' - `dco_codes`
+#' - `county_names`
+#' - `hucs`
+#' - `return_forecast_metadata`
+#' - `return_reservoir_metadata`
+#' - `return_element_metadata`
+#' - `active_only`
+#'
+#' You may also specify `networks`. The `networks` parameter is used internally
+#' to build unique station triplet identifiers of the form
+#' `station:state:network`, so it serves to filter stations to just those
+#' networks.
+#'
+#' See `set_options()` for more details.
 #'
 #' @export
 #'

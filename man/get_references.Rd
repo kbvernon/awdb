@@ -2,7 +2,7 @@
 % Please edit documentation in R/get-references.R
 \name{get_references}
 \alias{get_references}
-\title{Get Data Dictionary for AWDB}
+\title{Get Data Dictionary}
 \usage{
 get_references(reference_type = "elements")
 }
@@ -16,7 +16,9 @@ values include \code{dcos}, \code{durations}, \code{elements} (default), \code{f
 a data.frame
 }
 \description{
-Provides descriptions of all codes used in the AWDB.
+Get references from the USDA National Water and Climate Center Air and Water
+Database REST API. References provide descriptions of all codes used in the
+AWDB.
 }
 \examples{
 # get_references("elements")

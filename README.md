@@ -200,13 +200,13 @@ set_options()
 #> end_publication_date       NULL      x       x        ✓
 #> exceedence_probabilities   NULL      x       x        ✓
 #> forecast_periods           NULL      x       x        ✓
-#> station_names              NULL      ✓       x        x
-#> dco_codes                  NULL      ✓       x        x
-#> county_names               NULL      ✓       x        x
-#> hucs                       NULL      ✓       x        x
+#> station_names              NULL      ✓       ✓        ✓
+#> dco_codes                  NULL      ✓       ✓        ✓
+#> county_names               NULL      ✓       ✓        ✓
+#> hucs                       NULL      ✓       ✓        ✓
 #> return_forecast_metadata  FALSE      ✓       x        x
 #> return_reservoir_metadata FALSE      ✓       x        x
 #> return_element_metadata   FALSE      ✓       x        x
-#> active_only                TRUE      ✓       x        x
-#> request_size                 10      ✓       ✓        ✓
+#> active_only                TRUE      ✓       ✓        ✓
+#> request_size                 10      x       ✓        ✓
 ```
