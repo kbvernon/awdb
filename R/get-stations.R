@@ -5,7 +5,7 @@
 #'
 #' @inheritParams get_elements
 #'
-#' @return an `sf` table with station data.
+#' @return an `sf` table with station metadata.
 #'
 #' @details
 #' You can also subset stations using query parameters in [set_options()].
@@ -19,18 +19,11 @@
 #'   elements = "WTEQ"
 #' )
 #'
-#' # get stations with WTEQ elements that are in the SNTL (and SCAN) network
+#' # get stations with WTEQ elements that are in the SNTL network
 #' get_stations(
 #'   bear_lake,
 #'   elements = "WTEQ",
 #'   awdb_options = set_options(networks = "SNTL")
-#' )
-#'
-#' # get stations with WTEQ elements that are measured daily
-#' get_stations(
-#'   bear_lake,
-#'   elements = "WTEQ",
-#'   awdb_options = set_options(duration = "DAILY")
 #' )
 #'
 get_stations <- function(

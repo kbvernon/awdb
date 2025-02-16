@@ -31,7 +31,7 @@ get_references <- function(reference_type = "elements") {
       "states",
       "units"
     ),
-    error_call = current_call
+    error_call = rlang::caller_call()
   )
 
   endpoint <- file.path(

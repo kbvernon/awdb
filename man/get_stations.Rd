@@ -17,7 +17,7 @@ elements and codes.}
 \item{awdb_options}{an \code{awdb_options} list with additional query parameters.}
 }
 \value{
-an \code{sf} table with station data.
+an \code{sf} table with station metadata.
 }
 \description{
 Get stations and their coordinates from the Air and Water Database REST API
@@ -33,18 +33,11 @@ get_stations(
   elements = "WTEQ"
 )
 
-# get stations with WTEQ elements that are in the SNTL (and SCAN) network
+# get stations with WTEQ elements that are in the SNTL network
 get_stations(
   bear_lake,
   elements = "WTEQ",
   awdb_options = set_options(networks = "SNTL")
-)
-
-# get stations with WTEQ elements that are measured daily
-get_stations(
-  bear_lake,
-  elements = "WTEQ",
-  awdb_options = set_options(duration = "DAILY")
 )
 
 }

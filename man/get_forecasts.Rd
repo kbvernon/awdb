@@ -34,6 +34,6 @@ TODO!
 }
 \examples{
 # get forecasts for snow water equivalent (WTEQ)
-get_forecasts(bear_lake, elements = "WTEQ")
+get_forecasts(cascades, elements = "WTEQ")
 
 }
