@@ -242,7 +242,7 @@ print.awdb_options <- function(x, ...) {
     fmt,
     c("", parameters),
     c("VALUE", values),
-    c("STATION", formatC(check_station, width = nchar("STATION"))),
+    c("STATION", formatC(check_station, width = nchar("STATION") - 1)),
     c("ELEMENT", formatC(check_element, width = nchar("ELEMENT"))),
     c("FORECAST", formatC(check_forecast, width = nchar("FORECAST")))
   )
