@@ -2,7 +2,9 @@ Package: awdb
 Title: Query the USDA NWCC Air and Water Database REST API
 Version: 0.0.0.9000
 Authors@R: 
-    person("Kenneth", "Vernon", , "kenneth.b.vernon@gmail.com", role = c("aut", "cre"),
+    person("Kenneth Blake", "Vernon", , 
+           "kenneth.b.vernon@gmail.com", 
+           role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-0098-5092"))
 Description: The awdb package provides functions for querying the four endpoints
     of the USDA NWCC Air and Water Database REST API, including data, forecast, 

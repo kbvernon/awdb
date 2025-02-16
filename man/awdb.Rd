@@ -17,7 +17,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Kenneth Vernon \email{kenneth.b.vernon@gmail.com} (\href{https://orcid.org/0000-0003-0098-5092}{ORCID})
+\strong{Maintainer}: Kenneth Blake Vernon \email{kenneth.b.vernon@gmail.com} (\href{https://orcid.org/0000-0003-0098-5092}{ORCID})
 
 }
 \keyword{internal}
