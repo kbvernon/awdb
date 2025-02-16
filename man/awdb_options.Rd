@@ -62,6 +62,9 @@ value. Default is \code{FALSE}.}
 \item{return_original_values}{boolean scalar, whether to return original
 element values. Default is \code{FALSE}.}
 
+\item{return_suspect_values}{boolean scalar, whether to return suspect element
+values. Default is \code{FALSE}.}
+
 \item{begin_publication_date}{character scalar, the beginning of the
 publication period for which to retrieve data. Date must be in format
 \code{YYYY-MM-DD}. If \code{NULL}, assumes start of the current water year.}
@@ -106,8 +109,9 @@ in each query. This helps to meet rate limits imposed by the API. If you are
 getting a request error, you might try lowering this number. Default is
 \code{10L}.}
 
-\item{return_suspect_data}{boolean scalar, whether to return suspect element
-values. Default is \code{FALSE}.}
+\item{x}{an \code{awdb_options} list}
+
+\item{...}{ignored}
 }
 \value{
 an \code{awdb_options} list

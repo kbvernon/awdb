@@ -23,7 +23,7 @@
 #' value. Default is `FALSE`.
 #' @param return_original_values boolean scalar, whether to return original
 #' element values. Default is `FALSE`.
-#' @param return_suspect_data boolean scalar, whether to return suspect element
+#' @param return_suspect_values boolean scalar, whether to return suspect element
 #' values. Default is `FALSE`.
 #' @param begin_publication_date character scalar, the beginning of the
 #' publication period for which to retrieve data. Date must be in format
@@ -105,7 +105,7 @@ set_options <- function(
   check_date_format(begin_publication_date, call = current_call)
   check_date_format(end_publication_date, call = current_call)
   check_whole_number_vector(exceedence_probabilities)
-  check_character(forecast_periods, allow_null = TRUE, call = caller_call)
+  check_character(forecast_periods, allow_null = TRUE, call = current_call)
   check_character(station_names, allow_null = TRUE, call = current_call)
   check_character(dco_codes, allow_null = TRUE, call = current_call)
   check_character(county_names, allow_null = TRUE, call = current_call)
@@ -174,6 +174,10 @@ set_options <- function(
   parameters
 }
 
+#'
+#' @param x an `awdb_options` list
+#' @param ... ignored
+#'
 #' @rdname awdb_options
 #' @export
 #'
