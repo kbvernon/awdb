@@ -6,15 +6,17 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The `{awdb}` package provides tools for querying the USDA National Water
 and Climate Center [Air and Water Database REST
 API](https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html).
-The package is extremely light weight, with Rust via extendr doing most
-of the heavy lifting to serialize and flatten deeply nested JSON
-responses. The package is also designed to support pretty printing of
-`tibbles` if you import the `{tibble}` package.
+The package is extremely light weight, with Rust via
+[`extendr`](https://extendr.github.io/) doing most of the heavy lifting
+to deserialize and flatten deeply nested JSON responses. The package is
+also designed to support pretty printing of `tibbles` if you import the
+`{tibble}` package.
 
 ## Installation
 
@@ -28,8 +30,8 @@ pak::pak("kbvernon/awdb")
 
 ## The AWDB REST API
 
-This R package provides a separate function to query each endpoint at
-the UDSA AWDB REST API:
+This package provides a separate function to query each endpoint at the
+USDA AWDB REST API:
 
 | Endpoint       | Function           |
 |:---------------|:-------------------|
@@ -65,7 +67,7 @@ stations
 #> Geodetic CRS:  WGS 84
 #> # A tibble: 9 × 15
 #>   station_triplet station_id state_code network_code name   dco_code county_name
-#> * <chr>           <chr>      <chr>      <chr>        <chr>  <chr>    <chr>      
+#>   <chr>           <chr>      <chr>      <chr>        <chr>  <chr>    <chr>      
 #> 1 374:UT:SNTL     374        UT         SNTL         Bug L… UT       Rich       
 #> 2 484:ID:SNTL     484        ID         SNTL         Frank… UT       Franklin   
 #> 3 1114:UT:SNTL    1114       UT         SNTL         Garde… UT       Cache      
@@ -80,7 +82,7 @@ stations
 #> #   geometry <POINT [°]>
 ```
 
-<div style="width: 40%; margin: 0 auto;">
+<div style="width: 65%; margin: 0 auto;">
 
 <img src="man/figures/README-stations-1.svg" data-fig-align="center" />
 

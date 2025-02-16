@@ -14,13 +14,14 @@ knitr:
 # awdb
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The `{awdb}` package provides tools for querying the USDA National Water 
-and Climate Center [Air and Water Database REST API](https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html). The package is extremely light weight, with Rust via extendr doing most 
-of the heavy lifting to serialize and flatten deeply nested JSON responses. The 
-package is also designed to support pretty printing of `tibbles` if you import
-the `{tibble}` package.
+and Climate Center [Air and Water Database REST API](https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html). The package is extremely light weight, with Rust via [`extendr`](https://extendr.github.io/) 
+doing most of the heavy lifting to deserialize and flatten deeply nested JSON 
+responses. The package is also designed to support pretty printing of `tibbles` 
+if you import the `{tibble}` package.
 
 ## Installation
 
@@ -34,7 +35,7 @@ pak::pak("kbvernon/awdb")
 
 ## The AWDB REST API
 
-This package provides a separate function to query each endpoint at the UDSA 
+This package provides a separate function to query each endpoint at the USDA 
 AWDB REST API: 
 
 | Endpoint       | Function           |
@@ -67,7 +68,7 @@ stations <- get_stations(bear_lake, elements = "SMS:*")
 stations
 ```
 
-::: {style="width: 40%; margin: 0 auto;"}
+::: {style="width: 65%; margin: 0 auto;"}
 
 ```{r stations}
 #| echo: false
