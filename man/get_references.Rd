@@ -19,6 +19,6 @@ a data.frame
 Provides descriptions of all codes used in the AWDB.
 }
 \examples{
-get_references("elements")
+# get_references("elements")
 
 }

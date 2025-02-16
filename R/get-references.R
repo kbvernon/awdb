@@ -12,7 +12,7 @@
 #' @export
 #'
 #' @examples
-#' get_references("elements")
+#' # get_references("elements")
 #'
 get_references <- function(reference_type = "elements") {
   check_string(reference_type, call = rlang::caller_call())
