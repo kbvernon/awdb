@@ -64,7 +64,7 @@ elements and codes.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>an <code>sf</code> table with station data.</p>
+    <p>an <code>sf</code> table with station metadata.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -78,25 +78,55 @@ elements and codes.</p></dd>
 <span class="r-in"><span>  <span class="va">bear_lake</span>,</span></span>
 <span class="r-in"><span>  elements <span class="op">=</span> <span class="st">"WTEQ"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in st_filter.sf(df, aoi):</span> dplyr is not installed: install first?</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 10 features and 14 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: -111.6296 ymin: 41.68541 xmax: -111.1663 ymax: 42.4132</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geodetic CRS:  WGS 84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 15</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    station_triplet station_id state_code network_code name  dco_code county_name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 374:UT:SNTL     374        UT         SNTL         Bug … UT       Rich       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 471:ID:SNTL     471        ID         SNTL         Emig… ID       Bear Lake  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 484:ID:SNTL     484        ID         SNTL         Fran… UT       Franklin   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 1114:UT:SNTL    1114       UT         SNTL         Gard… UT       Cache      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 493:ID:SNTL     493        ID         SNTL         Give… ID       Bear Lake  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 1115:UT:SNTL    1115       UT         SNTL         Klon… UT       Cache      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 1013:UT:SNTL    1013       UT         SNTL         Temp… UT       Cache      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 823:UT:SNTL     823        UT         SNTL         Tony… UT       Cache      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 1113:UT:SNTL    1113       UT         SNTL         Tony… UT       Cache      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 1098:UT:SNTL    1098       UT         SNTL         Usu … UT       Rich       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 8 more variables: huc &lt;chr&gt;, elevation &lt;dbl&gt;, data_time_zone &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   pedon_code &lt;chr&gt;, shef_id &lt;chr&gt;, begin_date &lt;chr&gt;, end_date &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   geometry &lt;POINT [°]&gt;</span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># get stations with WTEQ elements that are in the SNTL (and SCAN) network</span></span></span>
+<span class="r-in"><span><span class="co"># get stations with WTEQ elements that are in the SNTL network</span></span></span>
 <span class="r-in"><span><span class="fu">get_stations</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">bear_lake</span>,</span></span>
 <span class="r-in"><span>  elements <span class="op">=</span> <span class="st">"WTEQ"</span>,</span></span>
 <span class="r-in"><span>  awdb_options <span class="op">=</span> <span class="fu"><a href="awdb_options.html">set_options</a></span><span class="op">(</span>networks <span class="op">=</span> <span class="st">"SNTL"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in st_filter.sf(df, aoi):</span> dplyr is not installed: install first?</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># get stations with WTEQ elements that are measured daily</span></span></span>
-<span class="r-in"><span><span class="fu">get_stations</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">bear_lake</span>,</span></span>
-<span class="r-in"><span>  elements <span class="op">=</span> <span class="st">"WTEQ"</span>,</span></span>
-<span class="r-in"><span>  awdb_options <span class="op">=</span> <span class="fu"><a href="awdb_options.html">set_options</a></span><span class="op">(</span>duration <span class="op">=</span> <span class="st">"DAILY"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> `duration` must be one of "daily", "hourly", "semimonthly", "monthly",</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> "calendar_year", or "water_year", not "DAILY".</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Did you mean "daily"?</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 10 features and 14 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: -111.6296 ymin: 41.68541 xmax: -111.1663 ymax: 42.4132</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geodetic CRS:  WGS 84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 15</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    station_triplet station_id state_code network_code name  dco_code county_name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 374:UT:SNTL     374        UT         SNTL         Bug … UT       Rich       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 471:ID:SNTL     471        ID         SNTL         Emig… ID       Bear Lake  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 484:ID:SNTL     484        ID         SNTL         Fran… UT       Franklin   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 1114:UT:SNTL    1114       UT         SNTL         Gard… UT       Cache      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 493:ID:SNTL     493        ID         SNTL         Give… ID       Bear Lake  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 1115:UT:SNTL    1115       UT         SNTL         Klon… UT       Cache      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 1013:UT:SNTL    1013       UT         SNTL         Temp… UT       Cache      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 823:UT:SNTL     823        UT         SNTL         Tony… UT       Cache      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 1113:UT:SNTL    1113       UT         SNTL         Tony… UT       Cache      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 1098:UT:SNTL    1098       UT         SNTL         Usu … UT       Rich       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 8 more variables: huc &lt;chr&gt;, elevation &lt;dbl&gt;, data_time_zone &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   pedon_code &lt;chr&gt;, shef_id &lt;chr&gt;, begin_date &lt;chr&gt;, end_date &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   geometry &lt;POINT [°]&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -105,7 +135,7 @@ elements and codes.</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by First Last.</p>
+  <p>Developed by Kenneth Vernon.</p>
 </div>
 
 <div class="pkgdown-footer-right">

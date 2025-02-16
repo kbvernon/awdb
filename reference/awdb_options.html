@@ -117,6 +117,11 @@ value. Default is <code>FALSE</code>.</p></dd>
 element values. Default is <code>FALSE</code>.</p></dd>
 
 
+<dt id="arg-return-suspect-values">return_suspect_values<a class="anchor" aria-label="anchor" href="#arg-return-suspect-values"></a></dt>
+<dd><p>boolean scalar, whether to return suspect element
+values. Default is <code>FALSE</code>.</p></dd>
+
+
 <dt id="arg-begin-publication-date">begin_publication_date<a class="anchor" aria-label="anchor" href="#arg-begin-publication-date"></a></dt>
 <dd><p>character scalar, the beginning of the
 publication period for which to retrieve data. Date must be in format
@@ -187,9 +192,12 @@ getting a request error, you might try lowering this number. Default is
 <code>10L</code>.</p></dd>
 
 
-<dt id="arg-return-suspect-data">return_suspect_data<a class="anchor" aria-label="anchor" href="#arg-return-suspect-data"></a></dt>
-<dd><p>boolean scalar, whether to return suspect element
-values. Default is <code>FALSE</code>.</p></dd>
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>an <code>awdb_options</code> list</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>ignored</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -205,28 +213,28 @@ values. Default is <code>FALSE</code>.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Options passed to each endpoint.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           VALUE STATION ELEMENT FORECAST</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> networks                      *       ✓       ✓        ✓</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> duration                  DAILY       x       ✓        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> begin_date                 NULL       x       ✓        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> end_date                   NULL       x       ✓        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> period_reference            END       x       ✓        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> central_tendency           NULL       x       ✓        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> return_flags              FALSE       x       ✓        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> return_original_values    FALSE       x       ✓        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> return_suspect_values     FALSE       x       ✓        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> begin_publication_date     NULL       x       x        ✓</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> end_publication_date       NULL       x       x        ✓</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> exceedence_probabilities   NULL       x       x        ✓</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> forecast_periods           NULL       x       x        ✓</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> station_names              NULL       ✓       x        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dco_codes                  NULL       ✓       x        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> county_names               NULL       ✓       x        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hucs                       NULL       ✓       x        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> return_forecast_metadata  FALSE       ✓       x        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> return_reservoir_metadata FALSE       ✓       x        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> return_element_metadata   FALSE       ✓       x        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> active_only                TRUE       ✓       x        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> request_size                 10       ✓       ✓        ✓</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> networks                      *      ✓       ✓        ✓</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> duration                  DAILY      x       ✓        x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> begin_date                 NULL      x       ✓        x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> end_date                   NULL      x       ✓        x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> period_reference            END      x       ✓        x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> central_tendency           NULL      x       ✓        x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> return_flags              FALSE      x       ✓        x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> return_original_values    FALSE      x       ✓        x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> return_suspect_values     FALSE      x       ✓        x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> begin_publication_date     NULL      x       x        ✓</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> end_publication_date       NULL      x       x        ✓</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> exceedence_probabilities   NULL      x       x        ✓</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> forecast_periods           NULL      x       x        ✓</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> station_names              NULL      ✓       x        x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dco_codes                  NULL      ✓       x        x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> county_names               NULL      ✓       x        x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hucs                       NULL      ✓       x        x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> return_forecast_metadata  FALSE      ✓       x        x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> return_reservoir_metadata FALSE      ✓       x        x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> return_element_metadata   FALSE      ✓       x        x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> active_only                TRUE      ✓       x        x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> request_size                 10      ✓       ✓        ✓</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -235,7 +243,7 @@ values. Default is <code>FALSE</code>.</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by First Last.</p>
+  <p>Developed by Kenneth Vernon.</p>
 </div>
 
 <div class="pkgdown-footer-right">

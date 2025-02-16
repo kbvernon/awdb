@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>What the Package Does (One Line, Title Case) • awdb</title>
+<title>Query the USDA NWCC Air and Water Database REST API • awdb</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="What the Package Does (One Line, Title Case)">
-<meta name="description" content="What the package does (one paragraph).">
-<meta property="og:description" content="What the package does (one paragraph).">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Query the USDA NWCC Air and Water Database REST API">
+<meta name="description" content="The awdb package provides functions for querying the four endpoints of the USDA NWCC Air and Water Database REST API, including data, forecast, reference-data, and metadata. The package is extremely light weight, with Rust via extendr doing most of the heavy lifting to deserialize and flatten deeply nested JSON responses.">
+<meta property="og:description" content="The awdb package provides functions for querying the four endpoints of the USDA NWCC Air and Water Database REST API, including data, forecast, reference-data, and metadata. The package is extremely light weight, with Rust via extendr doing most of the heavy lifting to deserialize and flatten deeply nested JSON responses.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -48,8 +48,8 @@
 <div class="page-header"><h1 id="awdb">awdb<a class="anchor" aria-label="anchor" href="#awdb"></a>
 </h1></div>
 <!-- badges: start -->
-<!-- badges: end -->
-<p>The <a href="https://kbvernon.github.io/awdb/">awdb</a> package provides tools for querying the USDA National Water and Climate Center <a href="https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html" class="external-link">Air and Water Database REST API</a>. The package is extremely light weight, with Rust via extendr doing most of the heavy lifting to serialize and flatten deeply nested JSON responses. The package is also designed to support pretty printing of <code>tibbles</code> if you import the <a href="https://tibble.tidyverse.org/" class="external-link">tibble</a> package.</p>
+
+<p>The <a href="https://kbvernon.github.io/awdb/">awdb</a> package provides tools for querying the USDA National Water and Climate Center <a href="https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html" class="external-link">Air and Water Database REST API</a>. The package is extremely light weight, with Rust via <a href="https://extendr.github.io/" class="external-link"><code>extendr</code></a> doing most of the heavy lifting to deserialize and flatten deeply nested JSON responses. The package is also designed to support pretty printing of <code>tibbles</code> if you import the <a href="https://tibble.tidyverse.org/" class="external-link">tibble</a> package.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -61,7 +61,7 @@
 <div class="section level2">
 <h2 id="the-awdb-rest-api">The AWDB REST API<a class="anchor" aria-label="anchor" href="#the-awdb-rest-api"></a>
 </h2>
-<p>This R package provides a separate function to query each endpoint at the UDSA AWDB REST API:</p>
+<p>This package provides a separate function to query each endpoint at the USDA AWDB REST API:</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Endpoint</th>
@@ -107,7 +107,7 @@
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
 <span><span class="co">#&gt; # A tibble: 9 × 15</span></span>
 <span><span class="co">#&gt;   station_triplet station_id state_code network_code name   dco_code county_name</span></span>
-<span><span class="co">#&gt; * &lt;chr&gt;           &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;      </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;           &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;      </span></span>
 <span><span class="co">#&gt; 1 374:UT:SNTL     374        UT         SNTL         Bug L… UT       Rich       </span></span>
 <span><span class="co">#&gt; 2 484:ID:SNTL     484        ID         SNTL         Frank… UT       Franklin   </span></span>
 <span><span class="co">#&gt; 3 1114:UT:SNTL    1114       UT         SNTL         Garde… UT       Cache      </span></span>
@@ -120,7 +120,7 @@
 <span><span class="co">#&gt; # ℹ 8 more variables: huc &lt;chr&gt;, elevation &lt;dbl&gt;, data_time_zone &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   pedon_code &lt;chr&gt;, shef_id &lt;chr&gt;, begin_date &lt;chr&gt;, end_date &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   geometry &lt;POINT [°]&gt;</span></span></code></pre></div>
-<div style="width: 40%; margin: 0 auto;">
+<div style="width: 65%; margin: 0 auto;">
 <p><img src="reference/figures/README-stations-1.svg" data-fig-align="center"></p>
 </div>
 </div>
@@ -246,18 +246,23 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>First Last <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Kenneth Vernon <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-0098-5092" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by First Last.</p>
+  <p>Developed by Kenneth Vernon.</p>
 </div>
 
 <div class="pkgdown-footer-right">

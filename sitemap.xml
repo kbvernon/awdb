@@ -1,10 +1,12 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://kbvernon.github.io/awdb/404.html</loc></url>
+<url><loc>https://kbvernon.github.io/awdb/LICENSE-text.html</loc></url>
 <url><loc>https://kbvernon.github.io/awdb/LICENSE.html</loc></url>
 <url><loc>https://kbvernon.github.io/awdb/authors.html</loc></url>
 <url><loc>https://kbvernon.github.io/awdb/index.html</loc></url>
+<url><loc>https://kbvernon.github.io/awdb/reference/awdb.html</loc></url>
 <url><loc>https://kbvernon.github.io/awdb/reference/awdb_options.html</loc></url>
-<url><loc>https://kbvernon.github.io/awdb/reference/bear_lake.html</loc></url>
+<url><loc>https://kbvernon.github.io/awdb/reference/datasets.html</loc></url>
 <url><loc>https://kbvernon.github.io/awdb/reference/get_elements.html</loc></url>
 <url><loc>https://kbvernon.github.io/awdb/reference/get_forecasts.html</loc></url>
 <url><loc>https://kbvernon.github.io/awdb/reference/get_references.html</loc></url>
