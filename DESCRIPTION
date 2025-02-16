@@ -1,9 +1,14 @@
 Package: awdb
-Title: What the Package Does (One Line, Title Case)
+Title: Query the USDA NWCC Air and Water Database REST API
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+    person("Kenneth", "Vernon", , "kenneth.b.vernon@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-0098-5092"))
+Description: The awdb package provides functions for querying the four endpoints
+    of the USDA NWCC Air and Water Database REST API, including data, forecast, 
+    reference-data, and metadata. The package is extremely light weight, with 
+    Rust via extendr doing most of the heavy lifting to deserialize and flatten 
+    deeply nested JSON responses.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -16,6 +21,6 @@ Imports:
     rlang (>= 1.1.0),
     sf
 Depends: 
-    R (>= 3.5)
+    R (>= 4.1.0)
 LazyData: true
 URL: https://kbvernon.github.io/awdb/
