@@ -18,9 +18,7 @@ parameters. Provides defaults for each and does type checking."></head><body>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-      </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
- <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
-      </ul></div>
+      </ul><ul class="navbar-nav"></ul></div>
 
 
   </div>
@@ -213,28 +211,28 @@ getting a request error, you might try lowering this number. Default is
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Options passed to each endpoint.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           VALUE STATION ELEMENT FORECAST</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> networks                      *      ✓       ✓        ✓</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> duration                  DAILY      x       ✓        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> begin_date                 NULL      x       ✓        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> end_date                   NULL      x       ✓        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> period_reference            END      x       ✓        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> central_tendency           NULL      x       ✓        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> return_flags              FALSE      x       ✓        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> return_original_values    FALSE      x       ✓        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> return_suspect_values     FALSE      x       ✓        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> begin_publication_date     NULL      x       x        ✓</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> end_publication_date       NULL      x       x        ✓</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> exceedence_probabilities   NULL      x       x        ✓</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> forecast_periods           NULL      x       x        ✓</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> station_names              NULL      ✓       ✓        ✓</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dco_codes                  NULL      ✓       ✓        ✓</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> county_names               NULL      ✓       ✓        ✓</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hucs                       NULL      ✓       ✓        ✓</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> return_forecast_metadata  FALSE      ✓       x        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> return_reservoir_metadata FALSE      ✓       x        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> return_element_metadata   FALSE      ✓       x        x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> active_only                TRUE      ✓       ✓        ✓</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> request_size                 10      x       ✓        ✓</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> networks                      *     [X]     [X]      [X]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> duration                  DAILY     [ ]     [X]      [ ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> begin_date                 NULL     [ ]     [X]      [ ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> end_date                   NULL     [ ]     [X]      [ ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> period_reference            END     [ ]     [X]      [ ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> central_tendency           NULL     [ ]     [X]      [ ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> return_flags              FALSE     [ ]     [X]      [ ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> return_original_values    FALSE     [ ]     [X]      [ ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> return_suspect_values     FALSE     [ ]     [X]      [ ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> begin_publication_date     NULL     [ ]     [ ]      [X]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> end_publication_date       NULL     [ ]     [ ]      [X]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> exceedence_probabilities   NULL     [ ]     [ ]      [X]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> forecast_periods           NULL     [ ]     [ ]      [X]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> station_names              NULL     [X]     [X]      [X]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dco_codes                  NULL     [X]     [X]      [X]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> county_names               NULL     [X]     [X]      [X]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hucs                       NULL     [X]     [X]      [X]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> return_forecast_metadata  FALSE     [X]     [ ]      [ ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> return_reservoir_metadata FALSE     [X]     [ ]      [ ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> return_element_metadata   FALSE     [X]     [ ]      [ ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> active_only                TRUE     [X]     [X]      [X]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> request_size                 10     [ ]     [X]      [X]</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

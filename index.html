@@ -33,11 +33,7 @@
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
       </ul>
-<ul class="navbar-nav">
-<li class="nav-item"><form class="form-inline" role="search">
- <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
-</form></li>
-      </ul>
+<ul class="navbar-nav"></ul>
 </div>
 
 
@@ -195,7 +191,11 @@
 <div class="section level2">
 <h2 id="additional-query-parameters">Additional Query Parameters<a class="anchor" aria-label="anchor" href="#additional-query-parameters"></a>
 </h2>
-<p>In the above examples, we use <code><a href="reference/awdb_options.html">set_options()</a></code> to pass additional query parameters. If you don’t pass any arguments, it uses defaults assumed by the AWDB REST API. Some additional package specific options are also included. It has a decent print method if you want to inspect it. It is important to note that options are passed as part of queries to specific endpoints.</p>
+<p>In the above examples, we use <code><a href="reference/awdb_options.html">set_options()</a></code> to pass additional query parameters. If you don’t pass any arguments, it uses defaults assumed by the AWDB REST API.</p>
+<blockquote>
+<p>[!NOTE]</p>
+<p>Not all parameters are passed to every endpoint. The references endpoint, for example, does not take any query parameters other than <code>reference_type</code>. To find out what parameters are passed to what endpoints, you can print the <code>awdb_options</code> list returned by <code><a href="reference/awdb_options.html">set_options()</a></code>. Technically, this tells you what parameters are passed to endpoints or used to filter stations (with queries to the metadata endpoint). It will also show you the current values for each parameter. You can find more information about parameters relevant to each endpoint in the documentation for each function.</p>
+</blockquote>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/awdb_options.html">set_options</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -203,28 +203,28 @@
 <span><span class="co">#&gt; Options passed to each endpoint.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                           VALUE STATION ELEMENT FORECAST</span></span>
-<span><span class="co">#&gt; networks                      *      ✓       ✓        ✓</span></span>
-<span><span class="co">#&gt; duration                  DAILY      x       ✓        x</span></span>
-<span><span class="co">#&gt; begin_date                 NULL      x       ✓        x</span></span>
-<span><span class="co">#&gt; end_date                   NULL      x       ✓        x</span></span>
-<span><span class="co">#&gt; period_reference            END      x       ✓        x</span></span>
-<span><span class="co">#&gt; central_tendency           NULL      x       ✓        x</span></span>
-<span><span class="co">#&gt; return_flags              FALSE      x       ✓        x</span></span>
-<span><span class="co">#&gt; return_original_values    FALSE      x       ✓        x</span></span>
-<span><span class="co">#&gt; return_suspect_values     FALSE      x       ✓        x</span></span>
-<span><span class="co">#&gt; begin_publication_date     NULL      x       x        ✓</span></span>
-<span><span class="co">#&gt; end_publication_date       NULL      x       x        ✓</span></span>
-<span><span class="co">#&gt; exceedence_probabilities   NULL      x       x        ✓</span></span>
-<span><span class="co">#&gt; forecast_periods           NULL      x       x        ✓</span></span>
-<span><span class="co">#&gt; station_names              NULL      ✓       ✓        ✓</span></span>
-<span><span class="co">#&gt; dco_codes                  NULL      ✓       ✓        ✓</span></span>
-<span><span class="co">#&gt; county_names               NULL      ✓       ✓        ✓</span></span>
-<span><span class="co">#&gt; hucs                       NULL      ✓       ✓        ✓</span></span>
-<span><span class="co">#&gt; return_forecast_metadata  FALSE      ✓       x        x</span></span>
-<span><span class="co">#&gt; return_reservoir_metadata FALSE      ✓       x        x</span></span>
-<span><span class="co">#&gt; return_element_metadata   FALSE      ✓       x        x</span></span>
-<span><span class="co">#&gt; active_only                TRUE      ✓       ✓        ✓</span></span>
-<span><span class="co">#&gt; request_size                 10      x       ✓        ✓</span></span></code></pre></div>
+<span><span class="co">#&gt; networks                      *     [X]     [X]      [X]</span></span>
+<span><span class="co">#&gt; duration                  DAILY     [ ]     [X]      [ ]</span></span>
+<span><span class="co">#&gt; begin_date                 NULL     [ ]     [X]      [ ]</span></span>
+<span><span class="co">#&gt; end_date                   NULL     [ ]     [X]      [ ]</span></span>
+<span><span class="co">#&gt; period_reference            END     [ ]     [X]      [ ]</span></span>
+<span><span class="co">#&gt; central_tendency           NULL     [ ]     [X]      [ ]</span></span>
+<span><span class="co">#&gt; return_flags              FALSE     [ ]     [X]      [ ]</span></span>
+<span><span class="co">#&gt; return_original_values    FALSE     [ ]     [X]      [ ]</span></span>
+<span><span class="co">#&gt; return_suspect_values     FALSE     [ ]     [X]      [ ]</span></span>
+<span><span class="co">#&gt; begin_publication_date     NULL     [ ]     [ ]      [X]</span></span>
+<span><span class="co">#&gt; end_publication_date       NULL     [ ]     [ ]      [X]</span></span>
+<span><span class="co">#&gt; exceedence_probabilities   NULL     [ ]     [ ]      [X]</span></span>
+<span><span class="co">#&gt; forecast_periods           NULL     [ ]     [ ]      [X]</span></span>
+<span><span class="co">#&gt; station_names              NULL     [X]     [X]      [X]</span></span>
+<span><span class="co">#&gt; dco_codes                  NULL     [X]     [X]      [X]</span></span>
+<span><span class="co">#&gt; county_names               NULL     [X]     [X]      [X]</span></span>
+<span><span class="co">#&gt; hucs                       NULL     [X]     [X]      [X]</span></span>
+<span><span class="co">#&gt; return_forecast_metadata  FALSE     [X]     [ ]      [ ]</span></span>
+<span><span class="co">#&gt; return_reservoir_metadata FALSE     [X]     [ ]      [ ]</span></span>
+<span><span class="co">#&gt; return_element_metadata   FALSE     [X]     [ ]      [ ]</span></span>
+<span><span class="co">#&gt; active_only                TRUE     [X]     [X]      [X]</span></span>
+<span><span class="co">#&gt; request_size                 10     [ ]     [X]      [X]</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
