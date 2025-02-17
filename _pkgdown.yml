@@ -2,3 +2,6 @@ url: https://kbvernon.github.io/awdb/
 template:
   bootstrap: 5
 
+navbar:
+  structure:
+    right:  [github]
