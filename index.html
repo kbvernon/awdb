@@ -191,11 +191,7 @@
 <div class="section level2">
 <h2 id="additional-query-parameters">Additional Query Parameters<a class="anchor" aria-label="anchor" href="#additional-query-parameters"></a>
 </h2>
-<p>In the above examples, we use <code><a href="reference/awdb_options.html">set_options()</a></code> to pass additional query parameters. If you don’t pass any arguments, it uses defaults assumed by the AWDB REST API.</p>
-<blockquote>
-<p>[!NOTE]</p>
-<p>Not all parameters are passed to every endpoint. The references endpoint, for example, does not take any query parameters other than <code>reference_type</code>. To find out what parameters are passed to what endpoints, you can print the <code>awdb_options</code> list returned by <code><a href="reference/awdb_options.html">set_options()</a></code>. Technically, this tells you what parameters are passed to endpoints or used to filter stations (with queries to the metadata endpoint). It will also show you the current values for each parameter. You can find more information about parameters relevant to each endpoint in the documentation for each function.</p>
-</blockquote>
+<p>In the above examples, we use <code><a href="reference/awdb_options.html">set_options()</a></code> to pass additional query parameters. If you don’t pass any arguments, it uses defaults assumed by the AWDB REST API. <span style="font-weight: bold; color: #3273a8;">It’s important to note that not all parameters are passed to every endpoint.</span> The references endpoint, for example, doesn’t take any query parameters other than <code>reference_type</code>. To see what goes where, you can print the <code>awdb_options</code> list returned by <code><a href="reference/awdb_options.html">set_options()</a></code>. This will also show you the current values for each parameter.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/awdb_options.html">set_options</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
