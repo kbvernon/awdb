@@ -175,10 +175,19 @@ get_references("elements")
 
 In the above examples, we use `set_options()` to pass additional query
 parameters. If you don’t pass any arguments, it uses defaults assumed by
-the AWDB REST API. Some additional package specific options are also
-included. It has a decent print method if you want to inspect it. It is
-important to note that options are passed as part of queries to specific
-endpoints.
+the AWDB REST API.
+
+> [!NOTE]
+>
+> Not all parameters are passed to every endpoint. The references
+> endpoint, for example, does not take any query parameters other than
+> `reference_type`. To find out what parameters are passed to what
+> endpoints, you can print the `awdb_options` list returned by
+> `set_options()`. Technically, this tells you what parameters are
+> passed to endpoints or used to filter stations (with queries to the
+> metadata endpoint). It will also show you the current values for each
+> parameter. You can find more information about parameters relevant to
+> each endpoint in the documentation for each function.
 
 ``` r
 set_options()
@@ -187,26 +196,26 @@ set_options()
 #> Options passed to each endpoint.
 #> 
 #>                           VALUE STATION ELEMENT FORECAST
-#> networks                      *      ✓       ✓        ✓
-#> duration                  DAILY      x       ✓        x
-#> begin_date                 NULL      x       ✓        x
-#> end_date                   NULL      x       ✓        x
-#> period_reference            END      x       ✓        x
-#> central_tendency           NULL      x       ✓        x
-#> return_flags              FALSE      x       ✓        x
-#> return_original_values    FALSE      x       ✓        x
-#> return_suspect_values     FALSE      x       ✓        x
-#> begin_publication_date     NULL      x       x        ✓
-#> end_publication_date       NULL      x       x        ✓
-#> exceedence_probabilities   NULL      x       x        ✓
-#> forecast_periods           NULL      x       x        ✓
-#> station_names              NULL      ✓       ✓        ✓
-#> dco_codes                  NULL      ✓       ✓        ✓
-#> county_names               NULL      ✓       ✓        ✓
-#> hucs                       NULL      ✓       ✓        ✓
-#> return_forecast_metadata  FALSE      ✓       x        x
-#> return_reservoir_metadata FALSE      ✓       x        x
-#> return_element_metadata   FALSE      ✓       x        x
-#> active_only                TRUE      ✓       ✓        ✓
-#> request_size                 10      x       ✓        ✓
+#> networks                      *     [X]     [X]      [X]
+#> duration                  DAILY     [ ]     [X]      [ ]
+#> begin_date                 NULL     [ ]     [X]      [ ]
+#> end_date                   NULL     [ ]     [X]      [ ]
+#> period_reference            END     [ ]     [X]      [ ]
+#> central_tendency           NULL     [ ]     [X]      [ ]
+#> return_flags              FALSE     [ ]     [X]      [ ]
+#> return_original_values    FALSE     [ ]     [X]      [ ]
+#> return_suspect_values     FALSE     [ ]     [X]      [ ]
+#> begin_publication_date     NULL     [ ]     [ ]      [X]
+#> end_publication_date       NULL     [ ]     [ ]      [X]
+#> exceedence_probabilities   NULL     [ ]     [ ]      [X]
+#> forecast_periods           NULL     [ ]     [ ]      [X]
+#> station_names              NULL     [X]     [X]      [X]
+#> dco_codes                  NULL     [X]     [X]      [X]
+#> county_names               NULL     [X]     [X]      [X]
+#> hucs                       NULL     [X]     [X]      [X]
+#> return_forecast_metadata  FALSE     [X]     [ ]      [ ]
+#> return_reservoir_metadata FALSE     [X]     [ ]      [ ]
+#> return_element_metadata   FALSE     [X]     [ ]      [ ]
+#> active_only                TRUE     [X]     [X]      [X]
+#> request_size                 10     [ ]     [X]      [X]
 ```

@@ -185,6 +185,9 @@ print.awdb_options <- function(x, ...) {
   parameters <- names(x)
   values <- unlist(as.character(x), use.names = FALSE)
 
+  yes <- "[X]"
+  no <- "[ ]"
+
   check_station <- ifelse(
     parameters %in% c(
       "station_names",
@@ -197,8 +200,8 @@ print.awdb_options <- function(x, ...) {
       "active_only",
       "networks"
     ),
-    "\u2713",
-    "x"
+    yes,
+    no
   )
 
   check_element <- ifelse(
@@ -219,8 +222,8 @@ print.awdb_options <- function(x, ...) {
       "networks",
       "request_size"
     ),
-    "\u2713",
-    "x"
+    yes,
+    no
   )
 
   check_forecast <- ifelse(
@@ -237,29 +240,23 @@ print.awdb_options <- function(x, ...) {
       "networks",
       "request_size"
     ),
-    "\u2713",
-    "x"
+    yes,
+    no
   )
 
-  np <- max(nchar(parameters))
-  nv <- max(nchar(values))
-
-  # sprint format with correct spacing
-  fmt <- paste0("%-", np, "s ", "%", nv, "s %s %s %s")
-
-  df <- sprintf(
-    fmt,
-    c("", parameters),
-    c("VALUE", values),
-    c("STATION", formatC(check_station, width = nchar("STATION") - 1)),
-    c("ELEMENT", formatC(check_element, width = nchar("ELEMENT"))),
-    c("FORECAST", formatC(check_forecast, width = nchar("FORECAST")))
+  df <- data.frame(
+    VALUE = unlist(as.character(x), use.names = FALSE),
+    STATION = check_station,
+    ELEMENT = check_element,
+    FORECAST = check_forecast
   )
+
+  rownames(df) <- names(x)
 
   cli::cli_h1("AWDB Query Parameter Set")
   cli::cli_text("Options passed to each endpoint.")
   cli::cli_text("")
-  cat(df, sep = "\n")
+  print(df, quote = FALSE)
 }
 
 #' Check For `awdb_options` List
