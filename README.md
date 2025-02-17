@@ -175,12 +175,12 @@ get_references("elements")
 
 In the above examples, we use `set_options()` to pass additional query
 parameters. If you don’t pass any arguments, it uses defaults assumed by
-the AWDB REST API. <span style="font-weight: bold; color: #3273a8;">It’s
-important to note that not all parameters are passed to every
-endpoint.</span> The references endpoint, for example, doesn’t take any
-query parameters other than `reference_type`. To see what goes where,
-you can print the `awdb_options` list returned by `set_options()`. This
-will also show you the current values for each parameter.
+the AWDB REST API. <span style="color: #3273a8;">**It’s important to
+note that not all parameters are passed to every endpoint.**</span> The
+references endpoint, for example, doesn’t take any query parameters
+other than `reference_type`. To see what goes where, you can print the
+`awdb_options` list returned by `set_options()`. This will also show you
+the current values for each parameter.
 
 ``` r
 set_options()
