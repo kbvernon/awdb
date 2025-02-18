@@ -168,13 +168,16 @@ check_sfc_scalar <- function(
     return()
   }
 
-  is_sfc <- rlang::inherits_any(aoi, "sfc")
-  is_scalar <- length(aoi) == 1
-  is_shape <- sf::st_geometry_type(aoi) %in% shape
-
-  if (!is_sfc || !is_scalar || !is_shape) {
+  if (!rlang::inherits_any(aoi, "sfc") || length(aoi) != 1) {
     cli::cli_abort(
-      "`aoi` must be an {.cls sfc} containing a single feature with geometry type {shape}.",
+      "`aoi` must be an {.cls sfc} containing a single feature.",
+      call = call
+    )
+  }
+
+  if (!sf::st_geometry_type(aoi) %in% shape) {
+    cli::cli_abort(
+      "`aoi` must have a geometry of type {shape}.",
       call = call
     )
   }

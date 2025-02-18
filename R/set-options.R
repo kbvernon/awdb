@@ -90,49 +90,48 @@ set_options <- function(
   active_only = TRUE,
   request_size = 10L
 ) {
-  current_call <- rlang::caller_call()
-
-  check_character(networks, call = current_call)
-  check_string(duration, call = current_call)
-  check_date_format(begin_date, call = current_call)
-  check_date_format(end_date, call = current_call)
-  check_string(end_date, allow_null = TRUE, call = current_call)
-  check_string(period_reference, call = current_call)
-  check_string(central_tendency, allow_null = TRUE, call = current_call)
-  check_bool(return_flags, call = current_call)
-  check_bool(return_original_values, call = current_call)
-  check_bool(return_suspect_values, call = current_call)
-  check_date_format(begin_publication_date, call = current_call)
-  check_date_format(end_publication_date, call = current_call)
+  check_character(networks)
+  check_string(duration, allow_null = TRUE)
+  check_date_format(begin_date)
+  check_date_format(end_date)
+  check_string(end_date, allow_null = TRUE)
+  check_string(period_reference)
+  check_string(central_tendency, allow_null = TRUE)
+  check_bool(return_flags)
+  check_bool(return_original_values)
+  check_bool(return_suspect_values)
+  check_date_format(begin_publication_date)
+  check_date_format(end_publication_date)
   check_whole_number_vector(exceedence_probabilities)
-  check_character(forecast_periods, allow_null = TRUE, call = current_call)
-  check_character(station_names, allow_null = TRUE, call = current_call)
-  check_character(dco_codes, allow_null = TRUE, call = current_call)
-  check_character(county_names, allow_null = TRUE, call = current_call)
-  check_character(hucs, allow_null = TRUE, call = current_call)
-  check_bool(return_forecast_metadata, call = current_call)
-  check_bool(return_reservoir_metadata, call = current_call)
-  check_bool(return_element_metadata, call = current_call)
-  check_bool(active_only, call = current_call)
-  check_number_whole(request_size, call = current_call)
+  check_character(forecast_periods, allow_null = TRUE)
+  check_character(station_names, allow_null = TRUE)
+  check_character(dco_codes, allow_null = TRUE)
+  check_character(county_names, allow_null = TRUE)
+  check_character(hucs, allow_null = TRUE)
+  check_bool(return_forecast_metadata)
+  check_bool(return_reservoir_metadata)
+  check_bool(return_element_metadata)
+  check_bool(active_only)
+  check_number_whole(request_size)
 
   # awdb has both a scalar and vector duration parameter, but for the sake of
   # keeping this api as simple as possible, we use only the scalar version
-  rlang::arg_match(
-    duration,
-    values = c(
-      "daily",
-      "hourly",
-      "semimonthly",
-      "monthly",
-      "calendar_year",
-      "water_year"
-    ),
-    error_call = current_call
-  )
+  if (!rlang::is_null(duration)) {
+    rlang::arg_match(
+      duration,
+      values = c(
+        "daily",
+        "hourly",
+        "semimonthly",
+        "monthly",
+        "calendar_year",
+        "water_year"
+      )
+    )
+  }
 
   # format queries
-  duration <- toupper(duration)
+  duration <- if_not_null(duration, toupper)
   period_reference <- toupper(period_reference)
   central_tendency <- if_not_null(central_tendency, toupper)
   exceedence_probabilities <- if_not_null(exceedence_probabilities, collapse)
@@ -268,7 +267,10 @@ print.awdb_options <- function(x, ...) {
 check_awdb_options <- function(awdb_options, call = rlang::caller_call()) {
   if (!rlang::inherits_all(awdb_options, c("awdb_options", "list"))) {
     cli::cli_abort(
-      "{.var awdb_options} must be an {.cls awdb_options} list.",
+      c(
+        "{.var awdb_options} must be an {.cls awdb_options} list.",
+        "i" = "You can make sure it is by using `awdb_options = set_options()`."
+      ),
       call = call
     )
   }

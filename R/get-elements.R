@@ -64,9 +64,9 @@ get_elements <- function(
   as_sf = FALSE
 ) {
   check_sfc_scalar(aoi, shape = c("POLYGON", "MULTIPOLYGON"), allow_null = TRUE)
-  check_character(elements, call = rlang::caller_call())
+  check_character(elements)
   check_awdb_options(awdb_options)
-  check_bool(as_sf, rlang::caller_call())
+  check_bool(as_sf)
 
   stations <- filter_stations(
     aoi,

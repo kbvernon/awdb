@@ -53,8 +53,25 @@ get_stations <- function(
   awdb_options = set_options()
 ) {
   check_sfc_scalar(aoi, shape = c("POLYGON", "MULTIPOLYGON"), allow_null = TRUE)
-  check_character(elements, call = rlang::caller_call())
+  check_character(elements)
   check_awdb_options(awdb_options)
+
+  # check for forecast variables, which shouldn't have a duration
+  forecast_variables <- c("SRVO", "SRVOO", "JDAY", "RESC", "REST")
+
+  has_forecast_variables <- any(elements %in% forecast_variables)
+  has_duration <- !rlang::is_null(awdb_options[["duration"]])
+
+  i <- which(elements %in% forecast_variables)
+
+  if (has_forecast_variables && has_duration) {
+    cli::cli_abort(
+      c(
+        "Forecast variables like {elements[i]} do not have a duration.",
+        "i" = "Please use `set_options(duration = NULL)`."
+      )
+    )
+  }
 
   df <- filter_stations(
     aoi,
