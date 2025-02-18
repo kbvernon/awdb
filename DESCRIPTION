@@ -25,4 +25,5 @@ Imports:
 Depends: 
     R (>= 4.1.0)
 LazyData: true
-URL: https://kbvernon.github.io/awdb/
+URL: https://github.com/kbvernon/awdb, https://kbvernon.github.io/awdb/
+BugReports: https://github.com/kbvernon/awdb/issues
