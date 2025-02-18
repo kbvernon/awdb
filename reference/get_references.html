@@ -62,7 +62,23 @@ values include <code>dcos</code>, <code>durations</code>, <code>elements</code> 
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># get_references("elements")</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">get_references</span><span class="op">(</span><span class="st">"elements"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 115 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    code  name     physical_element_name function_code data_precision description</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> TAVG  AIR TEM… air temperature       V                          1 Average Ai…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> TMAX  AIR TEM… air temperature       X                          1 Maximum Ai…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> TMIN  AIR TEM… air temperature       N                          1 Minimum Ai…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> TOBS  AIR TEM… air temperature       C                          1 Instantane…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> PRES  BAROMET… barometric pressure   C                          2 Barometric…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> BATT  BATTERY  battery               C                          2 Battery Vo…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> BATV  BATTERY… battery               V                          2 <span style="color: #BB0000;">NA</span>         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> BATX  BATTERY… battery               X                          2 Maximum Ba…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> BATN  BATTERY… battery               N                          2 Minimum Ba…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ETIB  BATTERY… battery-eti precip g… C                          2 <span style="color: #BB0000;">NA</span>         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 105 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: stored_unit_code &lt;chr&gt;, english_unit_code &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   metric_unit_code &lt;chr&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

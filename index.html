@@ -134,42 +134,82 @@
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">elements</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"station_triplet"</span>, <span class="st">"element_code"</span>, <span class="st">"element_values"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">elements</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"station_triplet"</span>,</span>
+<span>  <span class="st">"element_code"</span>,</span>
+<span>  <span class="st">"element_values"</span></span>
+<span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; # A tibble: 10 × 3</span></span>
-<span><span class="co">#&gt;    station_triplet element_code element_values</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;           &lt;chr&gt;        &lt;list&gt;        </span></span>
-<span><span class="co">#&gt;  1 374:UT:SNTL     WTEQ         &lt;df [7 × 2]&gt;  </span></span>
-<span><span class="co">#&gt;  2 471:ID:SNTL     WTEQ         &lt;df [7 × 2]&gt;  </span></span>
-<span><span class="co">#&gt;  3 484:ID:SNTL     WTEQ         &lt;df [7 × 2]&gt;  </span></span>
-<span><span class="co">#&gt;  4 1114:UT:SNTL    WTEQ         &lt;df [7 × 2]&gt;  </span></span>
-<span><span class="co">#&gt;  5 493:ID:SNTL     WTEQ         &lt;df [7 × 2]&gt;  </span></span>
-<span><span class="co">#&gt;  6 1115:UT:SNTL    WTEQ         &lt;df [7 × 2]&gt;  </span></span>
-<span><span class="co">#&gt;  7 1013:UT:SNTL    WTEQ         &lt;df [7 × 2]&gt;  </span></span>
-<span><span class="co">#&gt;  8 823:UT:SNTL     WTEQ         &lt;df [7 × 2]&gt;  </span></span>
-<span><span class="co">#&gt;  9 1113:UT:SNTL    WTEQ         &lt;df [7 × 2]&gt;  </span></span>
-<span><span class="co">#&gt; 10 1098:UT:SNTL    WTEQ         &lt;df [7 × 2]&gt;</span></span>
+<span><span class="co">#&gt;    station_triplet element_code element_values  </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;           &lt;chr&gt;        &lt;list&gt;          </span></span>
+<span><span class="co">#&gt;  1 374:UT:SNTL     WTEQ         &lt;tibble [7 × 2]&gt;</span></span>
+<span><span class="co">#&gt;  2 471:ID:SNTL     WTEQ         &lt;tibble [7 × 2]&gt;</span></span>
+<span><span class="co">#&gt;  3 484:ID:SNTL     WTEQ         &lt;tibble [7 × 2]&gt;</span></span>
+<span><span class="co">#&gt;  4 1114:UT:SNTL    WTEQ         &lt;tibble [7 × 2]&gt;</span></span>
+<span><span class="co">#&gt;  5 493:ID:SNTL     WTEQ         &lt;tibble [7 × 2]&gt;</span></span>
+<span><span class="co">#&gt;  6 1115:UT:SNTL    WTEQ         &lt;tibble [7 × 2]&gt;</span></span>
+<span><span class="co">#&gt;  7 1013:UT:SNTL    WTEQ         &lt;tibble [7 × 2]&gt;</span></span>
+<span><span class="co">#&gt;  8 823:UT:SNTL     WTEQ         &lt;tibble [7 × 2]&gt;</span></span>
+<span><span class="co">#&gt;  9 1113:UT:SNTL    WTEQ         &lt;tibble [7 × 2]&gt;</span></span>
+<span><span class="co">#&gt; 10 1098:UT:SNTL    WTEQ         &lt;tibble [7 × 2]&gt;</span></span>
 <span></span>
 <span><span class="va">elements</span><span class="op">[[</span><span class="st">"element_values"</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt;         date value</span></span>
+<span><span class="co">#&gt; # A tibble: 7 × 2</span></span>
+<span><span class="co">#&gt;   date       value</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;      &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 2015-05-01   2.1</span></span>
 <span><span class="co">#&gt; 2 2015-05-02   1.1</span></span>
-<span><span class="co">#&gt; 3 2015-05-03   0.0</span></span>
-<span><span class="co">#&gt; 4 2015-05-04   0.0</span></span>
-<span><span class="co">#&gt; 5 2015-05-05   0.0</span></span>
-<span><span class="co">#&gt; 6 2015-05-06   0.0</span></span>
-<span><span class="co">#&gt; 7 2015-05-07   0.0</span></span></code></pre></div>
+<span><span class="co">#&gt; 3 2015-05-03   0  </span></span>
+<span><span class="co">#&gt; 4 2015-05-04   0  </span></span>
+<span><span class="co">#&gt; 5 2015-05-05   0  </span></span>
+<span><span class="co">#&gt; 6 2015-05-06   0  </span></span>
+<span><span class="co">#&gt; 7 2015-05-07   0</span></span></code></pre></div>
 <p>These are time series, so the element values come in a list column containing data.frames with at least <code>date</code> and <code>value</code> columns. Using <code>tidyr::unnest()</code> is helpful for unpacking all of them.</p>
 </div>
 <div class="section level2">
 <h2 id="get-forecasts">Get Forecasts<a class="anchor" aria-label="anchor" href="#get-forecasts"></a>
 </h2>
-<p>TODO!</p>
+<p>Get streamflow forecasts for the Cascades in west central Oregon. This returns a list column as it does with elements.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">forecasts</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_forecasts.html">get_forecasts</a></span><span class="op">(</span><span class="va">cascades</span>, elements <span class="op">=</span> <span class="st">"SRVO"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">forecasts</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"station_triplet"</span>,</span>
+<span>  <span class="st">"element_code"</span>,</span>
+<span>  <span class="st">"publication_date"</span>,</span>
+<span>  <span class="st">"forecast_period"</span>,</span>
+<span>  <span class="st">"forecast_values"</span></span>
+<span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 63 × 5</span></span>
+<span><span class="co">#&gt;    station_triplet element_code publication_date forecast_period forecast_values</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;           &lt;chr&gt;        &lt;chr&gt;            &lt;chr&gt;           &lt;list&gt;         </span></span>
+<span><span class="co">#&gt;  1 14050000:OR:US… SRVO         2025-01-01 00:00 02-01:07-31     &lt;tibble&gt;       </span></span>
+<span><span class="co">#&gt;  2 14050000:OR:US… SRVO         2025-02-01 00:00 02-01:07-31     &lt;tibble&gt;       </span></span>
+<span><span class="co">#&gt;  3 14050000:OR:US… SRVO         2025-01-01 00:00 02-01:09-30     &lt;tibble&gt;       </span></span>
+<span><span class="co">#&gt;  4 14050000:OR:US… SRVO         2025-02-01 00:00 02-01:09-30     &lt;tibble&gt;       </span></span>
+<span><span class="co">#&gt;  5 14050000:OR:US… SRVO         2025-01-01 00:00 04-01:07-31     &lt;tibble&gt;       </span></span>
+<span><span class="co">#&gt;  6 14050000:OR:US… SRVO         2025-02-01 00:00 04-01:07-31     &lt;tibble&gt;       </span></span>
+<span><span class="co">#&gt;  7 14050000:OR:US… SRVO         2025-01-01 00:00 04-01:09-30     &lt;tibble&gt;       </span></span>
+<span><span class="co">#&gt;  8 14050000:OR:US… SRVO         2025-02-01 00:00 04-01:09-30     &lt;tibble&gt;       </span></span>
+<span><span class="co">#&gt;  9 14053500:OR:US… SRVO         2025-01-01 00:00 02-01:07-31     &lt;tibble&gt;       </span></span>
+<span><span class="co">#&gt; 10 14053500:OR:US… SRVO         2025-02-01 00:00 02-01:07-31     &lt;tibble&gt;       </span></span>
+<span><span class="co">#&gt; # ℹ 53 more rows</span></span>
+<span></span>
+<span><span class="va">forecasts</span><span class="op">[[</span><span class="st">"forecast_values"</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
+<span><span class="co">#&gt;   probability value</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;       &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 10             50</span></span>
+<span><span class="co">#&gt; 2 30             43</span></span>
+<span><span class="co">#&gt; 3 50             38</span></span>
+<span><span class="co">#&gt; 4 70             34</span></span>
+<span><span class="co">#&gt; 5 90             28</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="get-references">Get References<a class="anchor" aria-label="anchor" href="#get-references"></a>
 </h2>
 <p>A somewhat unique endpoint for this REST API is called “References.” If you have ever worked with government employees or the military, you maybe are aware that they prefer an extremely condensed form of speech jammed full of acronyms and other codes. The references endpoint helps clarify their cryptic language with data dictionaries that explain what each code used in the database actually means. It also in the process provides an exhaustive list of available options. All of this, you can access with <code><a href="reference/get_references.html">get_references()</a></code>. For instance, if you want a table showing all possible station elements in the AWDB, it is as simple as this.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/get_references.html">get_references</a></span><span class="op">(</span><span class="st">"elements"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 115 × 9</span></span>
 <span><span class="co">#&gt;    code  name     physical_element_name function_code data_precision description</span></span>
@@ -192,7 +232,7 @@
 <h2 id="additional-query-parameters">Additional Query Parameters<a class="anchor" aria-label="anchor" href="#additional-query-parameters"></a>
 </h2>
 <p>In the above examples, we use <code><a href="reference/awdb_options.html">set_options()</a></code> to pass additional query parameters. If you don’t pass any arguments, it uses defaults assumed by the AWDB REST API. <span style="color: #3273a8;"><strong>It’s important to note that not all parameters are passed to every endpoint.</strong></span> The references endpoint, for example, doesn’t take any query parameters other than <code>reference_type</code>. To see what goes where, you can print the <code>awdb_options</code> list returned by <code><a href="reference/awdb_options.html">set_options()</a></code>. This will also show you the current values for each parameter.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/awdb_options.html">set_options</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── AWDB Query Parameter Set ────────────────────────────────────────────────────</span></span>
