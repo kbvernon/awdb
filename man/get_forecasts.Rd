@@ -70,11 +70,18 @@ to \code{NULL}.
 See \code{set_options()} for more details.
 \subsection{Forecast Elements}{
 
-Almost all forecasts are reported in \verb{SRVO``, the adjusted streamflow set which accounts for upstream operations such as reservoir operations and diversions. }JDAY\verb{, }RESC\verb{, and }REST\verb{are hardly used at all, mostly to maintain historical forecasts made at Lake Tahoe (the birthplace of the snow survey). In general, it's recommended to use}SRVO`.
+Almost all forecasts are reported in \code{SRVO}, the adjusted streamflow set
+which accounts for upstream operations such as reservoir operations and
+diversions. \code{JDAY}, \code{RESC}, and \code{REST} are mostly there to maintain
+historical forecasts made at Lake Tahoe (the birthplace of the snow
+survey). In general, it's recommended to use \code{SRVO}.
 }
 }
 \examples{
 # get streamflow forecasts
 get_forecasts(cascades, elements = "SRVO")
+
+# return as sf table
+get_forecasts(cascades, elements = "SRVO", as_sf = TRUE)
 
 }

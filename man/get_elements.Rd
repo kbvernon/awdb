@@ -65,6 +65,10 @@ with this parameter useful.
 See \code{set_options()} for more details.
 }
 \examples{
+# get snow water equivalent values around Bear Lake
 get_elements(bear_lake, elements = "WTEQ")
+
+# return as sf table
+get_elements(bear_lake, elements = "WTEQ", as_sf = TRUE)
 
 }

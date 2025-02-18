@@ -40,10 +40,10 @@
 #' See `set_options()` for more details.
 #'
 #' ## Forecast Elements
-#' Almost all forecasts are reported in `SRVO``, the adjusted streamflow set
+#' Almost all forecasts are reported in `SRVO`, the adjusted streamflow set
 #' which accounts for upstream operations such as reservoir operations and
-#' diversions. `JDAY`, `RESC`, and `REST` are hardly used at all, mostly to
-#' maintain historical forecasts made at Lake Tahoe (the birthplace of the snow
+#' diversions. `JDAY`, `RESC`, and `REST` are mostly there to maintain
+#' historical forecasts made at Lake Tahoe (the birthplace of the snow
 #' survey). In general, it's recommended to use `SRVO`.
 #'
 #' @export
@@ -51,6 +51,9 @@
 #' @examples
 #' # get streamflow forecasts
 #' get_forecasts(cascades, elements = "SRVO")
+#'
+#' # return as sf table
+#' get_forecasts(cascades, elements = "SRVO", as_sf = TRUE)
 #'
 get_forecasts <- function(
   aoi = NULL,
@@ -102,6 +105,8 @@ get_forecasts <- function(
       df,
       by = "station_triplet"
     )
+
+    class(df) <- c("sf", "tbl_df", "tbl", "data.frame")
   }
 
   df

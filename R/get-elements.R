@@ -51,7 +51,11 @@
 #' @export
 #'
 #' @examples
+#' # get snow water equivalent values around Bear Lake
 #' get_elements(bear_lake, elements = "WTEQ")
+#'
+#' # return as sf table
+#' get_elements(bear_lake, elements = "WTEQ", as_sf = TRUE)
 #'
 get_elements <- function(
   aoi = NULL,
@@ -98,6 +102,8 @@ get_elements <- function(
       df,
       by = "station_triplet"
     )
+
+    class(df) <- c("sf", "tbl_df", "tbl", "data.frame")
   }
 
   df
