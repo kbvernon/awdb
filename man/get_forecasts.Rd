@@ -4,11 +4,17 @@
 \alias{get_forecasts}
 \title{Get Station Forecasts}
 \usage{
-get_forecasts(aoi, elements, awdb_options = set_options(), as_sf = FALSE)
+get_forecasts(
+  aoi = NULL,
+  elements,
+  awdb_options = set_options(),
+  as_sf = FALSE
+)
 }
 \arguments{
 \item{aoi}{\code{sfc} POLYGON scalar, the area of interest used for performing
-a spatial filter on available stations in \code{network}.}
+a spatial filter on available stations in \code{network}. If \code{NULL} (the default),
+no spatial filter is performed.}
 
 \item{elements}{character vector, abbreviations or codes for variables of
 interest (e.g., "SMS" for "Soil Moisture Percent"). See Details for available
@@ -27,7 +33,9 @@ data are included as a list column named \code{"forecast_values"}.
 }
 \description{
 Get station forecasts from the USDA National Water and Climate Center Air and
-Water Database REST API.
+Water Database REST API. These will almost always be streamflow forecasts,
+set with \code{elements = "SRVO"}, but some others are also available, albeit with
+extremely limited spatial representation (see Details).
 }
 \details{
 This endpoint will accept the following query parameters via \code{set_options()}:
@@ -56,10 +64,17 @@ value to measure directly, so this parameter is more a rule of thumb than a
 strict standard. If processing is slow for you, you may find experimenting
 with this parameter useful.
 
+Note that the \code{duration} parameter is ignored - or, more precisely, it is set
+to \code{NULL}.
+
 See \code{set_options()} for more details.
+\subsection{Forecast Elements}{
+
+Almost all forecasts are reported in \verb{SRVO``, the adjusted streamflow set which accounts for upstream operations such as reservoir operations and diversions. }JDAY\verb{, }RESC\verb{, and }REST\verb{are hardly used at all, mostly to maintain historical forecasts made at Lake Tahoe (the birthplace of the snow survey). In general, it's recommended to use}SRVO`.
+}
 }
 \examples{
-# get forecasts for snow water equivalent (WTEQ)
-# get_forecasts(cascades, elements = "WTEQ")
+# get streamflow forecasts
+get_forecasts(cascades, elements = "SRVO")
 
 }

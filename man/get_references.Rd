@@ -21,6 +21,6 @@ Database REST API. References provide descriptions of all codes used in the
 AWDB.
 }
 \examples{
-# get_references("elements")
+get_references("elements")
 
 }

@@ -132,7 +132,6 @@ set_options <- function(
   )
 
   # format queries
-  networks <- collapse(networks)
   duration <- toupper(duration)
   period_reference <- toupper(period_reference)
   central_tendency <- if_not_null(central_tendency, toupper)
@@ -243,6 +242,8 @@ print.awdb_options <- function(x, ...) {
     yes,
     no
   )
+
+  x[["networks"]] <- collapse(x[["networks"]])
 
   df <- data.frame(
     VALUE = unlist(as.character(x), use.names = FALSE),

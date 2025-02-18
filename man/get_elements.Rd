@@ -4,11 +4,12 @@
 \alias{get_elements}
 \title{Get Station Elements}
 \usage{
-get_elements(aoi, elements, awdb_options = set_options(), as_sf = FALSE)
+get_elements(aoi = NULL, elements, awdb_options = set_options(), as_sf = FALSE)
 }
 \arguments{
 \item{aoi}{\code{sfc} POLYGON scalar, the area of interest used for performing
-a spatial filter on available stations in \code{network}.}
+a spatial filter on available stations in \code{network}. If \code{NULL} (the default),
+no spatial filter is performed.}
 
 \item{elements}{character vector, abbreviations or codes for variables of
 interest (e.g., "SMS" for "Soil Moisture Percent"). See Details for available

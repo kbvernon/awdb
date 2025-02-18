@@ -1,7 +1,7 @@
 use extendr_api::prelude::*;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
 // https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html
 
@@ -103,7 +103,11 @@ impl From<StationDataSet> for Robj {
                 end_date.push(ed);
                 derived_data.push(dd);
 
-                let values_df = y.values.into_dataframe().unwrap().into_robj();
+                let mut values_df = y.values.into_dataframe().unwrap().into_robj();
+                values_df
+                    .set_class(&["tbl_df", "tbl", "data.frame"])
+                    .unwrap();
+
                 values.push(drop_empty_columns(&values_df).unwrap());
             }
         }
@@ -163,10 +167,10 @@ struct Forecast {
     forecast_period: Vec<String>,
     forecast_status: String,
     issue_date: String,
-    period_normal: f64,
+    period_normal: Option<f64>,
     publication_date: String,
     unit_code: String,
-    forecast_values: HashMap<String, Value>,
+    forecast_values: BTreeMap<String, Value>,
 }
 
 impl From<StationForecastSet> for Robj {
@@ -176,10 +180,10 @@ impl From<StationForecastSet> for Robj {
         let mut station_triplet: Vec<String> = Vec::with_capacity(n_row);
         let mut forecast_point_name: Vec<String> = Vec::with_capacity(n_row);
         let mut element_code: Vec<String> = Vec::with_capacity(n_row);
-        let mut forecast_period: Vec<Robj> = Vec::with_capacity(n_row);
+        let mut forecast_period: Vec<String> = Vec::with_capacity(n_row);
         let mut forecast_status: Vec<String> = Vec::with_capacity(n_row);
         let mut issue_date: Vec<String> = Vec::with_capacity(n_row);
-        let mut period_normal: Vec<f64> = Vec::with_capacity(n_row);
+        let mut period_normal: Vec<Option<f64>> = Vec::with_capacity(n_row);
         let mut publication_date: Vec<String> = Vec::with_capacity(n_row);
         let mut unit_code: Vec<String> = Vec::with_capacity(n_row);
         let mut forecast_values: Vec<Robj> = Vec::with_capacity(n_row);
@@ -189,7 +193,7 @@ impl From<StationForecastSet> for Robj {
                 station_triplet.push(x.station_triplet.clone());
                 forecast_point_name.push(x.forecast_point_name.clone());
                 element_code.push(y.element_code);
-                forecast_period.push(y.forecast_period.into());
+                forecast_period.push(y.forecast_period.join(":"));
                 forecast_status.push(y.forecast_status);
                 issue_date.push(y.issue_date);
                 period_normal.push(y.period_normal);
@@ -202,16 +206,14 @@ impl From<StationForecastSet> for Robj {
                     .values()
                     .map(|v| v.as_f64().unwrap())
                     .collect();
-                let mut df = data_frame!(keys = keys, values = values);
+                let mut df = data_frame!(probability = keys, value = values);
                 df.set_class(&["tbl_df", "tbl", "data.frame"]).unwrap();
                 forecast_values.push(drop_empty_columns(&df).unwrap());
             }
         }
 
-        let mut forecast_period = List::from_values(forecast_period);
         let mut forecast_values = List::from_values(forecast_values);
 
-        forecast_period.set_class(&["AsIs"]).unwrap();
         forecast_values.set_class(&["AsIs"]).unwrap();
 
         let mut df = data_frame!(

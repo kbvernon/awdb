@@ -4,11 +4,12 @@
 \alias{get_stations}
 \title{Get Station Metadata}
 \usage{
-get_stations(aoi, elements, awdb_options = set_options())
+get_stations(aoi = NULL, elements, awdb_options = set_options())
 }
 \arguments{
 \item{aoi}{\code{sfc} POLYGON scalar, the area of interest used for performing
-a spatial filter on available stations in \code{network}.}
+a spatial filter on available stations in \code{network}. If \code{NULL} (the default),
+no spatial filter is performed.}
 
 \item{elements}{character vector, abbreviations or codes for variables of
 interest (e.g., "SMS" for "Soil Moisture Percent"). See Details for available
@@ -44,16 +45,22 @@ networks.
 See \code{set_options()} for more details.
 }
 \examples{
-# get stations with WTEQ elements
+# get all stations in aoi
+get_stations(
+  bear_lake,
+  elements = "*"
+)
+
+# get all stations in aoi that measure WTEQ
 get_stations(
   bear_lake,
   elements = "WTEQ"
 )
 
-# get stations with WTEQ elements that are in the SNTL network
+# get all stations in aoi that are part of SNTL network
 get_stations(
   bear_lake,
-  elements = "WTEQ",
+  elements = "*",
   awdb_options = set_options(networks = "SNTL")
 )
 

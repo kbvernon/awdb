@@ -125,7 +125,11 @@ elements <- get_elements(
   )
 )
 
-elements[, c("station_triplet", "element_code", "element_values")]
+elements[c(
+  "station_triplet",
+  "element_code",
+  "element_values"
+)]
 
 elements[["element_values"]][[1]]
 ```
@@ -136,7 +140,22 @@ helpful for unpacking all of them.
 
 ## Get Forecasts
 
-TODO!
+Get streamflow forecasts for the Cascades in west central Oregon. This returns a
+list column as it does with elements.
+
+```{r}
+forecasts <- get_forecasts(cascades, elements = "SRVO")
+
+forecasts[c(
+  "station_triplet",
+  "element_code",
+  "publication_date",
+  "forecast_period",
+  "forecast_values"
+)]
+
+forecasts[["forecast_values"]][[1]]
+```
 
 ## Get References
 

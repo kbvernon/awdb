@@ -28,31 +28,51 @@
 #' @export
 #'
 #' @examples
-#' # get stations with WTEQ elements
+#' # get all stations in aoi
+#' get_stations(
+#'   bear_lake,
+#'   elements = "*"
+#' )
+#'
+#' # get all stations in aoi that measure WTEQ
 #' get_stations(
 #'   bear_lake,
 #'   elements = "WTEQ"
 #' )
 #'
-#' # get stations with WTEQ elements that are in the SNTL network
+#' # get all stations in aoi that are part of SNTL network
 #' get_stations(
 #'   bear_lake,
-#'   elements = "WTEQ",
+#'   elements = "*",
 #'   awdb_options = set_options(networks = "SNTL")
 #' )
 #'
 get_stations <- function(
-  aoi,
+  aoi = NULL,
   elements,
   awdb_options = set_options()
 ) {
-  check_sfc_scalar(aoi, shape = c("POLYGON", "MULTIPOLYGON"))
+  check_sfc_scalar(aoi, shape = c("POLYGON", "MULTIPOLYGON"), allow_null = TRUE)
   check_character(elements, call = rlang::caller_call())
   check_awdb_options(awdb_options)
 
-  filter_stations(
+  df <- filter_stations(
     aoi,
     elements = collapse(elements),
     awdb_options
   )
+
+  if (awdb_options[["return_element_metadata"]]) {
+    class(df[["element_metadata"]]) <- "list"
+  }
+
+  if (awdb_options[["return_forecast_metadata"]]) {
+    class(df[["forecast_metadata"]]) <- "list"
+  }
+
+  if (awdb_options[["return_reservoir_metadata"]]) {
+    class(df[["reservoir_metadata"]]) <- "list"
+  }
+
+  df
 }

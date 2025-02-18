@@ -1,7 +1,9 @@
 #' Get Station Forecasts
 #'
 #' Get station forecasts from the USDA National Water and Climate Center Air and
-#' Water Database REST API.
+#' Water Database REST API. These will almost always be streamflow forecasts,
+#' set with `elements = "SRVO"`, but some others are also available, albeit with
+#' extremely limited spatial representation (see Details).
 #'
 #' @inheritParams get_elements
 #'
@@ -32,28 +34,40 @@
 #' strict standard. If processing is slow for you, you may find experimenting
 #' with this parameter useful.
 #'
+#' Note that the `duration` parameter is ignored - or, more precisely, it is set
+#' to `NULL`.
+#'
 #' See `set_options()` for more details.
+#'
+#' ## Forecast Elements
+#' Almost all forecasts are reported in `SRVO``, the adjusted streamflow set
+#' which accounts for upstream operations such as reservoir operations and
+#' diversions. `JDAY`, `RESC`, and `REST` are hardly used at all, mostly to
+#' maintain historical forecasts made at Lake Tahoe (the birthplace of the snow
+#' survey). In general, it's recommended to use `SRVO`.
 #'
 #' @export
 #'
 #' @examples
-#' # get forecasts for snow water equivalent (WTEQ)
-#' # get_forecasts(cascades, elements = "WTEQ")
+#' # get streamflow forecasts
+#' get_forecasts(cascades, elements = "SRVO")
 #'
 get_forecasts <- function(
-  aoi,
+  aoi = NULL,
   elements,
   awdb_options = set_options(),
   as_sf = FALSE
 ) {
-  check_sfc_scalar(aoi, shape = c("POLYGON", "MULTIPOLYGON"))
+  check_sfc_scalar(aoi, shape = c("POLYGON", "MULTIPOLYGON"), allow_null = TRUE)
   check_character(elements, call = rlang::caller_call())
   check_awdb_options(awdb_options)
   check_bool(as_sf, call = rlang::caller_call())
 
+  awdb_options["duration"] <- list(NULL)
+
   stations <- filter_stations(
     aoi,
-    elements = elements,
+    elements = collapse(elements),
     awdb_options
   )
 

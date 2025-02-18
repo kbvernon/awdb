@@ -1,25 +1,26 @@
-# get stations with WTEQ elements
+rextendr::document()
+
 get_stations(
   bear_lake,
-  elements = "SMS:*",
-  awdb_options = set_options(
-    begin_date = "2015-06-01",
-    end_date = "2015-06-03"
-  )
+  elements = "*"
 )
 
-get_elements(
-  bear_lake,
-  elements = "SMS:*",
-  awdb_options = set_options(
-    begin_date = "2015-06-01",
-    end_date = "2015-06-03"
-  )
-) |> tidyr::unnest(element_values)
+get_stations(cascades, elements = "RESC")
 
-get_forecasts(bear_lake, elements = "REST")
-get_stations(
-  bear_lake,
-  elements = "WTEQ",
-  awdb_options = set_options(return_forecast_metadata = TRUE)
-)[["forecast_metadata"]]
+get_forecasts(cascades, elements = "SRVO")
+
+lapply(
+  c(
+    "dcos",
+    "durations",
+    "elements",
+    "forecastPeriods",
+    "functions",
+    "instruments",
+    "networks",
+    "physicalElements",
+    "states",
+    "units"
+  ),
+  get_references
+)

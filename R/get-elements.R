@@ -5,7 +5,8 @@
 #' variables measured at AWDB stations.
 #'
 #' @param aoi `sfc` POLYGON scalar, the area of interest used for performing
-#' a spatial filter on available stations in `network`.
+#' a spatial filter on available stations in `network`. If `NULL` (the default),
+#' no spatial filter is performed.
 #' @param elements character vector, abbreviations or codes for variables of
 #' interest (e.g., "SMS" for "Soil Moisture Percent"). See Details for available
 #' elements and codes.
@@ -53,12 +54,12 @@
 #' get_elements(bear_lake, elements = "WTEQ")
 #'
 get_elements <- function(
-  aoi,
+  aoi = NULL,
   elements,
   awdb_options = set_options(),
   as_sf = FALSE
 ) {
-  check_sfc_scalar(aoi, shape = c("POLYGON", "MULTIPOLYGON"))
+  check_sfc_scalar(aoi, shape = c("POLYGON", "MULTIPOLYGON"), allow_null = TRUE)
   check_character(elements, call = rlang::caller_call())
   check_awdb_options(awdb_options)
   check_bool(as_sf, rlang::caller_call())

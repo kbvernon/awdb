@@ -104,30 +104,36 @@ elements <- get_elements(
   )
 )
 
-elements[, c("station_triplet", "element_code", "element_values")]
+elements[c(
+  "station_triplet",
+  "element_code",
+  "element_values"
+)]
 #> # A tibble: 10 × 3
-#>    station_triplet element_code element_values
-#>    <chr>           <chr>        <list>        
-#>  1 374:UT:SNTL     WTEQ         <df [7 × 2]>  
-#>  2 471:ID:SNTL     WTEQ         <df [7 × 2]>  
-#>  3 484:ID:SNTL     WTEQ         <df [7 × 2]>  
-#>  4 1114:UT:SNTL    WTEQ         <df [7 × 2]>  
-#>  5 493:ID:SNTL     WTEQ         <df [7 × 2]>  
-#>  6 1115:UT:SNTL    WTEQ         <df [7 × 2]>  
-#>  7 1013:UT:SNTL    WTEQ         <df [7 × 2]>  
-#>  8 823:UT:SNTL     WTEQ         <df [7 × 2]>  
-#>  9 1113:UT:SNTL    WTEQ         <df [7 × 2]>  
-#> 10 1098:UT:SNTL    WTEQ         <df [7 × 2]>
+#>    station_triplet element_code element_values  
+#>    <chr>           <chr>        <list>          
+#>  1 374:UT:SNTL     WTEQ         <tibble [7 × 2]>
+#>  2 471:ID:SNTL     WTEQ         <tibble [7 × 2]>
+#>  3 484:ID:SNTL     WTEQ         <tibble [7 × 2]>
+#>  4 1114:UT:SNTL    WTEQ         <tibble [7 × 2]>
+#>  5 493:ID:SNTL     WTEQ         <tibble [7 × 2]>
+#>  6 1115:UT:SNTL    WTEQ         <tibble [7 × 2]>
+#>  7 1013:UT:SNTL    WTEQ         <tibble [7 × 2]>
+#>  8 823:UT:SNTL     WTEQ         <tibble [7 × 2]>
+#>  9 1113:UT:SNTL    WTEQ         <tibble [7 × 2]>
+#> 10 1098:UT:SNTL    WTEQ         <tibble [7 × 2]>
 
 elements[["element_values"]][[1]]
-#>         date value
+#> # A tibble: 7 × 2
+#>   date       value
+#>   <chr>      <dbl>
 #> 1 2015-05-01   2.1
 #> 2 2015-05-02   1.1
-#> 3 2015-05-03   0.0
-#> 4 2015-05-04   0.0
-#> 5 2015-05-05   0.0
-#> 6 2015-05-06   0.0
-#> 7 2015-05-07   0.0
+#> 3 2015-05-03   0  
+#> 4 2015-05-04   0  
+#> 5 2015-05-05   0  
+#> 6 2015-05-06   0  
+#> 7 2015-05-07   0
 ```
 
 These are time series, so the element values come in a list column
@@ -136,7 +142,44 @@ containing data.frames with at least `date` and `value` columns. Using
 
 ## Get Forecasts
 
-TODO!
+Get streamflow forecasts for the Cascades in west central Oregon. This
+returns a list column as it does with elements.
+
+``` r
+forecasts <- get_forecasts(cascades, elements = "SRVO")
+
+forecasts[c(
+  "station_triplet",
+  "element_code",
+  "publication_date",
+  "forecast_period",
+  "forecast_values"
+)]
+#> # A tibble: 63 × 5
+#>    station_triplet element_code publication_date forecast_period forecast_values
+#>    <chr>           <chr>        <chr>            <chr>           <list>         
+#>  1 14050000:OR:US… SRVO         2025-01-01 00:00 02-01:07-31     <tibble>       
+#>  2 14050000:OR:US… SRVO         2025-02-01 00:00 02-01:07-31     <tibble>       
+#>  3 14050000:OR:US… SRVO         2025-01-01 00:00 02-01:09-30     <tibble>       
+#>  4 14050000:OR:US… SRVO         2025-02-01 00:00 02-01:09-30     <tibble>       
+#>  5 14050000:OR:US… SRVO         2025-01-01 00:00 04-01:07-31     <tibble>       
+#>  6 14050000:OR:US… SRVO         2025-02-01 00:00 04-01:07-31     <tibble>       
+#>  7 14050000:OR:US… SRVO         2025-01-01 00:00 04-01:09-30     <tibble>       
+#>  8 14050000:OR:US… SRVO         2025-02-01 00:00 04-01:09-30     <tibble>       
+#>  9 14053500:OR:US… SRVO         2025-01-01 00:00 02-01:07-31     <tibble>       
+#> 10 14053500:OR:US… SRVO         2025-02-01 00:00 02-01:07-31     <tibble>       
+#> # ℹ 53 more rows
+
+forecasts[["forecast_values"]][[1]]
+#> # A tibble: 5 × 2
+#>   probability value
+#>   <chr>       <dbl>
+#> 1 10             50
+#> 2 30             43
+#> 3 50             38
+#> 4 70             34
+#> 5 90             28
+```
 
 ## Get References
 

@@ -45,35 +45,32 @@ filter_stations <- function(
 
   df <- parse_station_metadataset_json(json)
 
+  if (!all(c("longitude", "latitude") %in% names(df))) {
+    cli::cli_abort(
+      "Failed to retrieve spatial coordinates for stations.",
+      call = call
+    )
+  }
+
   df <- sf::st_as_sf(
     df,
     coords = c("longitude", "latitude"),
     crs = 4326
   )
 
-  df <- sf::st_transform(df, sf::st_crs(aoi))
+  if (!rlang::is_null(aoi)) {
+    df <- sf::st_transform(df, sf::st_crs(aoi))
 
-  i <- lengths(sf::st_intersects(sf::st_geometry(df), aoi)) > 0
+    i <- lengths(sf::st_intersects(sf::st_geometry(df), aoi)) > 0
 
-  df <- df[i, ]
+    df <- df[i, ]
+  }
 
   if (nrow(df) == 0) {
     cli::cli_abort(
       "No stations with {.val {elements}} element(s) found in the {.var aoi}.",
       call = call
     )
-  }
-
-  if (awdb_options[["return_element_metadata"]]) {
-    class(df[["element_metadata"]]) <- "list"
-  }
-
-  if (awdb_options[["return_forecast_metadata"]]) {
-    class(df[["forecast_metadata"]]) <- "list"
-  }
-
-  if (awdb_options[["return_reservoir_metadata"]]) {
-    class(df[["reservoir_metadata"]]) <- "list"
   }
 
   df
@@ -154,7 +151,23 @@ make_requests <- function(
 #' @keywords internal
 #' @noRd
 #'
-check_sfc_scalar <- function(aoi, shape, call = rlang::caller_call()) {
+check_sfc_scalar <- function(
+  aoi,
+  shape,
+  allow_null = FALSE,
+  call = rlang::caller_call()
+) {
+  if (rlang::is_null(aoi)) {
+    if (!allow_null) {
+      cli::cli_abort(
+        "`aoi` cannot be NULL.",
+        call = call
+      )
+    }
+
+    return()
+  }
+
   is_sfc <- rlang::inherits_any(aoi, "sfc")
   is_scalar <- length(aoi) == 1
   is_shape <- sf::st_geometry_type(aoi) %in% shape
