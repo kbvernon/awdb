@@ -191,6 +191,7 @@ print.awdb_options <- function(x, ...) {
       "station_names",
       "dco_codes",
       "county_names",
+      "duration",
       "hucs",
       "return_forecast_metadata",
       "return_reservoir_metadata",
