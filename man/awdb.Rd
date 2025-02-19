@@ -12,7 +12,9 @@ from R.
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://github.com/kbvernon/awdb}
   \item \url{https://kbvernon.github.io/awdb/}
+  \item Report bugs at \url{https://github.com/kbvernon/awdb/issues}
 }
 
 }
