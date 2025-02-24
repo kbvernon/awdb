@@ -7,6 +7,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml)
+[![extendr](https://img.shields.io/badge/extendr-^0.7.1-276DC2)](https://extendr.github.io/extendr/extendr_api/)
 <!-- badges: end -->
 
 The `{awdb}` package provides tools for querying the USDA National Water
