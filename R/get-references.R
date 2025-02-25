@@ -9,7 +9,7 @@
 #' `functions`, `instruments`, `networks`, `physicalElements`, `states`, and
 #' `units`.
 #'
-#' @return a data.frame
+#' @return a data.frame with reference data
 #'
 #' @export
 #'

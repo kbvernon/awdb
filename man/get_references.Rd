@@ -13,7 +13,7 @@ values include \code{dcos}, \code{durations}, \code{elements} (default), \code{f
 \code{units}.}
 }
 \value{
-a data.frame
+a data.frame with reference data
 }
 \description{
 Get references from the USDA National Water and Climate Center Air and Water
