@@ -31,8 +31,10 @@
 #' @param end_publication_date character scalar, the end of the publication
 #' period for which to retrieve data. Date must be in format `YYYY-MM-DD`. If
 #' `NULL`, assumes current day.
-#' @param exceedence_probabilities integer vector, TODO! write this...
-#' @param forecast_periods character vector, TODO! figure this one out...
+#' @param exceedence_probabilities integer vector, the probability that
+#' streamflow will exceed a specified level.
+#' @param forecast_periods character vector, the time period over which to make
+#' streamflow forecasts.
 #' @param station_names character vector, used to subset stations by their
 #' names. Default is `NULL`.
 #' @param dco_codes character vector, used to subset stations to those that fall

@@ -73,9 +73,11 @@ publication period for which to retrieve data. Date must be in format
 period for which to retrieve data. Date must be in format \code{YYYY-MM-DD}. If
 \code{NULL}, assumes current day.}
 
-\item{exceedence_probabilities}{integer vector, TODO! write this...}
+\item{exceedence_probabilities}{integer vector, the probability that
+streamflow will exceed a specified level.}
 
-\item{forecast_periods}{character vector, TODO! figure this one out...}
+\item{forecast_periods}{character vector, the time period over which to make
+streamflow forecasts.}
 
 \item{station_names}{character vector, used to subset stations by their
 names. Default is \code{NULL}.}
