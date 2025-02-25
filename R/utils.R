@@ -120,7 +120,11 @@ make_requests <- function(
     }
   )
 
-  responses <- httr2::req_perform_parallel(requests, on_error = "continue")
+  responses <- httr2::req_perform_parallel(
+    requests,
+    on_error = "continue",
+    progress = FALSE
+  )
 
   errors <- vapply(
     responses,
