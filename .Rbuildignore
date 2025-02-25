@@ -13,3 +13,4 @@
 ^\.vscode$
 [.]qmd$
 ^cran-comments\.md$
+^CRAN-SUBMISSION$

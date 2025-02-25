@@ -7,21 +7,29 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml)
-[![extendr](https://img.shields.io/badge/extendr-^0.7.1-276DC2)](https://extendr.github.io/extendr/extendr_api/)
+[![extendr](https://img.shields.io/badge/extendr-%5E0.7.1-276DC2)](https://extendr.github.io/extendr/extendr_api/)
 <!-- badges: end -->
 
-The `{awdb}` package provides tools for querying the USDA National Water
-and Climate Center [Air and Water Database REST
-API](https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html).
-The package is extremely light weight, with Rust via
-[`extendr`](https://extendr.github.io/) doing most of the heavy lifting
-to deserialize and flatten deeply nested JSON responses. The package is
-also designed to support pretty printing of `tibbles` if you import the
-`{tibble}` package.
+The `{awdb}` package provides functions for querying the four endpoints
+of the [Air and Water Database (AWDB) REST
+API](https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html)
+maintained by the National Water and Climate Center (NWCC) at the United
+States Department of Agriculture (USDA). Endpoints include data,
+forecast, reference-data, and metadata. The package is extremely light
+weight, with Rust via [`extendr`](https://extendr.github.io/) doing most
+of the heavy lifting to deserialize and flatten deeply nested JSON
+responses. The package is also designed to support pretty printing of
+`tibble`s if you import the `{tibble}` package.
 
 ## Installation
 
-You can install the development version of `{awdb}` from
+You can install the release version of `{awdb}` from CRAN with:
+
+``` r
+install.packages("awdb")
+```
+
+Or you can get the development version from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -143,8 +151,8 @@ containing data.frames with at least `date` and `value` columns. Using
 
 ## Get Forecasts
 
-Get streamflow forecasts for the Cascades in west central Oregon. This
-returns a list column as it does with elements.
+Get streamflow forecasts for the Cascades in west central Oregon. As
+with `get_elements()`, this returns a list column.
 
 ``` r
 forecasts <- get_forecasts(cascades, elements = "SRVO")
@@ -234,7 +242,7 @@ set_options()
 #> 
 #>                           VALUE STATION ELEMENT FORECAST
 #> networks                      *     [X]     [X]      [X]
-#> duration                  DAILY     [ ]     [X]      [ ]
+#> duration                  DAILY     [X]     [X]      [ ]
 #> begin_date                 NULL     [ ]     [X]      [ ]
 #> end_date                   NULL     [ ]     [X]      [ ]
 #> period_reference            END     [ ]     [X]      [ ]
