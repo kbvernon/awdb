@@ -43,6 +43,19 @@ to build unique station triplet identifiers of the form
 networks.
 
 See \code{set_options()} for more details.
+\subsection{Element Format}{
+
+Elements are specified as triplets of the form
+\code{elementCode:heightDepth:ordinal}. Any part of the element triplet can
+contain the \code{*} wildcard character. Both \code{heightDepth} and \code{ordinal} are
+optional. The unit of \code{heightDepth} is inches. If \code{ordinal} is not specified,
+it is assumed to be 1. Here are some examples:
+\itemize{
+\item \code{"WTEQ"} - return all snow water equivalent values.
+\item \code{"SMS:-8"} - return soil moisture values observed 8 inches below the surface.
+\item \code{"SMS:*"} - return soil moisture values for all measured depths.
+}
+}
 }
 \examples{
 # get all stations in aoi

@@ -25,6 +25,17 @@
 #'
 #' See `set_options()` for more details.
 #'
+#' ## Element Format
+#' Elements are specified as triplets of the form
+#' `elementCode:heightDepth:ordinal`. Any part of the element triplet can
+#' contain the `*` wildcard character. Both `heightDepth` and `ordinal` are
+#' optional. The unit of `heightDepth` is inches. If `ordinal` is not specified,
+#' it is assumed to be 1. Here are some examples:
+#'
+#' - `"WTEQ"` - return all snow water equivalent values.
+#' - `"SMS:-8"` - return soil moisture values observed 8 inches below the surface.
+#' - `"SMS:*"` - return soil moisture values for all measured depths.
+#'
 #' @export
 #'
 #' @examples
