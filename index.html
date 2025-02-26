@@ -11,8 +11,8 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Query the USDA NWCC Air and Water Database REST API">
-<meta name="description" content="Functions for querying the four endpoints of the Air and Water Database (AWDB) REST API maintained by the National Water and Climate Center (NWCC) at the United States Department of Agriculture (USDA). Endpoints include data, forecast, reference-data, and metadata. The package is extremely light weight, with Rust via extendr doing most of the heavy lifting to deserialize and flatten deeply nested JSON responses.">
-<meta property="og:description" content="Functions for querying the four endpoints of the Air and Water Database (AWDB) REST API maintained by the National Water and Climate Center (NWCC) at the United States Department of Agriculture (USDA). Endpoints include data, forecast, reference-data, and metadata. The package is extremely light weight, with Rust via extendr doing most of the heavy lifting to deserialize and flatten deeply nested JSON responses.">
+<meta name="description" content="Query the four endpoints of the Air and Water Database (AWDB) REST API maintained by the National Water and Climate Center (NWCC) at the United States Department of Agriculture (USDA). Endpoints include data, forecast, reference-data, and metadata. The package is extremely light weight, with Rust via extendr doing most of the heavy lifting to deserialize and flatten deeply nested JSON responses. The AWDB can be found at &lt;https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html&gt;.">
+<meta property="og:description" content="Query the four endpoints of the Air and Water Database (AWDB) REST API maintained by the National Water and Climate Center (NWCC) at the United States Department of Agriculture (USDA). Endpoints include data, forecast, reference-data, and metadata. The package is extremely light weight, with Rust via extendr doing most of the heavy lifting to deserialize and flatten deeply nested JSON responses. The AWDB can be found at &lt;https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html&gt;.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">awdb</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,12 +48,15 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The <a href="https://github.com/kbvernon/awdb" class="external-link">awdb</a> package provides tools for querying the USDA National Water and Climate Center <a href="https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html" class="external-link">Air and Water Database REST API</a>. The package is extremely light weight, with Rust via <a href="https://extendr.github.io/" class="external-link"><code>extendr</code></a> doing most of the heavy lifting to deserialize and flatten deeply nested JSON responses. The package is also designed to support pretty printing of <code>tibbles</code> if you import the <a href="https://tibble.tidyverse.org/" class="external-link">tibble</a> package.</p>
+<p>The <a href="https://github.com/kbvernon/awdb" class="external-link">awdb</a> package provides functions for querying the four endpoints of the <a href="https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html" class="external-link">Air and Water Database (AWDB) REST API</a> maintained by the National Water and Climate Center (NWCC) at the United States Department of Agriculture (USDA). Endpoints include data, forecast, reference-data, and metadata. The package is extremely light weight, with Rust via <a href="https://extendr.github.io/" class="external-link"><code>extendr</code></a> doing most of the heavy lifting to deserialize and flatten deeply nested JSON responses. The package is also designed to support pretty printing of <code>tibble</code>s if you import the <a href="https://tibble.tidyverse.org/" class="external-link">tibble</a> package.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of <a href="https://github.com/kbvernon/awdb" class="external-link">awdb</a> from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>You can install the release version of <a href="https://github.com/kbvernon/awdb" class="external-link">awdb</a> from CRAN with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"awdb"</span><span class="op">)</span></span></code></pre></div>
+<p>Or you can get the development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"kbvernon/awdb"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -91,7 +94,7 @@
 <h2 id="get-stations">Get Stations<a class="anchor" aria-label="anchor" href="#get-stations"></a>
 </h2>
 <p>Find all AWDB stations around Bear Lake in northern Utah that measure soil moisture percent at various depths.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/kbvernon/awdb" class="external-link">awdb</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span>
@@ -127,7 +130,7 @@
 <h2 id="get-elements">Get Elements<a class="anchor" aria-label="anchor" href="#get-elements"></a>
 </h2>
 <p>USDA NWCC refers to soil, snow, stream, and weather variables measured at AWDB stations as “elements.” Here we get snow water equivalent and soil moisture measurements around Bear Lake in early May of 2015.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">elements</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_elements.html">get_elements</a></span><span class="op">(</span></span>
 <span>  <span class="va">bear_lake</span>,</span>
 <span>  elements <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"WTEQ"</span>, <span class="st">"SMS:8"</span><span class="op">)</span>,</span>
@@ -172,8 +175,8 @@
 <div class="section level2">
 <h2 id="get-forecasts">Get Forecasts<a class="anchor" aria-label="anchor" href="#get-forecasts"></a>
 </h2>
-<p>Get streamflow forecasts for the Cascades in west central Oregon. This returns a list column as it does with elements.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>Get streamflow forecasts for the Cascades in west central Oregon. As with <code><a href="reference/get_elements.html">get_elements()</a></code>, this returns a list column.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">forecasts</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_forecasts.html">get_forecasts</a></span><span class="op">(</span><span class="va">cascades</span>, elements <span class="op">=</span> <span class="st">"SRVO"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">forecasts</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -212,7 +215,7 @@
 <h2 id="get-references">Get References<a class="anchor" aria-label="anchor" href="#get-references"></a>
 </h2>
 <p>A somewhat unique endpoint for this REST API is called “References.” If you have ever worked with government employees or the military, you maybe are aware that they prefer an extremely condensed form of speech jammed full of acronyms and other codes. The references endpoint helps clarify their cryptic language with data dictionaries that explain what each code used in the database actually means. It also in the process provides an exhaustive list of available options. All of this, you can access with <code><a href="reference/get_references.html">get_references()</a></code>. For instance, if you want a table showing all possible station elements in the AWDB, it is as simple as this.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/get_references.html">get_references</a></span><span class="op">(</span><span class="st">"elements"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 115 × 9</span></span>
 <span><span class="co">#&gt;    code  name     physical_element_name function_code data_precision description</span></span>
@@ -235,7 +238,7 @@
 <h2 id="additional-query-parameters">Additional Query Parameters<a class="anchor" aria-label="anchor" href="#additional-query-parameters"></a>
 </h2>
 <p>In the above examples, we use <code><a href="reference/awdb_options.html">set_options()</a></code> to pass additional query parameters. If you don’t pass any arguments, it uses defaults assumed by the AWDB REST API. <span style="color: #3273a8;"><strong>It’s important to note that not all parameters are passed to every endpoint.</strong></span> The references endpoint, for example, doesn’t take any query parameters other than <code>reference_type</code>. To see what goes where, you can print the <code>awdb_options</code> list returned by <code><a href="reference/awdb_options.html">set_options()</a></code>. This will also show you the current values for each parameter.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/awdb_options.html">set_options</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── AWDB Query Parameter Set ────────────────────────────────────────────────────</span></span>
@@ -243,7 +246,7 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                           VALUE STATION ELEMENT FORECAST</span></span>
 <span><span class="co">#&gt; networks                      *     [X]     [X]      [X]</span></span>
-<span><span class="co">#&gt; duration                  DAILY     [ ]     [X]      [ ]</span></span>
+<span><span class="co">#&gt; duration                  DAILY     [X]     [X]      [ ]</span></span>
 <span><span class="co">#&gt; begin_date                 NULL     [ ]     [X]      [ ]</span></span>
 <span><span class="co">#&gt; end_date                   NULL     [ ]     [X]      [ ]</span></span>
 <span><span class="co">#&gt; period_reference            END     [ ]     [X]      [ ]</span></span>
@@ -269,6 +272,7 @@
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=awdb" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/kbvernon/awdb/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/kbvernon/awdb/issues" class="external-link">Report a bug</a></li>
 </ul>
