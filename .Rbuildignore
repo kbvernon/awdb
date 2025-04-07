@@ -14,3 +14,4 @@
 [.]qmd$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^src/rust/target$
