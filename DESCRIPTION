@@ -1,6 +1,6 @@
 Package: awdb
 Title: Query the USDA NWCC Air and Water Database REST API
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: 
     person("Kenneth Blake", "Vernon", , 
            "kenneth.b.vernon@gmail.com", 
