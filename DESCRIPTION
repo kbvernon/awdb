@@ -25,7 +25,7 @@ Imports:
     rlang (>= 1.1.0),
     sf
 Depends: 
-    R (>= 4.1.0)
+    R (>= 4.2)
 LazyData: true
 URL: https://github.com/kbvernon/awdb, https://kbvernon.github.io/awdb/
 BugReports: https://github.com/kbvernon/awdb/issues
