@@ -1,3 +1,7 @@
+# awdb 0.1.3
+
+* Update examples so that they do not run on CRAN.
+
 # awdb 0.1.2
 
 ## 🐞 Bug fixes

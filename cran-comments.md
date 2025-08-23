@@ -1,7 +1,7 @@
-## CRAN REMOVAL WARNING (R-devel 4.5)
+## CRAN REMOVAL WARNING
 
-* This release addresses CRAN Team e-mail from 2025-03-24 and fixes WARNING 
-about calling bad entry points in the "compiled code" check.
+* This release addresses CRAN Team e-mail from 2025-07-22 and fixes issue with
+examples failing on CRAN.
 
 ## R CMD check results
 

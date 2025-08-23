@@ -7,8 +7,9 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml)
-[![CRAN status](https://www.r-pkg.org/badges/version/awdb)](https://CRAN.R-project.org/package=awdb)
-[![extendr](https://img.shields.io/badge/extendr-%5E0.8.0-276DC2)](https://extendr.github.io/extendr/extendr_api/)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/awdb.png)](https://CRAN.R-project.org/package=awdb)
+[![extendr](https://img.shields.io/badge/extendr-%5E0.8.0-276DC2)](https://extendr.rs/extendr/extendr_api/)
 <!-- badges: end -->
 
 The `{awdb}` package provides functions for querying the four endpoints
@@ -17,10 +18,10 @@ API](https://wcc.sc.egov.usda.gov/awdbRestApi/swagger-ui/index.html)
 maintained by the National Water and Climate Center (NWCC) at the United
 States Department of Agriculture (USDA). Endpoints include data,
 forecast, reference-data, and metadata. The package is extremely light
-weight, with Rust via [`extendr`](https://extendr.github.io/) doing most
-of the heavy lifting to deserialize and flatten deeply nested JSON
-responses. The package is also designed to support pretty printing of
-`tibble`s if you import the `{tibble}` package.
+weight, with Rust via [`extendr`](https://extendr.rs/) doing most of the
+heavy lifting to deserialize and flatten deeply nested JSON responses.
+The package is also designed to support pretty printing of `tibble`s if
+you import the `{tibble}` package.
 
 ## Installation
 
@@ -165,20 +166,20 @@ forecasts[c(
   "forecast_period",
   "forecast_values"
 )]
-#> # A tibble: 63 × 5
+#> # A tibble: 155 × 5
 #>    station_triplet element_code publication_date forecast_period forecast_values
 #>    <chr>           <chr>        <chr>            <chr>           <list>         
 #>  1 14050000:OR:US… SRVO         2025-01-01 00:00 02-01:07-31     <tibble>       
 #>  2 14050000:OR:US… SRVO         2025-02-01 00:00 02-01:07-31     <tibble>       
 #>  3 14050000:OR:US… SRVO         2025-01-01 00:00 02-01:09-30     <tibble>       
 #>  4 14050000:OR:US… SRVO         2025-02-01 00:00 02-01:09-30     <tibble>       
-#>  5 14050000:OR:US… SRVO         2025-01-01 00:00 04-01:07-31     <tibble>       
-#>  6 14050000:OR:US… SRVO         2025-02-01 00:00 04-01:07-31     <tibble>       
-#>  7 14050000:OR:US… SRVO         2025-01-01 00:00 04-01:09-30     <tibble>       
-#>  8 14050000:OR:US… SRVO         2025-02-01 00:00 04-01:09-30     <tibble>       
-#>  9 14053500:OR:US… SRVO         2025-01-01 00:00 02-01:07-31     <tibble>       
-#> 10 14053500:OR:US… SRVO         2025-02-01 00:00 02-01:07-31     <tibble>       
-#> # ℹ 53 more rows
+#>  5 14050000:OR:US… SRVO         2025-03-01 00:00 03-01:07-31     <tibble>       
+#>  6 14050000:OR:US… SRVO         2025-03-01 00:00 03-01:09-30     <tibble>       
+#>  7 14050000:OR:US… SRVO         2025-01-01 00:00 04-01:07-31     <tibble>       
+#>  8 14050000:OR:US… SRVO         2025-02-01 00:00 04-01:07-31     <tibble>       
+#>  9 14050000:OR:US… SRVO         2025-03-01 00:00 04-01:07-31     <tibble>       
+#> 10 14050000:OR:US… SRVO         2025-04-01 00:00 04-01:07-31     <tibble>       
+#> # ℹ 145 more rows
 
 forecasts[["forecast_values"]][[1]]
 #> # A tibble: 5 × 2
@@ -206,7 +207,7 @@ this.
 
 ``` r
 get_references("elements")
-#> # A tibble: 115 × 9
+#> # A tibble: 116 × 9
 #>    code  name     physical_element_name function_code data_precision description
 #>    <chr> <chr>    <chr>                 <chr>                  <int> <chr>      
 #>  1 TAVG  AIR TEM… air temperature       V                          1 Average Ai…
@@ -219,7 +220,7 @@ get_references("elements")
 #>  8 BATX  BATTERY… battery               X                          2 Maximum Ba…
 #>  9 BATN  BATTERY… battery               N                          2 Minimum Ba…
 #> 10 ETIB  BATTERY… battery-eti precip g… C                          2 <NA>       
-#> # ℹ 105 more rows
+#> # ℹ 106 more rows
 #> # ℹ 3 more variables: stored_unit_code <chr>, english_unit_code <chr>,
 #> #   metric_unit_code <chr>
 ```
