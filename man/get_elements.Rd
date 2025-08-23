@@ -62,7 +62,7 @@ value to measure directly, so this parameter is more a rule of thumb than a
 strict standard. If processing is slow for you, you may find experimenting
 with this parameter useful.
 
-See \code{set_options()} for more details.
+See \code{\link[=set_options]{set_options()}} for more details.
 \subsection{Element Format}{
 
 Elements are specified as triplets of the form
@@ -78,10 +78,11 @@ it is assumed to be 1. Here are some examples:
 }
 }
 \examples{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true")) withAutoprint(\{ # examplesIf}
 # get snow water equivalent values around Bear Lake
 get_elements(bear_lake, elements = "WTEQ")
 
 # return as sf table
 get_elements(bear_lake, elements = "WTEQ", as_sf = TRUE)
-
+\dontshow{\}) # examplesIf}
 }

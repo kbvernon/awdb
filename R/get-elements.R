@@ -46,7 +46,7 @@
 #' strict standard. If processing is slow for you, you may find experimenting
 #' with this parameter useful.
 #'
-#' See `set_options()` for more details.
+#' See [set_options()] for more details.
 #'
 #' ## Element Format
 #' Elements are specified as triplets of the form
@@ -61,7 +61,7 @@
 #'
 #' @export
 #'
-#' @examples
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true")
 #' # get snow water equivalent values around Bear Lake
 #' get_elements(bear_lake, elements = "WTEQ")
 #'

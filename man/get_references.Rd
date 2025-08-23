@@ -21,6 +21,7 @@ Database REST API. References provide descriptions of all codes used in the
 AWDB.
 }
 \examples{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true")) withAutoprint(\{ # examplesIf}
 get_references("elements")
-
+\dontshow{\}) # examplesIf}
 }
