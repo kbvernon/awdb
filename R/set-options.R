@@ -65,7 +65,7 @@
 #'
 #' @name awdb_options
 #'
-#' @examples
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true")
 #' set_options()
 #'
 set_options <- function(
@@ -189,58 +189,61 @@ print.awdb_options <- function(x, ...) {
   no <- "[ ]"
 
   check_station <- ifelse(
-    parameters %in% c(
-      "station_names",
-      "dco_codes",
-      "county_names",
-      "duration",
-      "hucs",
-      "return_forecast_metadata",
-      "return_reservoir_metadata",
-      "return_element_metadata",
-      "active_only",
-      "networks"
-    ),
+    parameters %in%
+      c(
+        "station_names",
+        "dco_codes",
+        "county_names",
+        "duration",
+        "hucs",
+        "return_forecast_metadata",
+        "return_reservoir_metadata",
+        "return_element_metadata",
+        "active_only",
+        "networks"
+      ),
     yes,
     no
   )
 
   check_element <- ifelse(
-    parameters %in% c(
-      "station_names",
-      "dco_codes",
-      "county_names",
-      "hucs",
-      "active_only",
-      "duration",
-      "begin_date",
-      "end_date",
-      "period_reference",
-      "central_tendency",
-      "return_flags",
-      "return_original_values",
-      "return_suspect_values",
-      "networks",
-      "request_size"
-    ),
+    parameters %in%
+      c(
+        "station_names",
+        "dco_codes",
+        "county_names",
+        "hucs",
+        "active_only",
+        "duration",
+        "begin_date",
+        "end_date",
+        "period_reference",
+        "central_tendency",
+        "return_flags",
+        "return_original_values",
+        "return_suspect_values",
+        "networks",
+        "request_size"
+      ),
     yes,
     no
   )
 
   check_forecast <- ifelse(
-    parameters %in% c(
-      "station_names",
-      "dco_codes",
-      "county_names",
-      "hucs",
-      "active_only",
-      "begin_publication_date",
-      "end_publication_date",
-      "exceedence_probabilities",
-      "forecast_periods",
-      "networks",
-      "request_size"
-    ),
+    parameters %in%
+      c(
+        "station_names",
+        "dco_codes",
+        "county_names",
+        "hucs",
+        "active_only",
+        "begin_publication_date",
+        "end_publication_date",
+        "exceedence_probabilities",
+        "forecast_periods",
+        "networks",
+        "request_size"
+      ),
     yes,
     no
   )
@@ -328,7 +331,9 @@ check_whole_number_vector <- function(x, call = rlang::caller_call()) {
 if_not_null <- function(x, .f, ...) {
   check_function(.f, ...)
 
-  if (!rlang::is_null(x)) x <- .f(x)
+  if (!rlang::is_null(x)) {
+    x <- .f(x)
+  }
 
   x
 }

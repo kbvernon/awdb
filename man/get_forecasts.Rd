@@ -67,7 +67,7 @@ with this parameter useful.
 Note that the \code{duration} parameter is ignored - or, more precisely, it is set
 to \code{NULL}.
 
-See \code{set_options()} for more details.
+See \code{\link[=set_options]{set_options()}} for more details.
 \subsection{Element Format}{
 
 Elements are specified as triplets of the form
@@ -92,10 +92,11 @@ survey). In general, it's recommended to use \code{SRVO}.
 }
 }
 \examples{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true")) withAutoprint(\{ # examplesIf}
 # get streamflow forecasts
 get_forecasts(cascades, elements = "SRVO")
 
 # return as sf table
 get_forecasts(cascades, elements = "SRVO", as_sf = TRUE)
-
+\dontshow{\}) # examplesIf}
 }

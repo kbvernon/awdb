@@ -13,7 +13,7 @@
 #'
 #' @export
 #'
-#' @examples
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true")
 #' get_references("elements")
 #'
 get_references <- function(reference_type = "elements") {

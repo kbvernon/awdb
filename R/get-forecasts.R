@@ -37,7 +37,7 @@
 #' Note that the `duration` parameter is ignored - or, more precisely, it is set
 #' to `NULL`.
 #'
-#' See `set_options()` for more details.
+#' See [set_options()] for more details.
 #'
 #' ## Element Format
 #' Elements are specified as triplets of the form
@@ -59,7 +59,7 @@
 #'
 #' @export
 #'
-#' @examples
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true")
 #' # get streamflow forecasts
 #' get_forecasts(cascades, elements = "SRVO")
 #'

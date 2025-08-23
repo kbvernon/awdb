@@ -42,7 +42,7 @@ to build unique station triplet identifiers of the form
 \code{station:state:network}, so it serves to filter stations to just those
 networks.
 
-See \code{set_options()} for more details.
+See \code{\link[=set_options]{set_options()}} for more details.
 \subsection{Element Format}{
 
 Elements are specified as triplets of the form
@@ -58,6 +58,7 @@ it is assumed to be 1. Here are some examples:
 }
 }
 \examples{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true")) withAutoprint(\{ # examplesIf}
 # get all stations in aoi
 get_stations(
   bear_lake,
@@ -76,5 +77,5 @@ get_stations(
   elements = "*",
   awdb_options = set_options(networks = "SNTL")
 )
-
+\dontshow{\}) # examplesIf}
 }

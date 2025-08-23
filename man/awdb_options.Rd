@@ -123,6 +123,7 @@ This is a helper function to make it easier to handle additional query
 parameters. Provides defaults for each and does type checking.
 }
 \examples{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true")) withAutoprint(\{ # examplesIf}
 set_options()
-
+\dontshow{\}) # examplesIf}
 }
