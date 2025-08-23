@@ -16,7 +16,7 @@ knitr:
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](https://www.r-pkg.org/badges/version/awdb)](https://CRAN.R-project.org/package=awdb)
-[![extendr](https://img.shields.io/badge/extendr-^0.8.0-276DC2)](https://extendr.github.io/extendr/extendr_api/)
+[![extendr](https://img.shields.io/badge/extendr-^0.8.0-276DC2)](https://extendr.rs/extendr/extendr_api/)
 <!-- badges: end -->
 
 The `{awdb}` package provides functions for querying the four endpoints of the 
@@ -24,7 +24,7 @@ The `{awdb}` package provides functions for querying the four endpoints of the
 maintained by the National Water and Climate Center (NWCC) at the United States 
 Department of Agriculture (USDA). Endpoints include data, forecast, 
 reference-data, and metadata. The package is extremely light weight, with Rust 
-via [`extendr`](https://extendr.github.io/) doing most of the heavy lifting 
+via [`extendr`](https://extendr.rs/) doing most of the heavy lifting 
 to deserialize and flatten deeply nested JSON responses. The package is also 
 designed to support pretty printing of `tibble`s if you import the `{tibble}` 
 package.
