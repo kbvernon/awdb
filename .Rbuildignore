@@ -1,5 +1,6 @@
 ^src/\.cargo$
 ^src/rust/vendor$
+^src/rust/target$
 ^src/Makevars$
 ^src/Makevars\.win$
 ^data-raw$
@@ -14,4 +15,3 @@
 [.]qmd$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
-^src/rust/target$
