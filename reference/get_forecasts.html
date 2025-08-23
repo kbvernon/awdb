@@ -137,7 +137,7 @@ survey). In general, it's recommended to use <code>SRVO</code>.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># get streamflow forecasts</span></span></span>
 <span class="r-in"><span><span class="fu">get_forecasts</span><span class="op">(</span><span class="va">cascades</span>, elements <span class="op">=</span> <span class="st">"SRVO"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 117 × 10</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 155 × 10</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    station_triplet  forecast_point_name    element_code forecast_period</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         02-01:07-31    </span>
@@ -150,36 +150,35 @@ survey). In general, it's recommended to use <code>SRVO</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:07-31    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:07-31    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:07-31    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 107 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 145 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 6 more variables: forecast_status &lt;chr&gt;, issue_date &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   period_normal &lt;dbl&gt;, publication_date &lt;chr&gt;, unit_code &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   forecast_values &lt;list&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># return as sf table</span></span></span>
 <span class="r-in"><span><span class="fu">get_forecasts</span><span class="op">(</span><span class="va">cascades</span>, elements <span class="op">=</span> <span class="st">"SRVO"</span>, as_sf <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 117 features and 10 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 155 features and 10 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: -122.8373 ymin: 43.5029 xmax: -121.5028 ymax: 44.2679</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geodetic CRS:  WGS 84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 117 × 11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 155 × 11</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    station_triplet  forecast_point_name    element_code forecast_period</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         02-01:09-30    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:07-31    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         02-01:09-30    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         03-01:07-31    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         03-01:09-30    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:09-30    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:07-31    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:07-31    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:07-31    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         02-01:07-31    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 107 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         02-01:07-31    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         02-01:07-31    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         06-01:07-31    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         06-01:09-30    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         05-01:07-31    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         05-01:09-30    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:09-30    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:09-30    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:09-30    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:09-30    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 145 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 7 more variables: forecast_status &lt;chr&gt;, issue_date &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   period_normal &lt;dbl&gt;, publication_date &lt;chr&gt;, unit_code &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   forecast_values &lt;list&gt;, geometry &lt;POINT [°]&gt;</span></span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -191,7 +190,7 @@ survey). In general, it's recommended to use <code>SRVO</code>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>
