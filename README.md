@@ -8,7 +8,7 @@
 
 [![R-CMD-check](https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml)
 [![CRAN
-status](https://www.r-pkg.org/badges/version/awdb.png)](https://CRAN.R-project.org/package=awdb)
+status](https://www.r-pkg.org/badges/version/awdb)](https://CRAN.R-project.org/package=awdb)
 [![extendr](https://img.shields.io/badge/extendr-%5E0.8.0-276DC2)](https://extendr.rs/extendr/extendr_api/)
 <!-- badges: end -->
 
