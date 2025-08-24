@@ -7,6 +7,7 @@ knitr:
     fig-align: center
     fig-path: "man/figures/README-"
     fig-format: svg
+default-image-extension: ""
 ---
 
 <!-- README.md is generated from README.qmd. Please edit that file -->
