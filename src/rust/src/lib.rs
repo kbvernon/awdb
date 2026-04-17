@@ -1,3 +1,4 @@
+use extendr_api::error::*;
 use extendr_api::prelude::*;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -399,8 +400,8 @@ struct UnitRef {
 
 #[extendr]
 fn parse_station_reference_json(x: Strings, reference_type: Strings) -> Robj {
-    let json = x[0].as_str();
-    let rtype = reference_type[0].as_str();
+    let json = x[0].as_ref();
+    let rtype = reference_type[0].as_ref();
 
     let mut df = match rtype {
         "dcos" => {
