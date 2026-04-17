@@ -1,0 +1,148 @@
+# Get Station Elements
+
+Get station elements from the USDA National Water and Climate Center Air
+and Water Database REST API. Elements are soil, snow, stream, and
+weather variables measured at AWDB stations.
+
+## Usage
+
+``` r
+get_elements(aoi = NULL, elements, awdb_options = set_options(), as_sf = FALSE)
+```
+
+## Arguments
+
+- aoi:
+
+  `sfc` POLYGON scalar, the area of interest used for performing a
+  spatial filter on available stations in `network`. If `NULL` (the
+  default), no spatial filter is performed.
+
+- elements:
+
+  character vector, abbreviations or codes for variables of interest
+  (e.g., "SMS" for "Soil Moisture Percent"). See Details for available
+  elements and codes.
+
+- awdb_options:
+
+  an `awdb_options` list with additional query parameters.
+
+- as_sf:
+
+  boolean scalar, whether to return the data as an `sf` table. Default
+  is `FALSE`. Repeating the spatial data across each station element and
+  its time series can be costly.
+
+## Value
+
+if `as_sf`, an `sf` table, otherwise a simple data.frame. The number of
+rows depends on the number of stations and element parameters. Time
+series data are included as a list column named `"element_values"`.
+
+## Details
+
+This endpoint will accept the following query parameters via
+[`set_options()`](https://kbvernon.github.io/awdb/reference/awdb_options.md):
+
+- `duration`
+
+- `begin_date`
+
+- `end_date`
+
+- `period_reference`
+
+- `central_tendency`
+
+- `return_flags`
+
+- `return_original_values`
+
+- `return_suspect_values`
+
+The following can also be passed to filter stations:
+
+- `station_names`
+
+- `dco_codes`
+
+- `county_names`
+
+- `hucs`
+
+- `active_only`
+
+You may also specify `networks` and `request_size`. The `networks`
+parameter is used internally to build unique station triplet identifiers
+of the form `station:state:network` which are then passed to the
+endpoint, so it serves to filter stations to just those networks. The
+`request_size` parameter is for handling rate limits, which are based on
+the number of elements - a hard value to measure directly, so this
+parameter is more a rule of thumb than a strict standard. If processing
+is slow for you, you may find experimenting with this parameter useful.
+
+See
+[`set_options()`](https://kbvernon.github.io/awdb/reference/awdb_options.md)
+for more details.
+
+### Element Format
+
+Elements are specified as triplets of the form
+`elementCode:heightDepth:ordinal`. Any part of the element triplet can
+contain the `*` wildcard character. Both `heightDepth` and `ordinal` are
+optional. The unit of `heightDepth` is inches. If `ordinal` is not
+specified, it is assumed to be 1. Here are some examples:
+
+- `"WTEQ"` - return all snow water equivalent values.
+
+- `"SMS:-8"` - return soil moisture values observed 8 inches below the
+  surface.
+
+- `"SMS:*"` - return soil moisture values for all measured depths.
+
+## Examples
+
+``` r
+# get snow water equivalent values around Bear Lake
+get_elements(bear_lake, elements = "WTEQ")
+#> # A tibble: 10 × 11
+#>    station_triplet element_code ordinal duration_name data_precision
+#>    <chr>           <chr>          <int> <chr>                  <int>
+#>  1 374:UT:SNTL     WTEQ               1 DAILY                      1
+#>  2 471:ID:SNTL     WTEQ               1 DAILY                      1
+#>  3 484:ID:SNTL     WTEQ               1 DAILY                      1
+#>  4 1114:UT:SNTL    WTEQ               1 DAILY                      1
+#>  5 493:ID:SNTL     WTEQ               1 DAILY                      1
+#>  6 1115:UT:SNTL    WTEQ               1 DAILY                      1
+#>  7 1013:UT:SNTL    WTEQ               1 DAILY                      1
+#>  8 823:UT:SNTL     WTEQ               1 DAILY                      1
+#>  9 1113:UT:SNTL    WTEQ               1 DAILY                      1
+#> 10 1098:UT:SNTL    WTEQ               1 DAILY                      1
+#> # ℹ 6 more variables: stored_unit_code <chr>, original_unit_code <chr>,
+#> #   begin_date <chr>, end_date <chr>, derived_data <lgl>, element_values <list>
+
+# return as sf table
+get_elements(bear_lake, elements = "WTEQ", as_sf = TRUE)
+#> Simple feature collection with 10 features and 11 fields
+#> Geometry type: POINT
+#> Dimension:     XY
+#> Bounding box:  xmin: -111.6296 ymin: 41.68541 xmax: -111.1663 ymax: 42.4132
+#> Geodetic CRS:  WGS 84
+#> # A tibble: 10 × 12
+#>    station_triplet element_code ordinal duration_name data_precision
+#>    <chr>           <chr>          <int> <chr>                  <int>
+#>  1 1013:UT:SNTL    WTEQ               1 DAILY                      1
+#>  2 1098:UT:SNTL    WTEQ               1 DAILY                      1
+#>  3 1113:UT:SNTL    WTEQ               1 DAILY                      1
+#>  4 1114:UT:SNTL    WTEQ               1 DAILY                      1
+#>  5 1115:UT:SNTL    WTEQ               1 DAILY                      1
+#>  6 374:UT:SNTL     WTEQ               1 DAILY                      1
+#>  7 471:ID:SNTL     WTEQ               1 DAILY                      1
+#>  8 484:ID:SNTL     WTEQ               1 DAILY                      1
+#>  9 493:ID:SNTL     WTEQ               1 DAILY                      1
+#> 10 823:UT:SNTL     WTEQ               1 DAILY                      1
+#> # ℹ 7 more variables: stored_unit_code <chr>, original_unit_code <chr>,
+#> #   begin_date <chr>, end_date <chr>, derived_data <lgl>,
+#> #   element_values <list>, geometry <POINT [°]>
+```
