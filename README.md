@@ -9,7 +9,7 @@
 [![R-CMD-check](https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kbvernon/awdb/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/awdb)](https://CRAN.R-project.org/package=awdb)
-[![extendr](https://img.shields.io/badge/extendr-%5E0.8.0-276DC2)](https://extendr.rs/extendr/extendr_api/)
+[![extendr](https://img.shields.io/badge/extendr-%5E0.9.0-276DC2)](https://extendr.rs/extendr/extendr_api/)
 <!-- badges: end -->
 
 The `{awdb}` package provides functions for querying the four endpoints
@@ -166,30 +166,30 @@ forecasts[c(
   "forecast_period",
   "forecast_values"
 )]
-#> # A tibble: 155 × 5
+#> # A tibble: 118 × 5
 #>    station_triplet element_code publication_date forecast_period forecast_values
 #>    <chr>           <chr>        <chr>            <chr>           <list>         
-#>  1 14050000:OR:US… SRVO         2025-01-01 00:00 02-01:07-31     <tibble>       
-#>  2 14050000:OR:US… SRVO         2025-02-01 00:00 02-01:07-31     <tibble>       
-#>  3 14050000:OR:US… SRVO         2025-01-01 00:00 02-01:09-30     <tibble>       
-#>  4 14050000:OR:US… SRVO         2025-02-01 00:00 02-01:09-30     <tibble>       
-#>  5 14050000:OR:US… SRVO         2025-03-01 00:00 03-01:07-31     <tibble>       
-#>  6 14050000:OR:US… SRVO         2025-03-01 00:00 03-01:09-30     <tibble>       
-#>  7 14050000:OR:US… SRVO         2025-01-01 00:00 04-01:07-31     <tibble>       
-#>  8 14050000:OR:US… SRVO         2025-02-01 00:00 04-01:07-31     <tibble>       
-#>  9 14050000:OR:US… SRVO         2025-03-01 00:00 04-01:07-31     <tibble>       
-#> 10 14050000:OR:US… SRVO         2025-04-01 00:00 04-01:07-31     <tibble>       
-#> # ℹ 145 more rows
+#>  1 14050000:OR:US… SRVO         2026-01-01 00:00 02-01:07-31     <tibble>       
+#>  2 14050000:OR:US… SRVO         2026-02-01 00:00 02-01:07-31     <tibble>       
+#>  3 14050000:OR:US… SRVO         2026-01-01 00:00 02-01:09-30     <tibble>       
+#>  4 14050000:OR:US… SRVO         2026-02-01 00:00 02-01:09-30     <tibble>       
+#>  5 14050000:OR:US… SRVO         2026-03-01 00:00 03-01:07-31     <tibble>       
+#>  6 14050000:OR:US… SRVO         2026-03-01 00:00 03-01:09-30     <tibble>       
+#>  7 14050000:OR:US… SRVO         2026-01-01 00:00 04-01:07-31     <tibble>       
+#>  8 14050000:OR:US… SRVO         2026-02-01 00:00 04-01:07-31     <tibble>       
+#>  9 14050000:OR:US… SRVO         2026-03-01 00:00 04-01:07-31     <tibble>       
+#> 10 14050000:OR:US… SRVO         2026-04-01 00:00 04-01:07-31     <tibble>       
+#> # ℹ 108 more rows
 
 forecasts[["forecast_values"]][[1]]
 #> # A tibble: 5 × 2
 #>   probability value
 #>   <chr>       <dbl>
-#> 1 10             50
+#> 1 10             51
 #> 2 30             43
 #> 3 50             38
 #> 4 70             34
-#> 5 90             28
+#> 5 90             30
 ```
 
 ## Get References
