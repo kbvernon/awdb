@@ -46,10 +46,8 @@ filter_stations <- function(
   df <- parse_station_metadataset_json(json)
 
   if (!all(c("longitude", "latitude") %in% names(df))) {
-    cli::cli_abort(
-      "Failed to retrieve spatial coordinates for stations.",
-      call = call
-    )
+    msg <- "Failed to retrieve spatial coordinates for stations."
+    cli::cli_abort(msg, call = call)
   }
 
   df <- sf::st_as_sf(
@@ -60,17 +58,13 @@ filter_stations <- function(
 
   if (!rlang::is_null(aoi)) {
     df <- sf::st_transform(df, sf::st_crs(aoi))
-
     i <- lengths(sf::st_intersects(sf::st_geometry(df), aoi)) > 0
-
     df <- df[i, ]
   }
 
   if (nrow(df) == 0) {
-    cli::cli_abort(
-      "No stations with {.val {elements}} element(s) found in the {.var aoi}.",
-      call = call
-    )
+    msg <- "No stations with {.val {elements}} element(s) found in the {.var aoi}."
+    cli::cli_abort(msg, call = call)
   }
 
   df
@@ -135,11 +129,8 @@ make_requests <- function(
 
   if (any(errors)) {
     missing_stations <- unlist(station_triplets_list[errors])
-
-    cli::cli_alert(
-      "Request failed for these stations: {.val {missing_stations}}.",
-      call = call
-    )
+    msg <- "Request failed for these stations: {.val {missing_stations}}."
+    cli::cli_alert(msg, call = call)
   }
 
   vapply(
@@ -163,34 +154,28 @@ check_sfc_scalar <- function(
 ) {
   if (rlang::is_null(aoi)) {
     if (!allow_null) {
-      cli::cli_abort(
-        "`aoi` cannot be NULL.",
-        call = call
-      )
+      msg <- "`aoi` cannot be NULL."
+      cli::cli_abort(msg, call = call)
     }
 
     return()
   }
 
   if (!rlang::inherits_any(aoi, "sfc") || length(aoi) != 1) {
-    cli::cli_abort(
-      "`aoi` must be an {.cls sfc} containing a single feature.",
-      call = call
-    )
+    msg <- "`aoi` must be an {.cls sfc} containing a single feature."
+    cli::cli_abort(msg, call = call)
   }
 
   if (!sf::st_geometry_type(aoi) %in% shape) {
-    cli::cli_abort(
-      "`aoi` must have a geometry of type {shape}.",
-      call = call
-    )
+    msg <- "`aoi` must have a geometry of type {shape}."
+    cli::cli_abort(msg, call = call)
   }
 
   if (!sf::st_is_valid(aoi)) {
-    cli::cli_abort(
+    msg <- c(
       "`aoi` is not a valid geometry.",
-      "i" = "Consider running `sf::st_make_valid(aoi)`.",
-      call = call
+      "i" = "Consider running `sf::st_make_valid(aoi)`."
     )
+    cli::cli_abort(msg, call = call)
   }
 }

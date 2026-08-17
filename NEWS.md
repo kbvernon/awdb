@@ -1,4 +1,9 @@
-# awdb (development version)
+# awdb 0.1.4
+
+# awadb 0.1.4
+
+* Update to extendr 0.9.0 and rextendr 0.5.0.
+* Update CLI messages.
 
 # awdb 0.1.3
 

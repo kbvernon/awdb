@@ -93,7 +93,7 @@ stations
 #> #   geometry <POINT [°]>
 ```
 
-<div style="width: 65%; margin: 0 auto;">
+<div style="width: 75%; margin: 0 auto;">
 
 <img src="man/figures/README-stations-1.svg" data-fig-align="center" />
 
@@ -166,7 +166,7 @@ forecasts[c(
   "forecast_period",
   "forecast_values"
 )]
-#> # A tibble: 118 × 5
+#> # A tibble: 156 × 5
 #>    station_triplet element_code publication_date forecast_period forecast_values
 #>    <chr>           <chr>        <chr>            <chr>           <list>         
 #>  1 14050000:OR:US… SRVO         2026-01-01 00:00 02-01:07-31     <tibble>       
@@ -179,7 +179,7 @@ forecasts[c(
 #>  8 14050000:OR:US… SRVO         2026-02-01 00:00 04-01:07-31     <tibble>       
 #>  9 14050000:OR:US… SRVO         2026-03-01 00:00 04-01:07-31     <tibble>       
 #> 10 14050000:OR:US… SRVO         2026-04-01 00:00 04-01:07-31     <tibble>       
-#> # ℹ 108 more rows
+#> # ℹ 146 more rows
 
 forecasts[["forecast_values"]][[1]]
 #> # A tibble: 5 × 2

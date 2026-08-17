@@ -272,13 +272,11 @@ print.awdb_options <- function(x, ...) {
 #'
 check_awdb_options <- function(awdb_options, call = rlang::caller_call()) {
   if (!rlang::inherits_all(awdb_options, c("awdb_options", "list"))) {
-    cli::cli_abort(
-      c(
-        "{.var awdb_options} must be an {.cls awdb_options} list.",
-        "i" = "You can make sure it is by using `awdb_options = set_options()`."
-      ),
-      call = call
+    msg <- c(
+      "{.var awdb_options} must be an {.cls awdb_options} list.",
+      "i" = "You can make sure it is by using `awdb_options = set_options()`."
     )
+    cli::cli_abort(msg, call = call)
   }
 }
 
@@ -295,10 +293,8 @@ check_date_format <- function(x, call = rlang::caller_call()) {
   arg <- rlang::caller_arg(x)
 
   if (!rlang::is_null(x) && !grepl("^\\d{4}-\\d{2}-\\d{2}$", x)) {
-    cli::cli_abort(
-      "{.arg {arg}} must be of the form `\"YYYY-MM-DD\"`.",
-      call = call
-    )
+    msg <- "{.arg {arg}} must be of the form `\"YYYY-MM-DD\"`."
+    cli::cli_abort(msg, call = call)
   }
 }
 
@@ -313,10 +309,8 @@ check_whole_number_vector <- function(x, call = rlang::caller_call()) {
   arg <- rlang::caller_arg(x)
 
   if (!rlang::is_null(x) && !rlang::is_integer(x)) {
-    cli::cli_abort(
-      "{.arg {arg}} must be an integer vector.",
-      call = call
-    )
+    msg <- "{.arg {arg}} must be an integer vector."
+    cli::cli_abort(msg, call = call)
   }
 }
 

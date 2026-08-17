@@ -76,12 +76,11 @@ get_stations <- function(
   i <- which(elements %in% forecast_variables)
 
   if (has_forecast_variables && has_duration) {
-    cli::cli_abort(
-      c(
-        "Forecast variables like {elements[i]} do not have a duration.",
-        "i" = "Please use `set_options(duration = NULL)`."
-      )
+    msg <- c(
+      "Forecast variables like {elements[i]} do not have a duration.",
+      "i" = "Please use `set_options(duration = NULL)`."
     )
+    cli::cli_abort(msg, call = rlang::caller_call())
   }
 
   df <- filter_stations(
