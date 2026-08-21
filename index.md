@@ -18,6 +18,7 @@ You can install the release version of
 [awdb](https://github.com/kbvernon/awdb) from CRAN with:
 
 ``` r
+
 install.packages("awdb")
 ```
 
@@ -25,6 +26,7 @@ Or you can get the development version from
 [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("kbvernon/awdb")
 ```
@@ -34,12 +36,12 @@ pak::pak("kbvernon/awdb")
 This package provides a separate function to query each endpoint at the
 USDA AWDB REST API:
 
-| Endpoint       | Function                                                                          |
-|:---------------|:----------------------------------------------------------------------------------|
-| data           | [`get_elements()`](https://kbvernon.github.io/awdb/reference/get_elements.md)     |
-| forecasts      | [`get_forecasts()`](https://kbvernon.github.io/awdb/reference/get_forecasts.md)   |
+| Endpoint | Function |
+|:---|:---|
+| data | [`get_elements()`](https://kbvernon.github.io/awdb/reference/get_elements.md) |
+| forecasts | [`get_forecasts()`](https://kbvernon.github.io/awdb/reference/get_forecasts.md) |
 | reference-data | [`get_references()`](https://kbvernon.github.io/awdb/reference/get_references.md) |
-| metadata       | [`get_stations()`](https://kbvernon.github.io/awdb/reference/get_stations.md)     |
+| metadata | [`get_stations()`](https://kbvernon.github.io/awdb/reference/get_stations.md) |
 
 Because the API does not provide for spatial queries, requests made with
 areas of interest (`aoi`) first ask the API metadata endpoint for all
@@ -54,6 +56,7 @@ Find all AWDB stations around Bear Lake in northern Utah that measure
 soil moisture percent at various depths.
 
 ``` r
+
 library(awdb)
 library(sf)
 library(tibble)
@@ -92,6 +95,7 @@ at AWDB stations as “elements.” Here we get snow water equivalent and
 soil moisture measurements around Bear Lake in early May of 2015.
 
 ``` r
+
 elements <- get_elements(
   bear_lake,
   elements = c("WTEQ", "SMS:8"),
@@ -145,6 +149,7 @@ with
 this returns a list column.
 
 ``` r
+
 forecasts <- get_forecasts(cascades, elements = "SRVO")
 
 forecasts[c(
@@ -154,7 +159,7 @@ forecasts[c(
   "forecast_period",
   "forecast_values"
 )]
-#> # A tibble: 118 × 5
+#> # A tibble: 156 × 5
 #>    station_triplet element_code publication_date forecast_period forecast_values
 #>    <chr>           <chr>        <chr>            <chr>           <list>         
 #>  1 14050000:OR:US… SRVO         2026-01-01 00:00 02-01:07-31     <tibble>       
@@ -167,7 +172,7 @@ forecasts[c(
 #>  8 14050000:OR:US… SRVO         2026-02-01 00:00 04-01:07-31     <tibble>       
 #>  9 14050000:OR:US… SRVO         2026-03-01 00:00 04-01:07-31     <tibble>       
 #> 10 14050000:OR:US… SRVO         2026-04-01 00:00 04-01:07-31     <tibble>       
-#> # ℹ 108 more rows
+#> # ℹ 146 more rows
 
 forecasts[["forecast_values"]][[1]]
 #> # A tibble: 5 × 2
@@ -195,6 +200,7 @@ For instance, if you want a table showing all possible station elements
 in the AWDB, it is as simple as this.
 
 ``` r
+
 get_references("elements")
 #> # A tibble: 116 × 9
 #>    code  name     physical_element_name function_code data_precision description
@@ -228,6 +234,7 @@ endpoint, for example, doesn’t take any query parameters other than
 This will also show you the current values for each parameter.
 
 ``` r
+
 set_options()
 #> 
 #> ── AWDB Query Parameter Set ────────────────────────────────────────────────────

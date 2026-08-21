@@ -116,7 +116,7 @@ survey). In general, it's recommended to use `SRVO`.
 ``` r
 # get streamflow forecasts
 get_forecasts(cascades, elements = "SRVO")
-#> # A tibble: 118 × 10
+#> # A tibble: 156 × 10
 #>    station_triplet  forecast_point_name    element_code forecast_period
 #>    <chr>            <chr>                  <chr>        <chr>          
 #>  1 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         02-01:07-31    
@@ -129,32 +129,32 @@ get_forecasts(cascades, elements = "SRVO")
 #>  8 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:07-31    
 #>  9 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:07-31    
 #> 10 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:07-31    
-#> # ℹ 108 more rows
+#> # ℹ 146 more rows
 #> # ℹ 6 more variables: forecast_status <chr>, issue_date <chr>,
 #> #   period_normal <dbl>, publication_date <chr>, unit_code <chr>,
 #> #   forecast_values <list>
 
 # return as sf table
 get_forecasts(cascades, elements = "SRVO", as_sf = TRUE)
-#> Simple feature collection with 118 features and 10 fields
+#> Simple feature collection with 156 features and 10 fields
 #> Geometry type: POINT
 #> Dimension:     XY
 #> Bounding box:  xmin: -122.8373 ymin: 43.5029 xmax: -121.5028 ymax: 44.2679
 #> Geodetic CRS:  WGS 84
-#> # A tibble: 118 × 11
+#> # A tibble: 156 × 11
 #>    station_triplet  forecast_point_name    element_code forecast_period
 #>    <chr>            <chr>                  <chr>        <chr>          
-#>  1 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:07-31    
-#>  2 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:09-30    
-#>  3 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:07-31    
-#>  4 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:07-31    
-#>  5 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:09-30    
-#>  6 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         02-01:09-30    
-#>  7 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         02-01:09-30    
-#>  8 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         03-01:07-31    
+#>  1 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         06-01:07-31    
+#>  2 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         05-01:09-30    
+#>  3 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         02-01:07-31    
+#>  4 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         02-01:09-30    
+#>  5 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         06-01:09-30    
+#>  6 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         05-01:07-31    
+#>  7 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         02-01:07-31    
+#>  8 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:09-30    
 #>  9 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         03-01:09-30    
 #> 10 14050000:OR:USGS Deschutes R bl Snow Ck SRVO         04-01:07-31    
-#> # ℹ 108 more rows
+#> # ℹ 146 more rows
 #> # ℹ 7 more variables: forecast_status <chr>, issue_date <chr>,
 #> #   period_normal <dbl>, publication_date <chr>, unit_code <chr>,
 #> #   forecast_values <list>, geometry <POINT [°]>

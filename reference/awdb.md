@@ -17,3 +17,8 @@ Useful links:
 
 **Maintainer**: Kenneth Blake Vernon <kenneth.b.vernon@gmail.com>
 ([ORCID](https://orcid.org/0000-0003-0098-5092)) \[copyright holder\]
+
+Authors:
+
+- Kenneth Blake Vernon <kenneth.b.vernon@gmail.com>
+  ([ORCID](https://orcid.org/0000-0003-0098-5092)) \[copyright holder\]

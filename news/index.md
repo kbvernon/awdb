@@ -1,6 +1,6 @@
 # Changelog
 
-## awdb (development version)
+## awdb 0.1.4
 
 ## awdb 0.1.3
 
