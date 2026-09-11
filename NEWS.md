@@ -1,6 +1,14 @@
 # awdb (development version)
 
+## New features
 
+## Bug fixes
+
+## Breaking changes
+
+# awdb 0.1.5
+
+* Fix: do not generate extendr wrappers on CRAN. (#12)
 
 # awadb 0.1.4
 
@@ -12,8 +20,6 @@
 * Update examples so that they do not run on CRAN.
 
 # awdb 0.1.2
-
-## 🐞 Bug fixes
 
 * Fix R-devel (4.5) issues (#1).
 
