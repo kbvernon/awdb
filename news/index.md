@@ -2,6 +2,17 @@
 
 ## awdb (development version)
 
+### New features
+
+### Bug fixes
+
+### Breaking changes
+
+## awdb 0.1.5
+
+- Fix: do not generate extendr wrappers on CRAN.
+  ([\#12](https://github.com/kbvernon/awdb/issues/12))
+
 ## awdb 0.1.3
 
 CRAN release: 2025-08-23
@@ -11,8 +22,6 @@ CRAN release: 2025-08-23
 ## awdb 0.1.2
 
 CRAN release: 2025-04-14
-
-### 🐞 Bug fixes
 
 - Fix R-devel (4.5) issues
   ([\#1](https://github.com/kbvernon/awdb/issues/1)).
