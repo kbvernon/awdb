@@ -1,7 +1,6 @@
-## CRAN REMOVAL WARNING
+## RESUBMISSION
 
-* This release addresses CRAN Team e-mail from 2026-07-29 and fixes issue with
-non-API call to R with extendr < 0.9.0.
+* This release fixes build failure when there is no rlib to link against.
 
 ## R CMD check results
 
