@@ -25,14 +25,14 @@ VENDOR_DIR = $(CURDIR)/vendor
 $(STATLIB):
 
 	if [ -d ./vendor ]; then \
-		echo "=== Using offline vendor directory ==="; \
 		mkdir -p "$(CARGOTMP)" && \
-		cp rust/vendor-config.toml "$(CARGOTMP)/config.toml"; \
+		cp rust/vendor-config.toml "$(CARGOTMP)/config.toml" && \
+		echo "* used offline vendor directory"; \
 	elif [ -f ./rust/vendor.tar.xz ]; then \
-		echo "=== Using offline vendor tarball ==="; \
 		tar xf rust/vendor.tar.xz && \
 		mkdir -p "$(CARGOTMP)" && \
-		cp rust/vendor-config.toml "$(CARGOTMP)/config.toml"; \
+		cp rust/vendor-config.toml "$(CARGOTMP)/config.toml" && \
+		echo "* unpacked offline vendor tarball"; \
 	fi
 
 	export CARGO_HOME="$(CARGOTMP)" && \
@@ -42,7 +42,8 @@ $(STATLIB):
 	if [ -n "$$ROXYGEN_PKG" ]; then \
 		$(CC) -o $(DOCUMENT) rust/document.c $(PKG_LIBS) -L"$(R_HOME)/lib$(R_ARCH)" -lR && \
 		./$(DOCUMENT) $(R_PACKAGE_NAME) ../R/extendr-wrappers.R && \
-		rm -f $(DOCUMENT); \
+		rm -f $(DOCUMENT) && \
+		echo "* generated extendr wrappers"; \
 	fi
 
 	# Always clean up CARGOTMP
