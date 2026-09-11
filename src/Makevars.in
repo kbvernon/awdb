@@ -23,7 +23,7 @@ VENDOR_DIR = $(CURDIR)/vendor
 # If a vendor directory exists, it is used for offline compilation. Otherwise if
 # vendor.tar.xz exists, it is unzipped and used for offline compilation.
 $(STATLIB):
-
+	@echo;
 	if [ -d ./vendor ]; then \
 		mkdir -p "$(CARGOTMP)" && \
 		cp rust/vendor-config.toml "$(CARGOTMP)/config.toml" && \
@@ -35,10 +35,12 @@ $(STATLIB):
 		echo "* unpacked offline vendor tarball"; \
 	fi
 
+	@echo;
 	export CARGO_HOME="$(CARGOTMP)" && \
 	export PATH="$(PATH):$(HOME)/.cargo/bin" && \
 	@PANIC_EXPORTS@RUSTFLAGS="$(RUSTFLAGS) --print=native-static-libs" cargo build @CRAN_FLAGS@ --lib @PROFILE@ --manifest-path=./rust/Cargo.toml --target-dir="$(TARGET_DIR)" @TARGET@
 
+	@echo;
 	if [ -n "$$ROXYGEN_PKG" ]; then \
 		$(CC) -o $(DOCUMENT) rust/document.c $(PKG_LIBS) -L"$(R_HOME)/lib$(R_ARCH)" -lR && \
 		./$(DOCUMENT) $(R_PACKAGE_NAME) ../R/extendr-wrappers.R && \
@@ -46,6 +48,7 @@ $(STATLIB):
 		echo "* generated extendr wrappers"; \
 	fi
 
+	@echo;
 	# Always clean up CARGOTMP
 	rm -Rf "$(CARGOTMP)";
 
