@@ -10,6 +10,8 @@
 
 ## awdb 0.1.5
 
+CRAN release: 2026-09-13
+
 - Fix: do not generate extendr wrappers on CRAN.
   ([\#12](https://github.com/kbvernon/awdb/issues/12))
 

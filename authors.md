@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/kbvernon/awdb/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/kbvernon/awdb/blob/v0.1.5/DESCRIPTION)
 
 Vernon K (2026). *awdb: Query the USDA NWCC Air and Water Database REST
 API*. R package version 0.1.5, <https://github.com/kbvernon/awdb>.
